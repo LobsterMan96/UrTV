@@ -1404,8 +1404,8 @@ public class MainActivity extends Activity {
                 return true;
             }
         }
-        // In a right to left layout Android looks for the focus the other way round, so the rows are
-        // walked by hand here: «right» always moves the highlight to the right.
+        // The rows are walked by hand so that «right» always moves the highlight to the right,
+        // whichever direction the row itself is laid out in.
         if (e.getAction() == KeyEvent.ACTION_DOWN && e.getRepeatCount() == 0) {
             if (e.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT && moveFocusSideways(false)) return true;
             if (e.getKeyCode() == KeyEvent.KEYCODE_DPAD_RIGHT && moveFocusSideways(true)) return true;
@@ -1437,8 +1437,8 @@ public class MainActivity extends Activity {
         if (row == null) return false;
         int index = row.indexOfChild(item);
         if (index < 0) return false;
-        // the row reads from the right, so the item before the focused one is the one on the right
-        int next = right ? index - 1 : index + 1;
+        // the row reads from the left, so the item after the focused one is the one on the right
+        int next = right ? index + 1 : index - 1;
         if (next < 0 || next >= row.getChildCount()) return true;   // the edge of the row: stay put
         View target = row.getChildAt(next);
         if (target == null || target.getVisibility() != View.VISIBLE) return true;

@@ -17,7 +17,12 @@ final class Ui {
     static Typeface font(Context c, String file) {
         Typeface cached = FONTS.get(file);
         if (cached != null) return cached;
-        Typeface made = Typeface.createFromAsset(c.getAssets(), "fonts/" + file);
+        // Thmanyah ships from a private fonts repo this fork cannot reach, so the asset is absent and
+        // createFromAsset throws. Unguarded here, that killed the whole launcher process the moment the
+        // «تلاوة» screen opened. The other three call sites already fall back; this one now does too.
+        Typeface made;
+        try { made = Typeface.createFromAsset(c.getAssets(), "fonts/" + file); }
+        catch (RuntimeException e) { made = Typeface.create("sans-serif", Typeface.NORMAL); }
         FONTS.put(file, made);
         return made;
     }
