@@ -27,22 +27,22 @@ final class Prefs {
     // Their clubs come from assets/shared/teams.json (Teams), which CI builds from these leagues' matches
     // (.github/tools/team_ids.py reads this list); a new league here needs its sport and minimum team count there.
     static final String[][] LEAGUES = {
-        {"Saudi-Arabian Pro League", "Saudi-Arabian Pro League"},
-        {"Saudi First Division League", "Saudi First Division League"},
-        {"English Premier League", "English Premier League"},
-        {"Spanish La Liga", "Spanish La Liga"},
-        {"Italian Serie A", "Italian Serie A"},
-        {"German Bundesliga", "German Bundesliga"},
-        {"French Ligue 1", "French Ligue 1"},
-        {"Portuguese Primeira Liga", "Portuguese Primeira Liga"},
-        {"Dutch Eredivisie", "Dutch Eredivisie"},
-        {"Turkish Super Lig", "Turkish Super Lig"},
-        {"Egyptian Premier League", "Egyptian Premier League"},
-        {"UAE Pro League", "UAE Pro League"},
-        {"Qatar Stars League", "Qatar Stars League"},
-        {"American Major League Soccer", "American Major League Soccer"},
-        {"NBA", "NBA"},
-        {"NFL", "NFL"},
+        {"Saudi-Arabian Pro League", "Saudi-Arabian Pro League", "دوري روشن السعودي"},
+        {"Saudi First Division League", "Saudi First Division League", "دوري يلو (الدرجة الأولى)"},
+        {"English Premier League", "English Premier League", "الدوري الإنجليزي"},
+        {"Spanish La Liga", "Spanish La Liga", "الدوري الإسباني"},
+        {"Italian Serie A", "Italian Serie A", "الدوري الإيطالي"},
+        {"German Bundesliga", "German Bundesliga", "الدوري الألماني"},
+        {"French Ligue 1", "French Ligue 1", "الدوري الفرنسي"},
+        {"Portuguese Primeira Liga", "Portuguese Primeira Liga", "الدوري البرتغالي"},
+        {"Dutch Eredivisie", "Dutch Eredivisie", "الدوري الهولندي"},
+        {"Turkish Super Lig", "Turkish Super Lig", "الدوري التركي"},
+        {"Egyptian Premier League", "Egyptian Premier League", "الدوري المصري"},
+        {"UAE Pro League", "UAE Pro League", "الدوري الإماراتي"},
+        {"Qatar Stars League", "Qatar Stars League", "الدوري القطري"},
+        {"American Major League Soccer", "American Major League Soccer", "الدوري الأمريكي"},
+        {"NBA", "NBA", "دوري كرة السلة الأمريكي (NBA)"},
+        {"NFL", "NFL", "دوري كرة القدم الأمريكية (NFL)"},
     };
 
     // Other sports shown in the matches slot and card beside the followed teams' games: only their next event
@@ -144,8 +144,9 @@ final class Prefs {
     static String[] leagueByName(String name) {
         String n = name.trim().toLowerCase().replaceAll("[^a-z0-9\\u0600-\\u06ff]+", "");
         for (String[] l : LEAGUES)
-            if (n.equals(l[0].toLowerCase().replaceAll("[^a-z0-9]+", "")) || n.equals(l[1].toLowerCase().replaceAll("[^a-z0-9\\u0600-\\u06ff]+", "")))
-                return l;
+            if (n.equals(l[0].toLowerCase().replaceAll("[^a-z0-9]+", "")) || n.equals(l[1].toLowerCase().replaceAll("[^a-z0-9\\u0600-\\u06ff]+", ""))
+                || (l.length > 2 && n.equals(l[2].toLowerCase().replaceAll("[^a-z0-9\\u0600-\\u06ff]+", ""))))
+                return l;                                   // [2] is the Arabic name: display is English, but an Arabic spelling still resolves
         return null;
     }
 

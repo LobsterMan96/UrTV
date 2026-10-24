@@ -801,7 +801,8 @@ def alt_names(t):
 # ---------- the run: one part per league and one for the national teams (CI runs them side by side), then merge
 
 def prefs_leagues():
-    return re.findall(r'\{"([^"]+)", "[^"]+"\}', PREFS.read_text(encoding="utf-8").split("LEAGUES = {")[1].split("};")[0])
+    # rows may carry a third column (the Arabic lookup alias in this fork), so do not demand exactly two
+    return re.findall(r'\{"([^"]+)", "[^"]+"(?:, "[^"]+")*\}', PREFS.read_text(encoding="utf-8").split("LEAGUES = {")[1].split("};")[0])
 
 
 def slug(name):
