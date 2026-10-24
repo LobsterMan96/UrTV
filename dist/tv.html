@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- the build: UTC time (YYYYMMDDHHMMSS) of the newest commit of the page's sources, put in by src/build.py. The app loads the page with the newer stamp (its own
      copy or a downloaded one), never by file time, and does not keep a download whose stamp is older than its own (Updater, PageStamp). -->
-<meta name="urtv-build" content="20261024191042">
+<meta name="urtv-build" content="20261024192931">
 <title>TV Screensaver</title>
 <style>
   @font-face{font-family:'Thmanyah';font-weight:300;font-style:normal;font-display:block;src:url("https://raw.githubusercontent.com/LobsterMan96/UrTV/english/assets/fonts/IBMPlexSansArabic-Light.woff2") format("woff2")}
@@ -47,6 +47,8 @@
   html.widget .mid.n2,html.widget .mid.n3{grid-template-columns:minmax(0,560fr) minmax(0,540fr)}
   html.widget .mid .week.w3{grid-column:1/-1}
   html.widget .week{width:100%}
+  /* a living room, not a desk: the card may lose rows, never legibility */
+  .widget .week li{font-size:calc(clamp(19px,3.4vw,30px)*var(--z,1))}
   html.widget .week.boxes{padding:max(1.7vh,10px) max(1.4vw,14px)}   /* the prayer boxes keep a clear, even distance from the card's edge */
   html,body{
     height:100%;overflow:hidden;background:#040E09;color:var(--sand);
@@ -130,7 +132,7 @@
   /* a game is one line, on the launcher's card and the screensaver's: the clubs with their crests beside the score, then the date, then
      «بعد …», «انتهت» or «مباشر». Too long for the card: fitGameRow() takes the clubs' short names, the date's short form, a smaller step */
   .week li .mwhen{display:block;font-style:normal;font-size:.68em;font-weight:300;color:#A79C85}
-  .week li.mg{display:block;padding:calc(.55vh + 2px) 0}
+  .week li.mg{display:block;padding:calc(.8vh + 3px) 0}
   /* a grid, not a flex row: fixed columns are what keeps every line aligned whatever the clubs are */
   .week li.mg .mr{display:grid;grid-template-columns:4.2em 4.1em 4.2em minmax(0,1fr) 4.6em;align-items:center;
     column-gap:.6em;white-space:nowrap;max-width:none;overflow:hidden;padding:0;margin:0}
@@ -158,19 +160,21 @@
   .week li.mg .tm .cr{margin:0}
   .week li.mg .sc{font-variant-numeric:tabular-nums;color:var(--gold-hi);font-weight:600}
   /* the league table: one grid, so every column is a column */
-  .week li.tbl{display:grid;grid-template-columns:1.6em 3.4em repeat(4,1.8em) 2.4em;align-items:center;
+  .week li.tbl{display:grid;grid-template-columns:1.6em 1.5em 3.2em repeat(4,1.8em) 2.4em;align-items:center;
     column-gap:.45em;white-space:nowrap;padding:calc(.34vh + 1px) 0;font-variant-numeric:tabular-nums;
     text-align:center;font-size:.92em}
   .week li.tbl .rk{text-align:right;color:#9C9279}
   .week li.tbl .cr{display:flex;align-items:center;justify-content:center}
   .week li.tbl .cl{text-align:left;font-weight:500;letter-spacing:.02em}
   .week li.tbl .pts{text-align:right;font-weight:600;color:var(--gold-hi)}
-  .week li.tbl.thd{font-size:.76em;color:#9C9279;font-weight:500;letter-spacing:.06em;
+  .week li.tbl.thd{color:#9C9279;font-weight:500;letter-spacing:.04em;
     border-bottom:1px solid rgba(220,184,111,.28);padding-bottom:calc(.4vh + 1px);margin-bottom:.2em}
   .week li.tbl.thd .pts,.week li.tbl.thd .rk{color:#9C9279}
-  .widget .week li.tbl{font-size:.74em;column-gap:.3em;padding:calc(.3vh + 1px) 0;
-    grid-template-columns:1.5em 3.1em repeat(4,1.6em) 2.2em}
-  .widget .week li.tbl.thd{font-size:.64em}
+  .week li.tbl .cr img{width:1.15em;height:1.15em;object-fit:contain;display:block;margin:0 auto}
+  /* the header must sit on the SAME grid and the SAME size as the rows, or the labels drift off
+     their numbers. Only its weight and colour differ. */
+  .widget .week li.tbl{font-size:.82em;column-gap:.32em;padding:calc(.36vh + 1px) 0;
+    grid-template-columns:1.5em 1.4em 3.1em repeat(4,1.7em) 2.3em}
   .week li .dt{flex:1 1 auto;color:#9C9279;font-size:.72em;min-width:3.2em;text-align:left}
   .week li .tm .cr{width:1.25em;height:1.25em;object-fit:contain;vertical-align:middle;margin-block:-.25em}
   .week li .tm .cr:not([src]){visibility:hidden}   /* a restored row waits for its picture: the same room */
@@ -2332,7 +2336,8 @@ function renderCard(card, animate, keepSize){
     setHTML(ul, `<li class="empty">${P === 'matches' ? matchesEmptyText() : P === 'tasks' ? 'No tasks today' : 'No data right now'}</li>`);
     return;
   }
-  const per = card.cap || (P === 'matches' ? MATCH_ROWS : P === 'table' ? TABLE_MAX + 1 : WEEK_ROWS);
+  const per = card.cap || (P === 'matches' ? (CONFIG.widget ? 3 : MATCH_ROWS)   // bigger rows on the small card
+    : P === 'table' ? TABLE_MAX + 1 : WEEK_ROWS);
   if((P === 'matches' || P === 'stocks' || P === 'tasks') && rows.length > per){        // page through, like the shows
     if(P === 'matches'){   // fixed pages, each game once a lap; the last holds what is left
       const pages = Math.ceil(rows.length / per), start = (card.page % pages) * per;
@@ -2497,7 +2502,16 @@ function forecastRows(){
 // once per club: kept as a 48 px copy in localStorage and fetched again only when the badge's address changes.
 // The launcher's page is a file:// document and the badge host may send no Access-Control-Allow-Origin: fetch() is then refused (or
 // the answer is no picture). The club keeps its address alone and the row shows a plain <img> of it, which needs no CORS.
-const CRESTS_ON = CONFIG.widget && USES('matches');
+// Club crests this fork ships, by their three-letter code (assets/crests/). Scraped once from
+// spl.com.sa, so every Saudi Pro League club has one instead of depending on TheSportsDB having a
+// badge. Shown on the screensaver as well as the home card.
+const OWN_CRESTS = new Set(["ABH", "AHL", "DIR", "ETT", "FAT", "FAY", "FSL", "HIL", "HZM", "ITT", "KHL", "KHO", "NEO", "NSR", "QAD", "RIY", "SHB", "TAW"]);
+// PHOTO_BASE is declared far below this point, so read it lazily: touching it here threw a
+// ReferenceError (temporal dead zone) that killed the whole script, page blank in both modes.
+let _crestBase = '';
+const crestBase = () => _crestBase || (_crestBase = PHOTO_BASE.replace(/photos\/$/, 'assets/crests/'));
+const ownCrest = name => { const c = abbr(name); return OWN_CRESTS.has(c) ? crestBase() + c + '.webp' : ''; };
+const CRESTS_ON = USES('matches') || USES('table');
 const CREST_PX = 48, CREST_KEEP = 60, CREST_PER_ROUND = 10;
 let CRESTS = {};   // team id -> {u: badge address, d: data: URI of the small copy, none when only the address could be kept}
 try{ CRESTS = JSON.parse(localStorage.getItem('crests') || '{}') || {}; }catch(e){}
@@ -2506,7 +2520,10 @@ function crestOf(ev, side){
   return /^https:\/\/[a-z0-9.-]+\.thesportsdb\.com\/\S+$/i.test(u) && /^\d+$/.test(id) ? {id, u} : null;
 }
 const crestImg = (ev, side) => {
-  const c = CRESTS_ON && crestOf(ev, side);
+  if(!CRESTS_ON) return '';
+  const own = ownCrest(ev['str' + side + 'Team']);   // ours first: every club has one
+  if(own) return `<img class="cr" src="${esc(own)}" width="${CREST_PX}" height="${CREST_PX}" loading="lazy" alt="">`;
+  const c = crestOf(ev, side);
   const k = c && CRESTS[c.id];
   if(!k) return '';   // no crest: the name alone
   return k.d ? `<img class="cr" data-t="${c.id}" alt="">`
@@ -2647,10 +2664,12 @@ function tableRows(){
   const rows = (d && d.table) || [];
   if(!rows.length) return [];
   const n = v => ar(String(v == null ? 0 : v));
-  const head = `<li class="tbl thd"><span class="rk">#</span><span class="cl">Club</span>`
+  const head = `<li class="tbl thd"><span class="rk">#</span><span class="cr"></span><span class="cl">Club</span>`
     + `<span>P</span><span>W</span><span>D</span><span>L</span><span class="pts">Pts</span></li>`;
   return [head].concat(rows.slice(0, TABLE_MAX).map(r => {
+    const own = ownCrest(r.strTeam);
     return `<li class="tbl"><span class="rk">${n(r.intRank)}</span>`
+      + `<span class="cr">${own ? `<img src="${esc(own)}" alt="" loading="lazy">` : ''}</span>`
       + `<span class="cl" title="${esc(r.strTeam)}">${esc(abbr(r.strTeam))}</span>`
       + `<span>${n(r.intPlayed)}</span><span>${n(r.intWin)}</span><span>${n(r.intDraw)}</span><span>${n(r.intLoss)}</span>`
       + `<span class="pts">${n(r.intPoints)}</span></li>`;

@@ -302,6 +302,10 @@ def main():
     clubs = json.loads((ROOT / "assets/shared/teams.json").read_text(encoding="utf-8"))
     by_id = {c["id"]: c["en"] for c in clubs if c.get("id") and c.get("en")}   # English build: the club's own name, not the Arabic one
     html = html.replace("__TEAMS_BY_ID__", js_json(by_id))
+    # the club crests this fork ships (assets/crests/<CODE>.webp, scraped from spl.com.sa):
+    # the page needs to know which codes exist before it can point at one
+    crests = sorted(p.stem for p in (ROOT / "assets/crests").glob("*.webp")) if (ROOT / "assets/crests").is_dir() else []
+    html = html.replace("__OWN_CRESTS__", js_json(crests))
     html = html.replace("__TEAMS_SHORT__", js_json(us_short(clubs)))
     # leagues of Formula 1, UFC, boxing and tennis, found by CI (.github/tools/team_ids.py); {} until a run delivers them
     html = html.replace("__EVENTS__", js_json(json.loads((ROOT / "assets/shared/events.json").read_text(encoding="utf-8"))))
