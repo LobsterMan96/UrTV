@@ -943,8 +943,7 @@ public class MainActivity extends Activity {
             if (hijriFormat != null) hijri = hijriFormat.format(now.getTime());
         } catch (Exception ignored) { }
         String greg = gregFormat.format(now.getTime());
-        date.setText(arabicDigits(hijri.isEmpty() ? greg : greg + "
-" + hijri));
+        date.setText(arabicDigits(hijri.isEmpty() ? greg : greg + "\n" + hijri));
         updateAdhanBar(cfg);
         sa.urtv.home.tilawah.AdhanSync.onConfig(this, cfg.fragment);   // «تعديل وقت الصلاة» changed on the TV: the alarm follows
         updateSleepPill();
