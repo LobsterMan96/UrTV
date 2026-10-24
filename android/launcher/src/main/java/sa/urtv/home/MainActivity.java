@@ -348,14 +348,16 @@ public class MainActivity extends Activity {
      */
     private int[] homeCardBox(int cards) {
         android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
-        int clockLeft = 0, titleTop = 0, dockTop = 0, wide = 0;
-        if (clockBlock != null && clockBlock.getWidth() > 0) clockLeft = ((View) clockBlock.getParent()).getLeft() + clockBlock.getLeft();
+        int clockEnd = 0, titleTop = 0, dockTop = 0, wide = 0;
+        // the clock block is on the LEFT now, so the cards need to know where it ENDS, not where it starts
+        if (clockBlock != null && clockBlock.getWidth() > 0)
+            clockEnd = ((View) clockBlock.getParent()).getLeft() + clockBlock.getLeft() + clockBlock.getWidth();
         if (bottomBlock != null && bottomBlock.getHeight() > 0 && dockRow != null) {
             titleTop = bottomBlock.getTop();
             dockTop = titleTop + dockRow.getTop();
             for (View c : dockCards) wide = Math.max(wide, Math.round(title.getPaint().measureText(((App) c.getTag()).label)));
         }
-        return CardBox.box(cards, dm.widthPixels, dm.heightPixels, dm.density, clockLeft, titleTop, dockTop, wide);
+        return CardBox.box(cards, dm.widthPixels, dm.heightPixels, dm.density, clockEnd, titleTop, dockTop, wide);
     }
 
     private View buildHeader() {
