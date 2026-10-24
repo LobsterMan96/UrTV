@@ -20,28 +20,28 @@ final class GreetingText {
 
     static String greeting(int part) {
         switch (part) {
-            case MORNING: return "صباح الخير";
-            case DAY: return "طاب يومك";
-            case EVENING: return "مساء الخير";
-            default: return "تصبح على خير";
+            case MORNING: return "Good morning";
+            case DAY: return "Good afternoon";
+            case EVENING: return "Good evening";
+            default: return "Good night";
         }
     }
 
     /** Open-Meteo's WMO weather code, as a short phrase that goes before «في المدينة». */
     static String sky(int code) {
         switch (code) {
-            case 0: return "سماء صافية";
-            case 1: return "سماء صافية غالبًا";
-            case 2: return "غائم جزئيًا";
-            case 3: return "سماء غائمة";
-            case 45: case 48: return "ضباب";
-            case 51: case 53: case 55: case 56: case 57: return "رذاذ";
-            case 61: case 63: case 80: case 81: return "أمطار";
-            case 65: case 82: return "أمطار غزيرة";
-            case 66: case 67: return "مطر متجمد";
-            case 71: case 73: case 75: case 77: case 85: case 86: return "ثلوج";
-            case 95: return "عواصف رعدية";
-            case 96: case 99: return "عواصف رعدية وبرد";
+            case 0: return "Clear sky";
+            case 1: return "Mainly clear";
+            case 2: return "Partly cloudy";
+            case 3: return "Cloudy";
+            case 45: case 48: return "Fog";
+            case 51: case 53: case 55: case 56: case 57: return "Drizzle";
+            case 61: case 63: case 80: case 81: return "Rain";
+            case 65: case 82: return "Heavy rain";
+            case 66: case 67: return "Freezing rain";
+            case 71: case 73: case 75: case 77: case 85: case 86: return "Snow";
+            case 95: return "Thunderstorms";
+            case 96: case 99: return "Thunderstorms with hail";
             default: return "";
         }
     }
@@ -51,16 +51,16 @@ final class GreetingText {
 
     /** The sky's word, or «غبار» / «غبار كثيف» when the dust level (the larger of Open-Meteo's pm10 and dust) says so. */
     static String skyWord(int code, double dust) {
-        if (dust >= HEAVY_DUST) return "غبار كثيف";
-        if (dust >= DUST) return "غبار";
+        if (dust >= HEAVY_DUST) return "Heavy dust";
+        if (dust >= DUST) return "Dust";
         return sky(code);
     }
 
     /** «سماء صافية في الرياض، ٣١°» (no «·» beside a digit: the TV's font draws it as ٠); a code we have no word for gives just «الرياض، ٣١°»; dust (0 when unknown) takes the word over. */
     static String weather(int code, double dust, String city, double temp, boolean latin) {
         String sky = skyWord(code, dust);
-        String place = sky.isEmpty() ? city : sky + " في " + city;
-        return place + "، " + digits(Math.round(temp) + "°", latin);
+        String place = sky.isEmpty() ? city : sky + " in " + city;
+        return place + ", " + digits(Math.round(temp) + "°", latin);
     }
 
     /** «الغروب ٥:٥٧ م» from "17:57". */
@@ -69,7 +69,7 @@ final class GreetingText {
         int h = Integer.parseInt(hhmm.substring(0, colon));
         String m = hhmm.substring(colon + 1, colon + 3);
         int h12 = h % 12 == 0 ? 12 : h % 12;
-        return label + " " + digits(h12 + ":" + m, latin) + " " + (h < 12 ? "ص" : "م");
+        return label + " " + digits(h12 + ":" + m, latin) + " " + (h < 12 ? "AM" : "PM");
     }
 
     /** Arabic-Indic digits (as the page's #digits=hindi), or the Latin ones left alone. */

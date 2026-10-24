@@ -327,7 +327,7 @@ public class MainActivity extends Activity {
         bottom.addView(dockRow, new LinearLayout.LayoutParams(-1, -2));
 
         appsLabel = text(11, "sans-serif-medium", 0x99FFFFFF);
-        appsLabel.setText("كل التطبيقات");
+        appsLabel.setText("All apps");
         appsLabel.setTextColor(GOLD);
         content.addView(appsLabel, llp(-2, -2, dp(68), dp(8), 0, dp(18)));
 
@@ -402,20 +402,20 @@ public class MainActivity extends Activity {
         LinearLayout right = new LinearLayout(this);
         right.setGravity(Gravity.CENTER_VERTICAL);
         right.setClipChildren(false);
-        Pill saver = pill("شاشة التوقف", R.drawable.ic_screensaver);
+        Pill saver = pill("Screensaver", R.drawable.ic_screensaver);
         saver.setOnClickListener(v -> openPackage(SAVER_PKG));
-        Pill inputs = pill("المصادر", R.drawable.ic_input);
+        Pill inputs = pill("Inputs", R.drawable.ic_input);
         inputs.setOnClickListener(v -> showInputs(v));
-        wifiPill = pill("واي فاي", R.drawable.ic_wifi);
+        wifiPill = pill("Wi-Fi", R.drawable.ic_wifi);
         wifiPill.setOnClickListener(v -> launch(new Intent(Settings.ACTION_WIFI_SETTINGS)));
-        Pill tasks = pill("المهام", R.drawable.ic_mic);   // the list lives in the screensaver app
+        Pill tasks = pill("Tasks", R.drawable.ic_mic);   // the list lives in the screensaver app
         tasks.setOnClickListener(v -> launch(new Intent(this, TasksActivity.class)));
-        Pill settings = pill("الإعدادات", R.drawable.ic_settings);
+        Pill settings = pill("Settings", R.drawable.ic_settings);
         settings.setOnClickListener(v -> launch(new Intent(Settings.ACTION_SETTINGS)));
         // the «تلاوة وأذان» pill: the Quran, the radio and the adhan are part of this app, so it opens them right here
         Pill tilawah = pill("تلاوة وأذان", R.drawable.ic_listen);
         tilawah.setOnClickListener(v -> launch(new Intent(this, sa.urtv.home.tilawah.MainActivity.class)));
-        sleepPill = pill("مؤقت النوم", R.drawable.ic_sleep);
+        sleepPill = pill("Sleep timer", R.drawable.ic_sleep);
         sleepPill.setOnClickListener(v -> showSleep(v));
         List<Pill> row = new ArrayList<>(Arrays.asList(inputs, wifiPill, settings, sleepPill));
         if (isInstalled(SAVER_PKG)) { row.add(tasks); row.add(saver); }
@@ -726,24 +726,24 @@ public class MainActivity extends Activity {
         int i = dock.indexOf(pkg);
         List<String> labels = new ArrayList<>();
         List<Runnable> actions = new ArrayList<>();
-        labels.add("ترتيب المفضلة…");
+        labels.add("Arrange favourites…");
         actions.add(() -> launch(new Intent(this, DockActivity.class)));
         if (inDock) {
             if (dock.size() > MIN_DOCK) {
-                labels.add("إزالة من المفضلة");
+                labels.add("Remove from favourites");
                 actions.add(() -> { dock.remove(pkg); saveDock(dock, dock.get(Math.max(0, i - 1))); });
             } else {
-                labels.add("المفضلة لا تقل عن " + arabicDigits(String.valueOf(MIN_DOCK)));
+                labels.add("Favourites cannot go below " + arabicDigits(String.valueOf(MIN_DOCK)));
                 actions.add(() -> { });
             }
         } else if (dock.size() < MAX_DOCK) {
-            labels.add("إضافة إلى المفضلة");
+            labels.add("Add to favourites");
             actions.add(() -> { dock.add(pkg); saveDock(dock, pkg); });
         } else {
-            labels.add("المفضلة ممتلئة (" + MAX_DOCK + ")");
+            labels.add("Favourites full (" + MAX_DOCK + ")");
             actions.add(() -> { });
         }
-        labels.add("إعادة المفضلة الافتراضية");
+        labels.add("Reset favourites");
         actions.add(() -> {
             prefs().edit().remove("dock").apply();
             dockApps = getResources().getStringArray(R.array.dock_apps);
@@ -805,10 +805,10 @@ public class MainActivity extends Activity {
         for (TvInputInfo t : inputs) {
             rows.add(inputRow(inputLabel(t), () -> openPassthroughInput(t)));
         }
-        if (isInstalled(liveTvPkg)) rows.add(inputRow("البث التلفزيوني", () -> openPackage(liveTvPkg)));
-        if (inputs.isEmpty() && isInstalled(inputPickerPkg)) rows.add(inputRow("كل المصادر…", () -> openPackage(inputPickerPkg)));
+        if (isInstalled(liveTvPkg)) rows.add(inputRow("Live TV", () -> openPackage(liveTvPkg)));
+        if (inputs.isEmpty() && isInstalled(inputPickerPkg)) rows.add(inputRow("All inputs…", () -> openPackage(inputPickerPkg)));
 
-        if (rows.isEmpty()) rows.add(inputRow("الإعدادات", () -> launch(new Intent(Settings.ACTION_SETTINGS))));
+        if (rows.isEmpty()) rows.add(inputRow("Settings", () -> launch(new Intent(Settings.ACTION_SETTINGS))));
         for (TextView r : rows) {
             r.setOnClickListener(v -> { pw.dismiss(); ((Runnable) v.getTag()).run(); });
             list.addView(r, new LinearLayout.LayoutParams(-1, dp(36)));
@@ -840,10 +840,10 @@ public class MainActivity extends Activity {
         list.setBackground(bg);
         PopupWindow pw = new PopupWindow(list, dp(220), -2, true);
         List<TextView> rows = new ArrayList<>();
-        for (int m : SleepTimer.MINUTES) rows.add(inputRow(arabicDigits(String.valueOf(m)) + " دقيقة", () -> SleepTimer.start(this, m)));
-        if (SleepTimer.minutesLeft(this) > 0) rows.add(inputRow("إلغاء", () -> SleepTimer.start(this, 0)));
+        for (int m : SleepTimer.MINUTES) rows.add(inputRow(arabicDigits(String.valueOf(m)) + " min", () -> SleepTimer.start(this, m)));
+        if (SleepTimer.minutesLeft(this) > 0) rows.add(inputRow("Cancel", () -> SleepTimer.start(this, 0)));
         if (!SleepService.enabled()) {   // without it the end only stops the sound and brings the screensaver: say so, and where to turn it on
-            rows.add(inputRow("لإطفاء الشاشة: فعّل «تلفزيونك: إطفاء الشاشة»", () -> launch(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))));
+            rows.add(inputRow("To turn the screen off, enable «UrTV: screen off»", () -> launch(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))));
         }
         for (TextView r : rows) {
             r.setOnClickListener(v -> { pw.dismiss(); ((Runnable) v.getTag()).run(); });
@@ -916,14 +916,14 @@ public class MainActivity extends Activity {
         greetingLine.update(h, cfg);
         int hh = h % 12 == 0 ? 12 : h % 12;   // always 12-hour
         clock.setText(arabicDigits(hh + ":" + String.format(Locale.ROOT, "%02d", now.get(Calendar.MINUTE))));
-        ampm.setText(h < 12 ? "ص" : "م");
+        ampm.setText(h < 12 ? "AM" : "PM");
         boolean other = zone != null && ClockZone.differs(tvTz, tz, ms);
         zoneLine.setVisibility(other ? View.VISIBLE : View.GONE);
         if (other) zoneLine.setText(ClockZone.label(zone[0]));
         if (gregFormat == null) {
-            gregFormat = new SimpleDateFormat("d MMMM", new Locale("ar"));
+            gregFormat = new SimpleDateFormat("EEEE, d MMMM", new Locale("en", "GB"));
             try {
-                hijriFormat = new android.icu.text.SimpleDateFormat("EEEE، d MMMM y", new android.icu.util.ULocale("ar_SA@calendar=islamic-umalqura"));
+                hijriFormat = new android.icu.text.SimpleDateFormat("d MMMM y G", new android.icu.util.ULocale("en@calendar=islamic-umalqura"));
             } catch (Exception ignored) { }
         }
         if (!tz.equals(formatZone)) {
@@ -933,10 +933,10 @@ public class MainActivity extends Activity {
         }
         String hijri = "";
         try {
-            if (hijriFormat != null) hijri = hijriFormat.format(now.getTime()).replaceAll("\\s*هـ\\s*$", "") + " هـ";
+            if (hijriFormat != null) hijri = hijriFormat.format(now.getTime());
         } catch (Exception ignored) { }
         String greg = gregFormat.format(now.getTime());
-        date.setText(arabicDigits(hijri.isEmpty() ? greg : hijri + "  –  " + greg));
+        date.setText(arabicDigits(hijri.isEmpty() ? greg : greg + "  ·  " + hijri));
         updateAdhanBar(cfg);
         sa.urtv.home.tilawah.AdhanSync.onConfig(this, cfg.fragment);   // «تعديل وقت الصلاة» changed on the TV: the alarm follows
         updateSleepPill();

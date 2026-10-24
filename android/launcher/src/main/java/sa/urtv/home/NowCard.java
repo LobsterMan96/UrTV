@@ -76,7 +76,7 @@ final class NowCard extends LinearLayout {
         title.setText(Digits.of(s.title));
         subText = Digits.of(s.sub);
         hintText = Digits.of(s.hint);
-        setContentDescription(Digits.of(s.title + "، " + s.sub));
+        setContentDescription(Digits.of(s.title + ", " + s.sub));
         paint(hasFocus());
     }
 

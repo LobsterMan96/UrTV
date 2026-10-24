@@ -22,17 +22,17 @@ final class AdhanBarText {
     static String text(long now, long[] adhan, boolean friday, boolean latin) {
         for (int i = 0; i < 5; i++) {
             double toAdhan = (adhan[i] - now) / 60000.0;
-            if (toAdhan > 0 && toAdhan <= BEFORE_MIN) return "الأذان بعد " + minutes((int) Math.ceil(toAdhan), latin);
+            if (toAdhan > 0 && toAdhan <= BEFORE_MIN) return "Adhan in " + minutes((int) Math.ceil(toAdhan), latin);
             int gap = i == 1 && friday ? 0 : IQAMA[i];
             double toIqama = (adhan[i] + gap * 60000L - now) / 60000.0;
-            if (now >= adhan[i] && toIqama > 0) return "الإقامة بعد " + minutes((int) Math.ceil(toIqama), latin);
+            if (now >= adhan[i] && toIqama > 0) return "Iqama in " + minutes((int) Math.ceil(toIqama), latin);
         }
         return null;
     }
 
     /** «١ دقيقة», «دقيقتين», «٨ دقائق», «١٢ دقيقة»: as the page says them. */
     static String minutes(int n, boolean latin) {
-        if (n == 2) return "دقيقتين";
-        return GreetingText.digits(String.valueOf(n), latin) + (n >= 3 && n <= 10 ? " دقائق" : " دقيقة");
+        // English has one plural where Arabic has a dual and a small-number form
+        return GreetingText.digits(String.valueOf(n), latin) + (n == 1 ? " min" : " mins");
     }
 }

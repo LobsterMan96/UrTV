@@ -47,13 +47,13 @@ final class Greeting {
     void update(int hour, ConfigSnapshot snap) {
         Config s = Config.of(snap);
         if (!s.on) {
-            greeting.setText(hour < 4 ? "تصبح على خير" : hour < 12 ? "صباح الخير" : "مساء الخير");
+            greeting.setText(hour < 4 ? "Good night" : hour < 12 ? "Good morning" : "Good evening");
             weather.setVisibility(android.view.View.GONE);
             return;
         }
         DayParts d = null;
         try { d = DayParts.now(context, snap.fragment); } catch (RuntimeException ignored) { }
-        greeting.setText(d == null ? (hour < 4 ? "تصبح على خير" : hour < 12 ? "صباح الخير" : "مساء الخير")
+        greeting.setText(d == null ? (hour < 4 ? "Good night" : hour < 12 ? "Good morning" : "Good evening")
                 : GreetingText.greeting(GreetingText.part(System.currentTimeMillis(), d.fajr, d.dhuhr, d.asr, d.isha)));
 
         SharedPreferences sp = prefs();
@@ -144,7 +144,7 @@ final class Greeting {
     /** The screensaver's settings this line needs. */
     private static final class Config {
         boolean on = true;   // an older screensaver does not say: on, the default
-        String city = "الرياض", lat = "24.6877", lon = "46.7219", tz = "Asia/Riyadh";
+        String city = "Al-Khobar", lat = "26.2794", lon = "50.2083", tz = "Asia/Riyadh";
         boolean latin;
 
         static Config of(ConfigSnapshot snap) {

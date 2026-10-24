@@ -184,7 +184,7 @@ final class HomeCard {
         target = new View(activity);
         target.setId(View.generateViewId());
         target.setFocusable(true);
-        target.setContentDescription("المهام");
+        target.setContentDescription("Tasks");
         target.setOnFocusChangeListener((v, has) -> {
             if (web != null) web.evaluateJavascript("setLiveFocus(" + has + ")", null);
             if (has) placeTarget();   // exactly over the card while it is the one in front

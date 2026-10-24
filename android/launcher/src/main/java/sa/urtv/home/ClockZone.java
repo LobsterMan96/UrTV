@@ -59,6 +59,6 @@ final class ClockZone {
 
     /** The small line under the clock, as the screensaver's: «بتوقيت دبي». */
     static String label(String city) {
-        return "بتوقيت " + (city.isEmpty() ? "المدينة" : city);
+        return (city.isEmpty() ? "the city" : city) + " time";
     }
 }

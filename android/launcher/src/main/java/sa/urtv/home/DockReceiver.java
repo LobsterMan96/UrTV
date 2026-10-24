@@ -53,7 +53,7 @@ public class DockReceiver extends BroadcastReceiver {
             }
             case "sa.urtv.home.SET_NAMES": {
                 String raw = i.getStringExtra("names");
-                if (raw == null) { setResultData("error: add --es names 'pkg|الاسم;pkg2|الاسم'"); return; }
+                if (raw == null) { setResultData("error: add --es names 'pkg|Name;pkg2|Name'"); return; }
                 Map<String, String> given = AppNames.given(c);
                 List<String> done = new ArrayList<>(), skipped = new ArrayList<>();
                 for (String pair : raw.split(";")) {

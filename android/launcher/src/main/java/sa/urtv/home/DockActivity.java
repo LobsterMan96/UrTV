@@ -56,9 +56,9 @@ public class DockActivity extends Activity {
         col.setPadding(0, dp(36), 0, dp(48));
         frame.addView(col, new FrameLayout.LayoutParams(dp(600), -2, Gravity.CENTER_HORIZONTAL));
 
-        col.addView(text("ترتيب المفضلة", 26, "Medium", TEXT), right(0));
-        col.addView(text("اختيار على تطبيق لتحريكه بالأسهم (أعلى/أسفل) ثم اختيار لتثبيته. من " + ar(Dock.MIN) + " إلى "
-            + ar(Dock.MAX) + " تطبيقات.", 14, "Regular", DIM), right(dp(6)));
+        col.addView(text("Arrange favourites", 26, "Medium", TEXT), right(0));
+        col.addView(text("Select an app to pick it up, move it with up and down, then select again to drop it. From " + ar(Dock.MIN) + " to "
+            + ar(Dock.MAX) + " apps.", 14, "Regular", DIM), right(dp(6)));
         count = text("", 13, "Medium", GOLD);
         col.addView(count, right(dp(24)));
         list = new LinearLayout(this);
@@ -74,26 +74,26 @@ public class DockActivity extends Activity {
         list.removeAllViews();
         cards.clear();
         removes.clear();
-        count.setText("المفضلة " + ar(row.size()) + " من " + ar(Dock.MAX));
+        count.setText("Favourites " + ar(row.size()) + " of " + ar(Dock.MAX));
         for (int i = 0; i < row.size(); i++) list.addView(favouriteRow(i), rowParams());
 
         List<String> others = new ArrayList<>(apps.keySet());
         others.removeAll(row);
         Collections.sort(others, (x, y) -> apps.get(x).compareToIgnoreCase(apps.get(y)));
         if (!others.isEmpty()) {
-            TextView h = text("إضافة تطبيق", 13, "Medium", GOLD);
+            TextView h = text("Add an app", 13, "Medium", GOLD);
             LinearLayout.LayoutParams hp = right(0);
             hp.topMargin = dp(22);
             hp.bottomMargin = dp(8);
             list.addView(h, hp);
             for (String p : others) list.addView(card(p, "+", false, v -> add(p)), rowParams());
         }
-        View reset = card(null, "الترتيب الافتراضي", false, v -> {
+        View reset = card(null, "Default order", false, v -> {
             Dock.reset(this);
             row.clear();
             row.addAll(Dock.shown(this, apps));
             render(0);
-            toast("رجعت المفضلة للترتيب الافتراضي");
+            toast("Favourites reset to the default order");
         });
         LinearLayout.LayoutParams rp = rowParams();
         rp.topMargin = dp(22);
@@ -115,7 +115,7 @@ public class DockActivity extends Activity {
     private View favouriteRow(final int i) {
         LinearLayout r = new LinearLayout(this);
         r.setOrientation(LinearLayout.HORIZONTAL);
-        TextView remove = (TextView) pill("إزالة", v -> remove(i));
+        TextView remove = (TextView) pill("Remove", v -> remove(i));
         r.addView(remove, new LinearLayout.LayoutParams(dp(84), -1));
         View c = card(row.get(i), ar(i + 1), i == moving, v -> {
             if (moving == i) drop(); else { moving = i; render(i); }
@@ -199,18 +199,18 @@ public class DockActivity extends Activity {
     // ---------------------------------------------------------------- actions
 
     private void remove(int i) {
-        if (row.size() <= Dock.MIN) { toast("المفضلة لا تقل عن " + ar(Dock.MIN) + " تطبيقات"); return; }
+        if (row.size() <= Dock.MIN) { toast("Favourites cannot go below " + ar(Dock.MIN) + " apps"); return; }
         row.remove(i);
         Dock.save(this, row);
         render(Math.min(i, row.size() - 1));
     }
 
     private void add(String pkg) {
-        if (row.size() >= Dock.MAX) { toast("المفضلة ممتلئة (" + ar(Dock.MAX) + ")"); return; }
+        if (row.size() >= Dock.MAX) { toast("Favourites full (" + ar(Dock.MAX) + ")"); return; }
         row.add(pkg);
         Dock.save(this, row);
         render(row.size() - 1);
-        toast("أُضيف " + apps.get(pkg));
+        toast("Added " + apps.get(pkg));
     }
 
     private void drop() {

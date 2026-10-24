@@ -12,15 +12,15 @@ final class PillText {
 
     /** «مؤقت النوم», or with the minutes left while the timer runs: «مؤقت النوم ٢٣ د» */
     static String sleep(int minutesLeft) {
-        return minutesLeft <= 0 ? "مؤقت النوم" : "مؤقت النوم " + digits(String.valueOf(minutesLeft)) + " د";
+        return minutesLeft <= 0 ? "Sleep timer" : "Sleep timer " + digits(String.valueOf(minutesLeft)) + "m";
     }
 
     /** the network pill's name: the cable, the Wi-Fi network by name when it can be read (else «واي فاي»), or «غير متصل» */
     static String network(boolean wired, boolean wifi, String ssid) {
-        if (wired) return "شبكة سلكية";
-        if (!wifi) return "غير متصل";
+        if (wired) return "Wired network";
+        if (!wifi) return "Not connected";
         String s = ssid == null ? "" : ssid.replace("\"", "");
-        return s.isEmpty() || s.contains("unknown ssid") ? "واي فاي" : s;
+        return s.isEmpty() || s.contains("unknown ssid") ? "Wi-Fi" : s;
     }
 
     /** 0-9 as ٠-٩, the digits the whole home screen uses */
