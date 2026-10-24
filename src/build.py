@@ -13,15 +13,20 @@ import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# Thmanyah lives in the private tshi-dev/urtv-fonts repo and a source build cannot reach it, so this
+# fork ships IBM Plex Sans Arabic instead (OFL, IBMPlexSansArabic-OFL.txt). It carries Latin as well as
+# Arabic, drawn to match, so one family serves the English chrome and the Arabic content both, and the
+# CSS family names in template.html stay as they are: only these filenames change, which keeps the
+# diff against upstream to this block.
 FONTS = {
-    "__F_LIGHT__": "Thmanyah-Light.woff2",
-    "__F_REGULAR__": "Thmanyah-Regular.woff2",
-    "__F_MEDIUM__": "Thmanyah-Medium.woff2",
-    "__F_DISPLAY__": "ThmanyahDisplay-Bold.woff2",
+    "__F_LIGHT__": "IBMPlexSansArabic-Light.woff2",
+    "__F_REGULAR__": "IBMPlexSansArabic-Regular.woff2",
+    "__F_MEDIUM__": "IBMPlexSansArabic-Medium.woff2",
+    "__F_DISPLAY__": "IBMPlexSansArabic-Bold.woff2",
     "__F_HAFS__": "UthmanicHafs-v30.woff2",   # the whole font, unmodified: its licence forbids changing it (see UthmanicHafs-NOTICE.txt)
 }
 # tv.html points here for fonts and bundled photos; the app answers from its assets, a browser from GitHub.
-REPO = "https://raw.githubusercontent.com/LobsterMan96/UrTV/master/"
+REPO = "https://raw.githubusercontent.com/LobsterMan96/UrTV/english/"
 
 
 TAFSIR_MAX = 130   # characters kept of «التفسير الميسر»; the card shows at most three lines of it
