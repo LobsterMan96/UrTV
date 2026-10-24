@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- the build: UTC time (YYYYMMDDHHMMSS) of the newest commit of the page's sources, put in by src/build.py. The app loads the page with the newer stamp (its own
      copy or a downloaded one), never by file time, and does not keep a download whose stamp is older than its own (Updater, PageStamp). -->
-<meta name="urtv-build" content="20261024165704">
-<title>شاشة تلفزيونك</title>
+<meta name="urtv-build" content="20261024171431">
+<title>TV Screensaver</title>
 <style>
   @font-face{font-family:'Thmanyah';font-weight:300;font-style:normal;font-display:block;src:url("https://raw.githubusercontent.com/LobsterMan96/UrTV/english/assets/fonts/IBMPlexSansArabic-Light.woff2") format("woff2")}
   @font-face{font-family:'Thmanyah';font-weight:400;font-style:normal;font-display:block;src:url("https://raw.githubusercontent.com/LobsterMan96/UrTV/english/assets/fonts/IBMPlexSansArabic-Regular.woff2") format("woff2")}
@@ -199,7 +199,7 @@
   .week li.past{color:#8F8670}
   .week li.next{color:var(--gold-hi)}
   .week li.next .dt{color:var(--gold-3)}
-  .week li.quote{white-space:normal;display:block;font-size:calc(clamp(17px,1.5vw,29px)*var(--z,1));line-height:1.75;
+  .week li.quote{direction:rtl;text-align:right;white-space:normal;display:block;font-size:calc(clamp(17px,1.5vw,29px)*var(--z,1));line-height:1.75;
     border-bottom:none;padding:.4vh 0 0;color:#FFF7E6}
   /* Thmanyah draws ﴿﴾ as small angle marks: they come from the NotoMarks subset */
   .week li.quote .orn{font-family:'NotoMarks','Noto Naskh Arabic',serif;color:var(--gold-2);
@@ -526,12 +526,12 @@
 
     <div class="markets">
       <div class="wxline"><span class="wxt" id="wx-temp"></span><span class="wxd" id="wx-desc"></span></div>
-      <div class="wxsub"><span id="wx-city">الرياض</span><span class="wxr" id="wx-range"></span></div>
+      <div class="wxsub"><span id="wx-city">Al-Khobar</span><span class="wxr" id="wx-range"></span></div>
       <div class="rule l"></div>
       <div class="mk">
-        <span class="m"><span>تاسي</span><span id="tasi-chg" class="delta" hidden></span></span>
+        <span class="m"><span>TASI</span><span id="tasi-chg" class="delta" hidden></span></span>
         <span class="m"><span>S&amp;P 500</span><span id="spx-chg" class="delta" hidden></span></span>
-        <span class="m"><span>بيتكوين</span><span id="btc-chg" class="delta" hidden></span></span>
+        <span class="m"><span>Bitcoin</span><span id="btc-chg" class="delta" hidden></span></span>
       </div>
     </div>
   </header>
@@ -541,34 +541,34 @@
       <div class="clock">
         <span class="ampm" id="ck-ap">—</span><span class="d" id="ck-h">--</span><span class="sep">:</span><span class="d" id="ck-m">--</span>
       </div>
-      <div class="subline"><span class="dot"></span><span id="clock-sub">بتوقيت الرياض</span></div>
+      <div class="subline"><span class="dot"></span><span id="clock-sub">Al-Khobar time</span></div>
       <div class="ystrip" id="ystrip" hidden></div>
     </div>
 
     <div class="week">
       <span class="frm"></span><span class="dia t"></span><span class="dia b"></span>
-      <div class="hd" id="week-hd">هذا الأسبوع</div>
-      <ul id="week-list"><li class="empty">جارٍ التحميل…</li></ul>
+      <div class="hd" id="week-hd">This week</div>
+      <ul id="week-list"><li class="empty">Loading…</li></ul>
     </div>
   </section>
 
   <footer class="bottom">
     <div class="panel p-prayer">
-      <div class="label" id="prayer-label">الصلاة القادمة</div>
+      <div class="label" id="prayer-label">Next prayer</div>
       <div class="big"><span id="prayer-name">—</span><span class="num" id="prayer-time"></span></div>
       <div class="sub" id="prayer-count">—</div>
     </div>
 
     <div class="panel p-mid">
-      <div class="label" id="occ-label">رمضان ١٤٤٨</div>
+      <div class="label" id="occ-label">Ramadan 1448</div>
       <div class="big"><span class="num" id="occ-days">—</span></div>
       <div class="sub" id="occ-sub">—</div>
     </div>
 
     <div class="panel p-match">
-      <div class="label" id="slot-label">المباريات</div>
+      <div class="label" id="slot-label">Matches</div>
       <div class="mrow" id="match-row">
-        <div class="none-week">جارٍ التحميل…</div>
+        <div class="none-week">Loading…</div>
       </div>
     </div>
   </footer>
@@ -576,7 +576,7 @@
   <!-- «يُتلى الآن»: while the Quran or a radio station plays in the launcher (nowPlayingTick), in the style of the card beside the clock -->
   <div class="week np" id="np" hidden>
     <span class="frm"></span><span class="dia t"></span><span class="dia b"></span>
-    <div class="npl" id="np-l"><span class="npe"><i></i><i></i><i></i></span><span class="npk">يُتلى الآن</span><span class="nps">·</span><b id="np-t"></b><span class="nps" id="np-s">·</span><span class="npw" id="np-w"></span></div>
+    <div class="npl" id="np-l"><span class="npe"><i></i><i></i><i></i></span><span class="npk">Now playing</span><span class="nps">·</span><b id="np-t"></b><span class="nps" id="np-s">·</span><span class="npw" id="np-w"></span></div>
   </div>
 
 </main>
@@ -599,7 +599,7 @@ const _tzOk = z => { try{ new Intl.DateTimeFormat('en',{timeZone:z}); return tru
 // the cards a slot can show (Prefs.PANELS in the app is the same list); «none» is the absence of one
 const CARD_KINDS = ['shows','prayers','forecast','hourly','prayerrow','matches','verse','wisdom','adhkar','stocks','tasks','year','smart','today'];
 const CONFIG = {
-  city: _Q.get('city') || 'الرياض',
+  city: _Q.get('city') || 'Al-Khobar',
   latitude: _num('lat', 24.7136),
   longitude: _num('lon', 46.6753),
   timezone: _tzOk(_Q.get('tz') || 'Asia/Riyadh') ? (_Q.get('tz') || 'Asia/Riyadh') : 'Asia/Riyadh',
@@ -702,7 +702,7 @@ const LS = {
 
 // every number on the screen goes through ar() or a formatter built on NU, so CONFIG.digits decides them all
 const LATIN = CONFIG.digits === 'latin', NU = LATIN ? 'latn' : 'arab';
-const GREG = 'ar-SA-u-ca-gregory-nu-' + NU;
+const GREG = 'en-GB-u-ca-gregory-nu-' + NU;
 const AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 const ar = s => LATIN ? String(s) : String(s).replace(/[0-9]/g, d => AR[+d]);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -731,7 +731,7 @@ function tzOffsetMs(ms){
 function fmt12(h, mi){
   h %= 24;   // 24:30 (an Isha after midnight) is 12:30 ص
   const h12 = h % 12 === 0 ? 12 : h % 12;
-  return `${ar(h12)}:${ar(pad(mi))} ${h < 12 ? 'ص' : 'م'}`;
+  return `${ar(h12)}:${ar(pad(mi))} ${h < 12 ? 'AM' : 'PM'}`;
 }
 
 // An identical write still restyles and repaints, so the timers below write only what changed.
@@ -748,15 +748,15 @@ function tickClock(){
   tickClock.last = key;
   document.getElementById('ck-h').innerHTML = digits(ar(h12));
   document.getElementById('ck-m').innerHTML = digits(ar(pad(p.mi)));
-  setText(document.getElementById('ck-ap'), p.h < 12 ? 'ص' : 'م');
+  setText(document.getElementById('ck-ap'), p.h < 12 ? 'AM' : 'PM');
   if(CONFIG.yearStrip) renderYearStrip();   // the day may have turned; the clock's width may have changed
 }
 
 // National Day (23 September, shown 21-25) and Founding Day (22 February, shown 20-24), by the Riyadh date.
 // n = the year count shown; today = the day itself. Null when off or outside the days.
 const NATIONAL = [
-  {mo:9, d:23, name:'اليوم الوطني السعودي', short:'اليوم الوطني', since:1930, unit:''},
-  {mo:2, d:22, name:'يوم التأسيس', short:'يوم التأسيس', since:1727, unit:' عامًا'},
+  {mo:9, d:23, name:'Saudi National Day', short:'National Day', since:1930, unit:''},
+  {mo:2, d:22, name:'Founding Day', short:'Founding Day', since:1727, unit:' years'},
 ];
 function nationalNow(){
   if(CONFIG.national === 'off') return null;
@@ -775,11 +775,11 @@ function tickDates(){
   nl.hidden = !nat;
   if(nat) setText(nl, nat.name + ' ' + ar(nat.n) + nat.unit);
   try{
-    let h = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-' + NU,{
+    let h = new Intl.DateTimeFormat('en-GB-u-ca-islamic-umalqura-nu-' + NU,{
       timeZone: CONFIG.timezone, weekday:'long', day:'numeric', month:'long', year:'numeric'
     }).format(now);
     h = h.replace(/\s*هـ\s*$/,'').replace(/،\s*$/,'');
-    setText(document.getElementById('hijri'), h + ' هـ');
+    setText(document.getElementById('hijri'), h);
   }catch(e){}
   try{
     setText(document.getElementById('greg'), new Intl.DateTimeFormat(GREG,{
@@ -789,7 +789,7 @@ function tickDates(){
 }
 
 const PRAYER_KEYS = ['Fajr','Dhuhr','Asr','Maghrib','Isha'];
-const PRAYER_NAMES = {Fajr:'الفجر',Dhuhr:'الظهر',Asr:'العصر',Maghrib:'المغرب',Isha:'العشاء'};
+const PRAYER_NAMES = {Fajr:'Fajr',Dhuhr:'Dhuhr',Asr:'Asr',Maghrib:'Maghrib',Isha:'Isha'};
 let PRAYERS = [];
 
 let DAY_TIMES = null;
@@ -873,20 +873,19 @@ async function loadPrayers(){
 }
 
 const UNIT = {
-  day: {one:'يوم', two:'يومين', few:'أيام', many:'يوم'},
-  hour:{one:'ساعة', two:'ساعتين', few:'ساعات', many:'ساعة'},
-  min: {one:'دقيقة', two:'دقيقتين', few:'دقائق', many:'دقيقة'}
+  day: {one:'day',    few:'days'},
+  hour:{one:'hour',   few:'hours'},
+  min: {one:'min',    few:'mins'}
 };
+// English has one plural where Arabic has singular, dual and a small-number form
 function qty(n,u){
-  if(n === 2) return u.two;
-  if(n >= 3 && n <= 10) return `${ar(n)} ${u.few}`;
-  return `${ar(n)} ${u.many}`;
+  return `${ar(n)} ${n === 1 ? u.one : u.few}`;
 }
 function humanRemaining(sec){
   const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), out = [];
   if(h) out.push(qty(h,UNIT.hour));
   if(m || !h) out.push(qty(m,UNIT.min));
-  return out.join(' و ');
+  return out.join(' ');
 }
 function shortRemaining(ms){
   const d = Math.floor(ms/86400000), h = Math.floor((ms%86400000)/3600000);
@@ -894,13 +893,13 @@ function shortRemaining(ms){
   if(d) out.push(qty(d,UNIT.day));
   if(h && out.length < 2) out.push(qty(h,UNIT.hour));
   if(!out.length) out.push(qty(Math.max(1, Math.ceil(ms/60000)), UNIT.min));
-  return out.join(' و ');
+  return out.join(' ');
 }
 
 function isFriday(){
   return new Intl.DateTimeFormat('en-US',{timeZone:CONFIG.timezone,weekday:'short'}).format(new Date()) === 'Fri';
 }
-function prayerName(x){ return x.key === 'Dhuhr' && isFriday() ? 'الجمعة' : x.name; }
+function prayerName(x){ return x.key === 'Dhuhr' && isFriday() ? 'Jumuah' : x.name; }
 
 // ---- the bar before the adhan: in the last 10 minutes before each prayer «الأذان بعد ٨ دقائق», from the adhan to the iqama
 // «الإقامة بعد ١٢ دقيقة» (the iqama minutes of CONFIG.iqama, none for a Friday's Dhuhr). #adhanbar=0 turns it off.
@@ -913,9 +912,9 @@ function adhanBarText(){
   const p = riyadhParts(), mins = p.h*60 + p.mi + p.s/60;
   for(const x of PRAYERS){
     const at = x.h*60 + x.mi, toAdhan = at - mins;
-    if(toAdhan > 0 && toAdhan <= ADHAN_BAR_MIN) return 'الأذان بعد ' + untilAdhan(toAdhan);
+    if(toAdhan > 0 && toAdhan <= ADHAN_BAR_MIN) return 'Adhan in ' + untilAdhan(toAdhan);
     const gap = x.key === 'Dhuhr' && isFriday() ? 0 : (CONFIG.iqama[x.key] || 0);
-    if(mins >= at && mins < at + gap) return 'الإقامة بعد ' + humanRemaining(Math.max(60, Math.ceil(at + gap - mins)*60));
+    if(mins >= at && mins < at + gap) return 'Iqama in ' + humanRemaining(Math.max(60, Math.ceil(at + gap - mins)*60));
   }
   return '';
 }
@@ -946,22 +945,22 @@ function tickPrayer(){
   if(cur){
     const left = (cur.h*60 + cur.mi + CONFIG.iqama[cur.key]) - mins;
     if(!panel.classList.contains('now')) panel.classList.add('now');
-    setText(elL, 'حان الآن');
+    setText(elL, 'Now');
     setText(elN, prayerName(cur));
     setText(elT, fmt12(cur.h, cur.mi));
-    setHTML(elC, 'الإقامة بعد <b>' + humanRemaining(Math.max(60, Math.ceil(left)*60)) + '</b>');
+    setHTML(elC, 'Iqama in <b>' + humanRemaining(Math.max(60, Math.ceil(left)*60)) + '</b>');
     return;
   }
 
   if(panel.classList.contains('now')) panel.classList.remove('now');
-  setText(elL, 'الصلاة القادمة');
+  setText(elL, 'Next prayer');
   let next = PRAYERS.find(x => (x.h*60+x.mi) > mins);
   const leftM = next ? (next.h*60 + next.mi) - mins
                      : (PRAYERS[0].h*60 + PRAYERS[0].mi) + 1440 - mins;
   if(!next) next = PRAYERS[0];
   setText(elN, prayerName(next));
   setText(elT, fmt12(next.h, next.mi));
-  setHTML(elC, 'بعد <b>' + untilAdhan(leftM) + '</b>');
+  setHTML(elC, 'in <b>' + untilAdhan(leftM) + '</b>');
 }
 
 // ---- «المناسبة القادمة»: the card in the middle of the bottom row follows the Hijri year ----
@@ -969,15 +968,15 @@ function tickPrayer(){
 // name: the label; year: the Hijri year follows the name; today: the big text on its days;
 // note: a small second line while counting down. Ramadan itself shows iftar and suhoor (see tickOccasion).
 const OCCASIONS = [
-  {hm:9,  hd:1,  days:30, name:'رمضان',             year:true, today:'رمضان مبارك'},
-  {hm:10, hd:1,  days:3,  name:'عيد الفطر',          today:'عيد مبارك'},
-  {hm:12, hd:1,  days:1,  name:'عشر ذي الحجة',       today:'اليوم أول أيام العشر'},
-  {hm:12, hd:9,  days:1,  name:'يوم عرفة',           today:'اليوم يوم عرفة'},
-  {hm:12, hd:10, days:4,  name:'عيد الأضحى',         today:'عيد مبارك'},
-  {hm:1,  hd:1,  days:1,  name:'رأس السنة الهجرية',  today:'اليوم رأس السنة الهجرية'},
-  {hm:1,  hd:10, days:1,  name:'عاشوراء',            today:'اليوم عاشوراء', note:'ويُستحب صيام التاسع'},
+  {hm:9,  hd:1,  days:30, name:'Ramadan',       year:true, today:'Ramadan Mubarak'},
+  {hm:10, hd:1,  days:3,  name:'Eid al-Fitr',   today:'Eid Mubarak'},
+  {hm:12, hd:1,  days:1,  name:'Ten Days of Dhul Hijjah', today:'The first of the ten days'},
+  {hm:12, hd:9,  days:1,  name:'Day of Arafah', today:'Today is Arafah'},
+  {hm:12, hd:10, days:4,  name:'Eid al-Adha',   today:'Eid Mubarak'},
+  {hm:1,  hd:1,  days:1,  name:'Hijri New Year', today:'Hijri New Year'},
+  {hm:1,  hd:10, days:1,  name:'Ashura',        today:'Today is Ashura', note:'Fasting the ninth is recommended'},
 ];
-const OCC_TEXT = {unit:'يوم', expected:'متوقّع'};   // the moon decides the day, so the date is only expected
+const OCC_TEXT = {unit:'days', expected:'expected'};   // the moon decides the day, so the date is only expected
 
 // Today's occasion, or the next one with the days left and its day: one pass over the coming year, once a day.
 let OCC_CACHE = {day:'', val:null};
@@ -1022,7 +1021,7 @@ function tickOccasion(){
   const nat = nationalNow();
   if(nat && nat.today){
     setText(elL, nat.short);
-    setHTML(elD, '<span class="txt">كل عام والوطن بخير</span>');
+    setHTML(elD, '<span class="txt">Long live the Kingdom</span>');
     setText(elS, '');
     return;
   }
@@ -1035,14 +1034,14 @@ function tickOccasion(){
     const maghrib = PRAYERS.find(p=>p.key==='Maghrib');
     const fajrM = fajr.h*60 + fajr.mi, maghribM = maghrib.h*60 + maghrib.mi;
     let label, targetM;
-    if(mins < fajrM){ label = 'الإمساك'; targetM = fajrM; }
-    else if(mins < maghribM){ label = 'الإفطار'; targetM = maghribM; }
-    else { label = 'الإمساك'; targetM = fajrM + 1440; }
+    if(mins < fajrM){ label = 'Suhoor ends'; targetM = fajrM; }
+    else if(mins < maghribM){ label = 'Iftar'; targetM = maghribM; }
+    else { label = 'Suhoor ends'; targetM = fajrM + 1440; }
     const th = Math.floor((targetM % 1440) / 60), tm = targetM % 60;
     setText(elL, label);
     setHTML(elD, ar(th%12===0?12:th%12) + ':' + ar(String(tm).padStart(2,'0'))
-                  + ' <span class="unit">' + (th < 12 ? 'ص' : 'م') + '</span>');
-    setHTML(elS, 'بعد <b>' + humanRemaining(Math.max(0, Math.round((targetM - mins)*60))) + '</b>');
+                  + ' <span class="unit">' + (th < 12 ? 'AM' : 'PM') + '</span>');
+    setHTML(elS, 'in <b>' + humanRemaining(Math.max(0, Math.round((targetM - mins)*60))) + '</b>');
     return;
   }
 
@@ -1068,7 +1067,7 @@ const TEAM_AR = {"Al-Hilal": "الهلال", "Al-Hazem": "الحزم", "Al-Nassr
 const teamKey = s => String(s).replace(/ı/g,'i').replace(/ß/g,'ss').normalize('NFKD').replace(/[\u0300-\u036f]+/g,'')
   .toLowerCase().replace(/\b(fc|sc|cf|afc|club|saudi club)\b/g,'')
   .replace(/[^a-z0-9]+/g,' ').trim().replace(/^al /,'al');
-const TEAM_BY_ID = {"137855": "أبها", "137721": "الأهلي", "152917": "الدرعية", "136017": "الاتفاق", "136021": "الفيصلي", "136011": "الفتح", "136014": "الفيحاء", "136200": "الحزم", "136013": "الهلال", "136018": "الاتحاد", "139080": "الخليج", "149112": "الخلود", "150638": "النجمة", "136022": "النصر", "147444": "الأخدود", "136015": "القادسية", "147445": "الرياض", "136020": "الشباب", "136012": "التعاون", "137852": "ضمك", "150637": "نيوم", "137854": "العدالة", "152918": "الأنوار", "150639": "العربي", "136019": "الباطن", "150640": "البكيرية", "150091": "الجبلين", "150644": "الجندل", "156331": "الجيل", "150645": "الجبيل", "149111": "العروبة", "136016": "الرائد", "156329": "الصقر", "143173": "الطائي", "152473": "العلا", "136199": "الوحدة", "150643": "الزلفي", "156330": "هجر", "150641": "جدة", "133604": "آرسنال", "133601": "أستون فيلا", "134301": "بورنموث", "134355": "برينتفورد", "133619": "برايتون", "133623": "بيرنلي", "133610": "تشيلسي", "133625": "كوفنتري سيتي", "133632": "كريستال بالاس", "133615": "إيفرتون", "133600": "فولهام", "133617": "هال سيتي", "133622": "إيبسويتش تاون", "133635": "ليدز يونايتد", "133602": "ليفربول", "133613": "مانشستر سيتي", "133612": "مانشستر يونايتد", "134777": "نيوكاسل", "133720": "نوتنغهام فورست", "133603": "سندرلاند", "133616": "توتنهام", "133636": "وست هام", "133599": "وولفرهامبتون", "133727": "أتلتيك بلباو", "133729": "أتلتيكو مدريد", "133739": "برشلونة", "133937": "سيلتا فيغو", "134221": "ديبورتيفو ألافيس", "133816": "ديبورتيفو لاكورونيا", "134384": "إلتشي", "133734": "إسبانيول", "133731": "خيتافي", "134700": "جيرونا", "133732": "ليفانتي اف سي", "133733": "مايوركا", "133736": "ملقا", "133730": "أوساسونا", "133726": "راسينغ سانتاندير", "133728": "رايو فايكانو", "133722": "ريال بيتيس", "133738": "ريال مدريد", "135455": "ريال أوفييدو", "133724": "ريال سوسيداد", "133735": "إشبيلية", "133725": "فالنسيا", "133740": "فياريال", "133667": "ميلان", "134782": "أتالانتا", "134781": "بولونيا", "134783": "كلياري", "134243": "كومو", "134224": "كريمونيزي", "133674": "فيورنتينا", "133818": "فروزينوني", "133675": "جنوى", "134784": "إيلاس فيرونا", "133681": "إنتر ميلان", "133676": "يوفنتوس", "133668": "لاتسيو", "133678": "ليتشي", "134270": "مونزا", "133670": "نابولي", "135728": "بارما", "133859": "بيزا", "133682": "روما", "133701": "ساسولو", "133687": "تورينو", "133679": "أودينيزي", "134234": "فينيتسيا", "133666": "باير ليفركوزن", "133664": "بايرن ميونخ", "133650": "دورتموند", "134779": "بوروسيا مونشنغلادباخ", "133814": "آينتراخت فرانكفورت", "138411": "إلفرسبيرغ", "133652": "آوغسبورغ", "134696": "هايدنهايم", "133654": "كولن", "133653": "فرايبورغ", "133651": "هامبورغ", "133657": "هوفنهايم", "133665": "ماينتس", "134551": "بادربورن", "134695": "لايبزيغ", "133661": "شالكه", "133813": "سانت باولي", "133660": "شتوتغارت", "134690": "يونيون برلين", "133662": "فيردر بريمن", "133655": "فولفسبورغ", "134709": "أنجيه", "134788": "أوكسير", "133704": "بريست", "133862": "لوهافر", "133848": "لومان", "133822": "لانس", "133711": "ليل", "133715": "لوريان", "133713": "ليون", "133707": "مارسيليا", "133883": "متز", "133823": "موناكو", "133861": "نانت", "133712": "نيس", "135465": "باريس إف سي", "133714": "باريس سان جيرمان", "133719": "رين", "133882": "ستراسبورغ", "133703": "تولوز", "134789": "تروا", "147479": "آفس", "138856": "أكادميكو دي بازو", "143704": "ألفيركا", "134387": "أروكا دا سيلفا", "134108": "بنفيكا", "134098": "سبورتينغ براغا", "138864": "كاسا بيا", "134106": "إستوريل", "140008": "إستريلا دا أمادورا", "134114": "بورتو", "136854": "فاماليكاو", "134113": "جل فيسنتي", "134023": "ماريتيمو", "134112": "موريرينسي", "134109": "ناسيونال ماديرا", "134107": "ريو أفي", "136192": "سانتا كلارا", "135708": "سبورتينغ لشبونة", "135502": "تونديلا", "134115": "فيتوريا غيماريش", "133769": "أدو دين هاغ", "133767": "إي زد ألكمار", "133772": "أياكس", "134303": "كامبور", "133757": "إكسلسيور", "133867": "فولندام", "133758": "فينورد", "134264": "فورتونا سيتارد", "134304": "غو أهد إيغلز", "133762": "خرونينغن", "133759": "هيرنفين", "133766": "هيراكليس ألميلو", "133773": "ناك بريدا", "133760": "إن إي سي نيميخن", "133936": "بي إي سي زفوله", "133768": "آيندهوفن", "133866": "سبارتا روتردام", "138004": "تلستار", "133774": "تفينتي أنشخيدة", "133764": "أوترخت", "133827": "فيليم الثاني", "135676": "ألانيا سبور", "138959": "آمد", "133799": "أنطاليا سبور", "133794": "بشكتاش", "134272": "أرضروم سبور", "138977": "أيوب سبور", "138983": "فاتح قرهجمرك", "133807": "فنربخشة", "133804": "غلطة سراي", "138092": "غازي عنتاب", "133798": "غنتشلربيرليغي", "135891": "غوزتبه", "133834": "قاسم باشا", "133802": "قيصرية سبور", "133870": "كوجالي سبور", "133835": "قونيا سبور", "133885": "ريزه سبور", "133797": "سامسون سبور", "133796": "طرابزون سبور", "138951": "تشوروم", "134589": "إسطنبول بشاق شهر", "156496": "أبو قير للأسمدة", "138995": "الأهلي المصري", "139839": "الاتحاد السكندري", "139844": "المصري", "139837": "المقاولون العرب", "156495": "بترول أسيوط", "140795": "سيراميكا كيلوباترا", "139841": "إنبي", "139845": "الجونة", "156494": "القناة", "140794": "غزل المحلة", "139846": "حرس الحدود", "139843": "الإسماعيلي", "153475": "كهرباء الإسماعيلية", "144160": "مودرن سبورت", "140796": "البنك الأهلي المصري", "149410": "بتروجت", "144159": "فاركو", "139838": "بيراميدز", "139840": "سموحة", "139848": "طلائع الجيش", "139850": "وادي دجلة", "139852": "زد", "138997": "الزمالك", "137838": "عجمان", "137832": "العين", "146537": "البطائح", "137834": "الظفرة", "137830": "الجزيرة", "137831": "النصر الإماراتي", "137836": "الوحدة الإماراتي", "137835": "الوصل", "137839": "بني ياس", "146536": "دبا الفجيرة", "137841": "حتا", "137837": "كلباء", "137842": "خورفكان", "137828": "شباب الأهلي", "137829": "الشارقة", "156157": "يونايتد", "138049": "الأهلي القطري", "135946": "العربي القطري", "137679": "الدحيل", "138029": "الغرافة", "138050": "الريان", "137648": "السد", "138035": "السيلية", "138030": "الشحانية", "141174": "الشمال", "137994": "الوكرة", "155255": "لوسيل", "137995": "نادي قطر", "138052": "أم صلال", "135851": "أتلانتا يونايتد", "140079": "أوستن", "134150": "كلوب دو فوت مونتريال", "140078": "تشارلوت", "134154": "شيكاغو فاير", "134794": "كولورادو رابيدز", "134152": "كولومبوس كرو", "134145": "دي.سي. يونايتد", "136688": "سينسيناتي", "134146": "دالاس", "134144": "هيوستن دينامو", "137699": "إنتر ميامي", "134153": "لوس أنجلوس جالاكسي", "136050": "لوس أنجلوس", "135852": "منيسوتا يونايتد", "137700": "ناشفيل أس سي", "134159": "نيو إنجلاند ريفولوشن", "134630": "نيويورك سيتي", "134156": "نيويورك ريد بولز", "135292": "أورلاندو سيتي", "134142": "فيلادلفيا يونيون", "134155": "بورتلاند تيمبرز", "134158": "ريال سالت ليك", "150261": "سان دييغو", "134157": "سان خوسيه إيرثكويكس", "134149": "سياتل ساوندرز", "134143": "سبورتينغ كانساس سيتي", "147062": "سانت لويس أس سي", "134148": "تورنتو", "134147": "فانكوفر وايتكابس", "134880": "أتلانتا هوكس", "134860": "بوسطن سلتيكس", "134861": "بروكلين نتس", "134881": "شارلوت هورنتس", "134870": "شيكاغو بولز", "134871": "كليفلاند كافالييرز", "134875": "دالاس مافريكس", "134885": "دنفر ناغتس", "134872": "ديترويت بيستونز", "134865": "غولدن ستيت ووريورز", "134876": "هيوستن روكتس", "134873": "إنديانا بيسرز", "134866": "لوس أنجلوس كليبرز", "134867": "لوس أنجلوس ليكرز", "134877": "ممفيس غريزليز", "134882": "ميامي هيت", "134874": "ميلووكي باكس", "134886": "مينيسوتا تيمبروولفز", "134878": "نيو أورليانز بيليكانز", "134862": "نيويورك نيكس", "134887": "أوكلاهوما سيتي ثاندر", "134883": "أورلاندو ماجيك", "134863": "فيلادلفيا سفنتي سيكسرز", "134868": "فينيكس صنز", "134888": "بورتلاند تريل بليزرز", "134869": "ساكرامنتو كينغز", "134879": "سان أنتونيو سبيرز", "134864": "تورونتو رابتورز", "134889": "يوتا جاز", "134884": "واشنطن ويزاردز", "134946": "أريزونا كاردينالز", "134942": "أتلانتا فالكونز", "134922": "بالتيمور رافنز", "134918": "بافالو بيلز", "134943": "كارولاينا بانثرز", "134938": "شيكاغو بيرز", "134923": "سينسيناتي بنغلز", "134924": "كليفلاند براونز", "134934": "دالاس كاوبويز", "134930": "دنفر برونكوس", "134939": "ديترويت لايونز", "134940": "غرين باي باكرز", "134926": "هيوستن تكسانز", "134927": "إنديانابوليس كولتس", "134928": "جاكسونفيل جاغوارز", "134931": "كانساس سيتي تشيفز", "134932": "لاس فيغاس رايدرز", "135908": "لوس أنجلوس تشارجرز", "135907": "لوس أنجلوس رامز", "134919": "ميامي دولفينز", "134941": "مينيسوتا فايكينغز", "134920": "نيو إنجلاند باتريوتس", "134944": "نيو أورليانز سينتس", "134935": "نيويورك جاينتس", "134921": "نيويورك جتس", "134936": "فيلادلفيا إيغلز", "134925": "بيتسبرغ ستيلرز", "134948": "سان فرانسيسكو فورتي ناينرز", "134949": "سياتل سي هوكس", "134945": "تامبا باي بوكانيرز", "134929": "تينيسي تايتنز", "134937": "واشنطن كوماندرز", "134516": "الجزائر", "134509": "الأرجنتين", "134500": "أستراليا", "140149": "البحرين", "134515": "بلجيكا", "134496": "البرازيل", "134498": "الكاميرون", "134579": "الصين", "134501": "كولومبيا", "133912": "كرواتيا", "136138": "مصر", "133914": "إنجلترا", "133913": "فرنسا", "133907": "ألمانيا", "134511": "إيران", "140148": "العراق", "133910": "إيطاليا", "134503": "اليابان", "140145": "الأردن", "140144": "الكويت", "140166": "لبنان", "136489": "ليبيا", "134497": "المكسيك", "136139": "المغرب", "133905": "هولندا", "134512": "نيجيريا", "140155": "عمان", "140154": "فلسطين", "133908": "البرتغال", "136472": "قطر", "136137": "السعودية", "136143": "السنغال", "134517": "كوريا الجنوبية", "133909": "إسبانيا", "136495": "السودان", "140032": "سوريا", "136142": "تونس", "135985": "تركيا", "134514": "الولايات المتحدة", "140163": "الإمارات", "134504": "الأوروغواي", "140151": "أوزبكستان", "140153": "اليمن"};   // assets/shared/teams.json: TheSportsDB id -> Arabic
+const TEAM_BY_ID = {"137855": "Abha", "137721": "Al-Ahli", "152917": "Al-Diriyah", "136017": "Al-Ettifaq", "136021": "Al-Faisaly", "136011": "Al-Fateh", "136014": "Al-Fayha", "136200": "Al-Hazem", "136013": "Al-Hilal", "136018": "Al-Ittihad", "139080": "Al-Khaleej", "149112": "Al-Kholood", "150638": "Al-Najma Unaizah", "136022": "Al-Nassr", "147444": "Al-Okhdood", "136015": "Al-Qadsiah", "147445": "Al-Riyadh", "136020": "Al-Shabab", "136012": "Al-Taawoun", "137852": "Damac", "150637": "Neom", "137854": "Al-Adalah", "152918": "Al-Anwar", "150639": "Al-Arabi Al-Saudi", "136019": "Al-Batin", "150640": "Al-Bukiryah", "150091": "Al-Jabalain", "150644": "Al-Jandal", "156331": "Al-Jeel", "150645": "Al-Jubail", "149111": "Al-Orobah", "136016": "Al-Raed", "156329": "Al-Saqer", "143173": "Al-Tai", "152473": "Al-Ula", "136199": "Al-Wehda", "150643": "Al-Zulfi", "156330": "Hajer", "150641": "Jeddah Club", "133604": "Arsenal", "133601": "Aston Villa", "134301": "Bournemouth", "134355": "Brentford", "133619": "Brighton and Hove Albion", "133623": "Burnley", "133610": "Chelsea", "133625": "Coventry City", "133632": "Crystal Palace", "133615": "Everton", "133600": "Fulham", "133617": "Hull City", "133622": "Ipswich Town", "133635": "Leeds United", "133602": "Liverpool", "133613": "Manchester City", "133612": "Manchester United", "134777": "Newcastle United", "133720": "Nottingham Forest", "133603": "Sunderland", "133616": "Tottenham Hotspur", "133636": "West Ham United", "133599": "Wolverhampton Wanderers", "133727": "Athletic Bilbao", "133729": "Atlético Madrid", "133739": "Barcelona", "133937": "Celta Vigo", "134221": "Deportivo Alavés", "133816": "Deportivo de A Coruña", "134384": "Elche", "133734": "Espanyol", "133731": "Getafe", "134700": "Girona", "133732": "Levante", "133733": "Mallorca", "133736": "Málaga", "133730": "Osasuna", "133726": "Racing de Santander", "133728": "Rayo Vallecano", "133722": "Real Betis", "133738": "Real Madrid", "135455": "Real Oviedo", "133724": "Real Sociedad", "133735": "Sevilla", "133725": "Valencia", "133740": "Villarreal", "133667": "AC Milan", "134782": "Atalanta", "134781": "Bologna", "134783": "Cagliari", "134243": "Como", "134224": "Cremonese", "133674": "Fiorentina", "133818": "Frosinone", "133675": "Genoa", "134784": "Hellas Verona", "133681": "Inter Milan", "133676": "Juventus", "133668": "Lazio", "133678": "Lecce", "134270": "Monza", "133670": "Napoli", "135728": "Parma", "133859": "Pisa", "133682": "Roma", "133701": "Sassuolo", "133687": "Torino", "133679": "Udinese", "134234": "Venezia", "133666": "Bayer Leverkusen", "133664": "Bayern Munich", "133650": "Borussia Dortmund", "134779": "Borussia Mönchengladbach", "133814": "Eintracht Frankfurt", "138411": "Elversberg", "133652": "FC Augsburg", "134696": "FC Heidenheim", "133654": "FC Köln", "133653": "Freiburg", "133651": "Hamburg", "133657": "Hoffenheim", "133665": "Mainz", "134551": "Paderborn", "134695": "RB Leipzig", "133661": "Schalke 04", "133813": "St Pauli", "133660": "Stuttgart", "134690": "Union Berlin", "133662": "Werder Bremen", "133655": "Wolfsburg", "134709": "Angers", "134788": "Auxerre", "133704": "Brest", "133862": "Le Havre", "133848": "Le Mans", "133822": "Lens", "133711": "Lille", "133715": "Lorient", "133713": "Lyon", "133707": "Marseille", "133883": "Metz", "133823": "Monaco", "133861": "Nantes", "133712": "Nice", "135465": "Paris FC", "133714": "Paris SG", "133719": "Rennes", "133882": "Strasbourg", "133703": "Toulouse", "134789": "Troyes", "147479": "AVS", "138856": "Académico de Viseu", "143704": "Alverca", "134387": "Arouca", "134108": "Benfica", "134098": "Braga", "138864": "Casa Pia", "134106": "Estoril Praia", "140008": "Estrela Amadora", "134114": "FC Porto", "136854": "Famalicao", "134113": "Gil Vicente", "134023": "Marítimo", "134112": "Moreirense", "134109": "Nacional de Madeira", "134107": "Rio Ave", "136192": "Santa Clara", "135708": "Sporting CP", "135502": "Tondela", "134115": "Vitória de Guimarães", "133769": "ADO Den Haag", "133767": "AZ Alkmaar", "133772": "Ajax", "134303": "Cambuur", "133757": "Excelsior", "133867": "FC Volendam", "133758": "Feyenoord", "134264": "Fortuna Sittard", "134304": "Go Ahead Eagles", "133762": "Groningen", "133759": "Heerenveen", "133766": "Heracles Almelo", "133773": "NAC Breda", "133760": "NEC Nijmegen", "133936": "PEC Zwolle", "133768": "PSV Eindhoven", "133866": "Sparta Rotterdam", "138004": "Telstar", "133774": "Twente", "133764": "Utrecht", "133827": "Willem II", "135676": "Alanyaspor", "138959": "Amed", "133799": "Antalyaspor", "133794": "Beşiktaş", "134272": "Erzurumspor", "138977": "Eyüpspor", "138983": "Fatih Karagümrük", "133807": "Fenerbahçe", "133804": "Galatasaray", "138092": "Gaziantep", "133798": "Gençlerbirliği", "135891": "Göztepe", "133834": "Kasımpaşa", "133802": "Kayserispor", "133870": "Kocaelispor", "133835": "Konyaspor", "133885": "Rizespor", "133797": "Samsunspor", "133796": "Trabzonspor", "138951": "Çorum", "134589": "İstanbul Başakşehir", "156496": "Abou Qir Fertilizers", "138995": "Al Ahly", "139839": "Al Ittihad Alexandria", "139844": "Al Masry", "139837": "Al-Mokawloon al-Arab", "156495": "Asyut Petroleum", "140795": "Ceramica Cleopatra", "139841": "ENPPI", "139845": "El Gouna", "156494": "El Qanah", "140794": "Ghazl El Mahalla", "139846": "Haras El Hodoud", "139843": "Ismaily", "153475": "Kahrabaa Ismailia", "144160": "Modern Sport", "140796": "National Bank of Egypt", "149410": "Petrojet", "144159": "Pharco", "139838": "Pyramids", "139840": "Smouha", "139848": "Tala'ea El Gaish", "139850": "Wadi Degla", "139852": "ZED", "138997": "Zamalek", "137838": "Ajman", "137832": "Al Ain", "146537": "Al Bataeh", "137834": "Al Dhafra", "137830": "Al Jazira", "137831": "Al Nasr", "137836": "Al Wahda", "137835": "Al Wasl", "137839": "Baniyas", "146536": "Dibba Al-Fujairah", "137841": "Hatta", "137837": "Ittihad Kalba", "137842": "Khorfakkan", "137828": "Shabab Al-Ahli Dubai", "137829": "Sharjah", "156157": "United FC Dubai", "138049": "Al-Ahli Doha", "135946": "Al-Arabi", "137679": "Al-Duhail", "138029": "Al-Gharafa", "138050": "Al-Rayyan", "137648": "Al-Sadd", "138035": "Al-Sailiya", "138030": "Al-Shahaniya", "141174": "Al-Shamal", "137994": "Al-Wakrah", "155255": "Lusail", "137995": "Qatar SC", "138052": "Umm-Salal", "135851": "Atlanta United", "140079": "Austin FC", "134150": "CF Montréal", "140078": "Charlotte FC", "134154": "Chicago Fire", "134794": "Colorado Rapids", "134152": "Columbus Crew", "134145": "DC United", "136688": "FC Cincinnati", "134146": "FC Dallas", "134144": "Houston Dynamo", "137699": "Inter Miami", "134153": "LA Galaxy", "136050": "Los Angeles FC", "135852": "Minnesota United", "137700": "Nashville SC", "134159": "New England Revolution", "134630": "New York City FC", "134156": "New York Red Bulls", "135292": "Orlando City", "134142": "Philadelphia Union", "134155": "Portland Timbers", "134158": "Real Salt Lake", "150261": "San Diego FC", "134157": "San Jose Earthquakes", "134149": "Seattle Sounders FC", "134143": "Sporting Kansas City", "147062": "St. Louis City SC", "134148": "Toronto FC", "134147": "Vancouver Whitecaps", "134880": "Atlanta Hawks", "134860": "Boston Celtics", "134861": "Brooklyn Nets", "134881": "Charlotte Hornets", "134870": "Chicago Bulls", "134871": "Cleveland Cavaliers", "134875": "Dallas Mavericks", "134885": "Denver Nuggets", "134872": "Detroit Pistons", "134865": "Golden State Warriors", "134876": "Houston Rockets", "134873": "Indiana Pacers", "134866": "Los Angeles Clippers", "134867": "Los Angeles Lakers", "134877": "Memphis Grizzlies", "134882": "Miami Heat", "134874": "Milwaukee Bucks", "134886": "Minnesota Timberwolves", "134878": "New Orleans Pelicans", "134862": "New York Knicks", "134887": "Oklahoma City Thunder", "134883": "Orlando Magic", "134863": "Philadelphia 76ers", "134868": "Phoenix Suns", "134888": "Portland Trail Blazers", "134869": "Sacramento Kings", "134879": "San Antonio Spurs", "134864": "Toronto Raptors", "134889": "Utah Jazz", "134884": "Washington Wizards", "134946": "Arizona Cardinals", "134942": "Atlanta Falcons", "134922": "Baltimore Ravens", "134918": "Buffalo Bills", "134943": "Carolina Panthers", "134938": "Chicago Bears", "134923": "Cincinnati Bengals", "134924": "Cleveland Browns", "134934": "Dallas Cowboys", "134930": "Denver Broncos", "134939": "Detroit Lions", "134940": "Green Bay Packers", "134926": "Houston Texans", "134927": "Indianapolis Colts", "134928": "Jacksonville Jaguars", "134931": "Kansas City Chiefs", "134932": "Las Vegas Raiders", "135908": "Los Angeles Chargers", "135907": "Los Angeles Rams", "134919": "Miami Dolphins", "134941": "Minnesota Vikings", "134920": "New England Patriots", "134944": "New Orleans Saints", "134935": "New York Giants", "134921": "New York Jets", "134936": "Philadelphia Eagles", "134925": "Pittsburgh Steelers", "134948": "San Francisco 49ers", "134949": "Seattle Seahawks", "134945": "Tampa Bay Buccaneers", "134929": "Tennessee Titans", "134937": "Washington Commanders", "134516": "Algeria", "134509": "Argentina", "134500": "Australia", "140149": "Bahrain", "134515": "Belgium", "134496": "Brazil", "134498": "Cameroon", "134579": "China", "134501": "Colombia", "133912": "Croatia", "136138": "Egypt", "133914": "England", "133913": "France", "133907": "Germany", "134511": "Iran", "140148": "Iraq", "133910": "Italy", "134503": "Japan", "140145": "Jordan", "140144": "Kuwait", "140166": "Lebanon", "136489": "Libya", "134497": "Mexico", "136139": "Morocco", "133905": "Netherlands", "134512": "Nigeria", "140155": "Oman", "140154": "Palestine", "133908": "Portugal", "136472": "Qatar", "136137": "Saudi Arabia", "136143": "Senegal", "134517": "South Korea", "133909": "Spain", "136495": "Sudan", "140032": "Syria", "136142": "Tunisia", "135985": "Turkey", "134514": "USA", "140163": "United Arab Emirates", "134504": "Uruguay", "140151": "Uzbekistan", "140153": "Yemen"};   // assets/shared/teams.json: TheSportsDB id -> the club's English name
 const TEAM_KEYS = {};
 // first entry wins on a clash: the Saudi "Al-Faisaly" before the Jordanian "Al Faisaly"
 for(const [en, arName] of Object.entries(TEAM_AR)) if(!(teamKey(en) in TEAM_KEYS)) TEAM_KEYS[teamKey(en)] = arName;
@@ -1097,7 +1096,7 @@ const JITTER_MS = (()=>{
 })();
 const periodic = (fn, ms) => setTimeout(() => { fn(); setInterval(fn, ms); }, ms + JITTER_MS);   // the first periodic run is late by the offset
 const later = fn => setTimeout(fn, JITTER_MS);   // the same offset for the refresh at midnight
-const fmtAgo = ms => { const p = riyadhParts(new Date(ms)); return 'آخر تحديث ' + fmt12(p.h, p.mi); };
+const fmtAgo = ms => { const p = riyadhParts(new Date(ms)); return 'Updated ' + fmt12(p.h, p.mi); };
 
 // ---------- team names in Arabic ----------
 // 1) built-in table, 2) the Arabic label on Wikidata (cached on the device), 3) transliteration meanwhile
@@ -1157,8 +1156,13 @@ async function wikidataArabic(en, kind){
 
 let arQueue = Promise.resolve();
 function arName(en, kind, id){
-  if(kind === 'team' && id && TEAM_BY_ID[id]) return TEAM_BY_ID[id];
+  if(kind === 'team' && id && TEAM_BY_ID[id]) return TEAM_BY_ID[id];   // our curated name for this club id
   en = String(en || '').trim();
+  // English build: show the source's own name. The Arabic lookup below (Wikidata, then the
+  // transliteration tables) exists to invent an Arabic name and has nothing to give us here,
+  // so it is skipped entirely: no network call, no transliteration, no club short-name map.
+  return en;
+  /* eslint-disable no-unreachable */
   if(!en || hasArabic(en)) return en;
   if(kind === 'team'){
     const k = TEAM_KEYS[teamKey(en)];
@@ -1183,6 +1187,7 @@ function arName(en, kind, id){
     });
   }
   return translit(en);
+  /* eslint-enable no-unreachable */
 }
 const teamAr = (s, id) => arName(s, 'team', id);
 
@@ -1255,7 +1260,7 @@ function resultBlock(done){
   const day = FMT_WEEKDAY.format(toDate(done));
   return `<div class="mblock">`
     + `<div class="big"><span><span class="tm">${esc(teamAr(done.strHomeTeam, done.idHomeTeam))}</span> <span class="sc">${ar(+done.intHomeScore)} - ${ar(+done.intAwayScore)}</span> <span class="tm">${esc(teamAr(done.strAwayTeam, done.idAwayTeam))}</span></span></div>`
-    + `<div class="sub">النتيجة النهائية · ${day}</div></div>`;
+    + `<div class="sub">Final score · ${day}</div></div>`;
 }
 // a game under way or due within the week; '' for any other
 function gameBlock(ev, now, big){
@@ -1269,7 +1274,7 @@ function gameBlock(ev, now, big){
   const live = diff <= 0 && ev.intHomeScore != null && ev.intAwayScore != null;
   // «بعد ٣ أيام» and under it the date and time, small: «السبت ٢٤ أكتوبر · ٩:١٦ م»
   const dateLine = matchWhen(d);
-  const sub = diff > 0 ? `بعد ${shortRemaining(diff)}</div><div class="sub when">${dateLine}` : `<span class="live">مباشر</span> · ${liveStatus(ev, t12)}`;
+  const sub = diff > 0 ? `in ${shortRemaining(diff)}</div><div class="sub when">${dateLine}` : `<span class="live">LIVE</span> · ${liveStatus(ev, t12)}`;
   const mid = live ? ` <span class="sc">${ar(+ev.intHomeScore)} - ${ar(+ev.intAwayScore)}</span> ` : ' × ';
   return `<div class="mblock${big ? ' lvb' : ''}">`
        + `<div class="big"><span><span class="tm">${home}</span>${mid}<span class="tm">${away}</span></span></div>`
@@ -1345,10 +1350,10 @@ function leagueShow(now, shown){
 
 function liveStatus(ev, t12){
   const st = (ev.strStatus || '').toUpperCase();
-  if(st === 'HT') return 'استراحة';
-  if(['FT','AET','PEN'].includes(st)) return 'انتهت';
+  if(st === 'HT') return 'Half time';
+  if(['FT','AET','PEN'].includes(st)) return 'Full time';
   const m = parseInt(ev.strProgress, 10);
-  return isNaN(m) || (ev.strSport && ev.strSport !== 'Soccer') ? `بدأت ${t12}` : `الدقيقة ${ar(m)}`;   // minutes are football's
+  return isNaN(m) || (ev.strSport && ev.strSport !== 'Soccer') ? `Started ${t12}` : `${ar(m)}'`;   // minutes are football's
 }
 
 // while a picked team is playing, refresh that event every 2 minutes; so is a game of a followed league (a few at most)
@@ -1483,9 +1488,9 @@ function eventWhen(i, now){
   const p = hmParts(new Date(i.t));
   const t12 = i.dateOnly ? '' : ar(fmt12(+p.hour % 24, +p.minute));
   const sameDay = FMT_DATE.format(new Date(i.t + (i.dateOnly ? 3600000 : 0))) === FMT_DATE.format(new Date(now));
-  const dayName = sameDay ? 'اليوم' : FMT_WEEKDAY.format(new Date(i.t + (i.dateOnly ? 3600000 : 0)));
-  if(i.dateOnly) return {live:false, text: sameDay ? 'اليوم' : dayName, row: dayName};
-  if(now >= i.t) return {live:true, text: `<span class="live">مباشر</span> · بدأ ${t12}`, row: '<span class="live">مباشر</span>'};
+  const dayName = sameDay ? 'Today' : FMT_WEEKDAY.format(new Date(i.t + (i.dateOnly ? 3600000 : 0)));
+  if(i.dateOnly) return {live:false, text: sameDay ? 'Today' : dayName, row: dayName};
+  if(now >= i.t) return {live:true, text: `<span class="live">LIVE</span> · started ${t12}`, row: '<span class="live">LIVE</span>'};
   return {live:false, text: `${dayName} · ${t12}`, row: `${dayName} ${t12}`};
 }
 function eventSlot(key, now){
@@ -1541,7 +1546,7 @@ function packPages(slots, per){
 }
 // loading, failed and empty are three different things: «لا مباريات» only after an answer that had none
 function matchesEmptyText(){
-  return MATCHES_LOADED ? 'لا مباريات هذا الأسبوع' : MATCH_FAIL_AT ? 'تعذّر التحديث' : 'جارٍ التحميل…';
+  return MATCHES_LOADED ? 'No matches this week' : MATCH_FAIL_AT ? 'Update failed' : 'Loading…';
 }
 // when the last refresh failed and older games are on screen: «آخر تحديث …», else ''
 const matchesStaleNote = () => MATCH_OK_AT && MATCH_FAIL_AT > MATCH_OK_AT ? fmtAgo(MATCH_OK_AT) : '';
@@ -1682,13 +1687,13 @@ const loadMatches = guarded('matches', async function(){
 // gold and silver the factor from USD per troy ounce to riyals per gram (3.75 riyals to the dollar, 31.1035 g)
 const GRAM = 3.75 / 31.1035;
 const MARKETS = {
-  tasi:   {name:'تاسي',     sym:'^TASI.SR', dec:0},
-  aramco: {name:'أرامكو',   sym:'2222.SR',  dec:2, unit:'ر.س'},
+  tasi:   {name:'TASI',     sym:'^TASI.SR', dec:0},
+  aramco: {name:'Aramco',   sym:'2222.SR',  dec:2, unit:'SAR'},
   spx:    {name:'S&P 500',  sym:'^GSPC',    dec:0},
-  btc:    {name:'بيتكوين',  cg:'bitcoin',   dec:0, unit:'$'},
-  gold:   {name:'الذهب',    sym:'GC=F',     dec:2, unit:'ر.س', mul:GRAM},
-  silver: {name:'الفضة',    sym:'SI=F',     dec:2, unit:'ر.س', mul:GRAM},
-  xrp:    {name:'ريبل',     cg:'ripple',    dec:2, unit:'$'},
+  btc:    {name:'Bitcoin',  cg:'bitcoin',   dec:0, unit:'$'},
+  gold:   {name:'Gold',     sym:'GC=F',     dec:2, unit:'SAR', mul:GRAM},
+  silver: {name:'Silver',   sym:'SI=F',     dec:2, unit:'SAR', mul:GRAM},
+  xrp:    {name:'XRP',      cg:'ripple',    dec:2, unit:'$'},
 };
 const CG_YAHOO = {bitcoin:'BTC-USD', ripple:'XRP-USD'};   // the file CI keeps holds crypto under Yahoo's pair
 const TICKERS = CONFIG.markets.map(k => Object.assign({key:k, chg:k + '-chg', px:k + '-px'}, MARKETS[k]))
@@ -1709,24 +1714,24 @@ function buildMarkets(){
 const _nf = {};
 function num(v, dec){
   const k = dec + NU;
-  return (_nf[k] || (_nf[k] = new Intl.NumberFormat('ar-SA-u-nu-' + NU, {minimumFractionDigits:dec, maximumFractionDigits:dec}))).format(v);
+  return (_nf[k] || (_nf[k] = new Intl.NumberFormat('en-GB-u-nu-' + NU, {minimumFractionDigits:dec, maximumFractionDigits:dec}))).format(v);
 }
 
 // ---- the bottom-left slot: matches, weather, fasting, a countdown, or nothing (#slot=) ----
 // Matches are the default; with no team or other sport followed the slot shows the weather instead of an empty line.
 const SLOT_MATCHES = CONFIG.slot === 'matches' && (CONFIG.teamIds.length > 0 || CONFIG.leagues.length > 0 || CONFIG.events.length > 0);   // teams, leagues or other sports
 const NEEDS_MATCHES = SLOT_MATCHES || USES('matches');   // the slot or a card
-const SLOT_LABEL = {matches:'المباريات', weather:'الطقس', fasting:'الصيام', countdown:'عدّ تنازلي', markets:'الأسواق'};
+const SLOT_LABEL = {matches:'Matches', weather:'Weather', fasting:'Fasting', countdown:'Countdown', markets:'Markets'};
 
 // All the fasting wording is here. FAST_NAMES: the big text per day; the small line below says when.
 const FAST_NAMES = {
-  ramadan:'صيام رمضان', arafah:'يوم عرفة', tasua:'تاسوعاء', ashura:'عاشوراء', white:'الأيام البيض',
-  mon:'صيام الإثنين', thu:'صيام الخميس', shawwal:'ست من شوال',
+  ramadan:'Ramadan fast', arafah:'Day of Arafah', tasua:'Tasua', ashura:'Ashura', white:'The White Days',
+  mon:'Monday fast', thu:'Thursday fast', shawwal:'Six of Shawwal',
 };
 const FAST_WHEN = {
-  today:'اليوم', tomorrow:'غدًا', in2:'بعد يومين',
-  few:n => 'بعد ' + ar(n) + ' أيام', many:n => 'بعد ' + ar(n) + ' يومًا',
-  ramadanDay:n => 'اليوم ' + ar(n) + ' من رمضان',
+  today:'Today', tomorrow:'Tomorrow', in2:'In 2 days',
+  few:n => 'In ' + ar(n) + ' days', many:n => 'In ' + ar(n) + ' days',
+  ramadanDay:n => 'Day ' + ar(n) + ' of Ramadan',
 };
 const FAST_TODAY_UNTIL = 18;   // from this hour (Riyadh) today's fast is behind us: look from tomorrow on
 
@@ -1807,7 +1812,7 @@ function slotHTML(s){
     const n = countdownDays();
     const name = CONFIG.cdName ? esc(CONFIG.cdName)
       : new Intl.DateTimeFormat(GREG, {timeZone:'UTC', day:'numeric', month:'long'}).format(new Date(CONFIG.cd + 'T12:00:00Z'));
-    return slotBlock(n === 0 ? 'اليوم' : '<span class="num">' + ar(n) + '</span> <span class="unit">يوم</span>', name);
+    return slotBlock(n === 0 ? 'Today' : '<span class="num">' + ar(n) + '</span> <span class="unit">' + (n === 1 ? 'day' : 'days') + '</span>', name);
   }
   return null;
 }
@@ -1934,7 +1939,7 @@ function staleMark(v){
   if(!v) return '';
   const old = v.at && Date.now() - v.at > DAY_MS;
   if(!v.bad && !old) return '';
-  return v.at && !old ? fmtAgo(v.at) : 'غير محدّث';
+  return v.at && !old ? fmtAgo(v.at) : 'Not updated';
 }
 
 // One tick for the markets line and the stocks card: each symbol once (a stock on both is asked once), one request at a time.
@@ -1994,7 +1999,7 @@ const loadWeek = guarded('week', async function(){
     const prem = e.number === 1;
     out.push({
       name: s.name,
-      ep: e.season ? (prem ? `الموسم ${ar(e.season)}` : `الموسم ${ar(e.season)} · ح ${ar(e.number)}`) : '',
+      ep: e.season ? (prem ? `Season ${ar(e.season)}` : `S${ar(e.season)} · E${ar(e.number)}`) : '',
       date: e.airdate || '',
       rating: (s.rating && s.rating.average) || 0,
       prem, picked
@@ -2054,7 +2059,7 @@ function renderWeekPage(card, animate){
     if(!WEEK_LOADED && !WEEK_FAIL_AT) return;   // the saved list stays until the first answer
     if(!WEEK_LOADED && ul.firstElementChild && !ul.firstElementChild.classList.contains('empty')) return;
     ul.classList.remove('flip');
-    setHTML(ul, `<li class="empty">${WEEK_LOADED ? 'لا جديد هذا الأسبوع' : 'تعذّر التحديث'}</li>`);
+    setHTML(ul, `<li class="empty">${WEEK_LOADED ? 'Nothing new this week' : 'Update failed'}</li>`);
     return;
   }
   const per = card.cap || WEEK_ROWS, start = (card.page * per) % WEEK_POOL.length;
@@ -2116,7 +2121,7 @@ function liveRect(){
 
 let FORECAST = [];
 try{ FORECAST = JSON.parse(localStorage.getItem(LS.forecast) || '[]') || []; }catch(e){}
-const PANEL_TITLE = {today:'يومك', shows:'هذا الأسبوع', prayers:'مواقيت اليوم', forecast:'الأيام القادمة', hourly:'الساعات القادمة', matches:CONFIG.leagues.length ? 'المباريات' : 'مباريات فرقك', tasks:'المهام', year:'السنة'};
+const PANEL_TITLE = {today:'Your day', shows:'This week', prayers:"Today's prayers", forecast:'Next days', hourly:'Next hours', matches:CONFIG.leagues.length ? 'Matches' : "Your teams' matches", tasks:'Tasks', year:'The year'};
 const LISTS = ['matches', 'stocks', 'tasks', 'shows'];   // the kinds that page through their rows
 
 // ---- «يومك» (today): the day in one card: the next prayer, the next game of a followed team, the first open task, the next
@@ -2140,28 +2145,28 @@ function todayCard(){
     const p = riyadhParts(), mins = p.h * 60 + p.mi + p.s / 60;
     let n = PRAYERS.find(x => x.h * 60 + x.mi > mins), tomorrow = false;
     if(!n){ n = PRAYERS[0]; tomorrow = true; }
-    rows.push(tdRow('الصلاة القادمة', `${prayerName(n)} · ${fmt12(n.h, n.mi)}`, 'بعد ' + shortHM(Math.max(0, Math.round((n.h * 60 + n.mi + (tomorrow ? 1440 : 0) - mins) * 60)))));
+    rows.push(tdRow('Next prayer', `${prayerName(n)} · ${fmt12(n.h, n.mi)}`, 'in ' + shortHM(Math.max(0, Math.round((n.h * 60 + n.mi + (tomorrow ? 1440 : 0) - mins) * 60)))));
   }
   const g = nextFollowedGame(now);
   if(g){
     const live = now >= g.k;
-    rows.push(tdRow('المباراة', `<span class="tm">${esc(teamAr(g.ev.strHomeTeam, g.ev.idHomeTeam))}</span> × <span class="tm">${esc(teamAr(g.ev.strAwayTeam, g.ev.idAwayTeam))}</span>`,
-      live ? '<span class="live">مباشر</span>' : 'بعد ' + shortRemaining(g.k - now).split(' و ')[0]));
+    rows.push(tdRow('Match', `<span class="tm">${esc(teamAr(g.ev.strHomeTeam, g.ev.idHomeTeam))}</span> × <span class="tm">${esc(teamAr(g.ev.strAwayTeam, g.ev.idAwayTeam))}</span>`,
+      live ? '<span class="live">LIVE</span>' : 'in ' + shortRemaining(g.k - now).split(' ').slice(0, 2).join(' ')));
   }
-  if(CONFIG.tasks.length) rows.push(tdRow('المهمة', esc(CONFIG.tasks[0])));
+  if(CONFIG.tasks.length) rows.push(tdRow('Task', esc(CONFIG.tasks[0])));
   const oc = occasionNow();
   if(oc){
     const name = oc.o.name + (oc.o.year ? ' ' + ar(oc.hy) : '');
-    rows.push(tdRow(oc.today ? 'اليوم' : 'المناسبة القادمة', esc(name), oc.today ? '' : 'بعد ' + qty(oc.days, UNIT.day)));
+    rows.push(tdRow(oc.today ? 'Today' : 'Next occasion', esc(name), oc.today ? '' : 'in ' + qty(oc.days, UNIT.day)));
   }
-  return {title: 'يومك', rows};
+  return {title: 'Your day', rows};
 }
 
 // ---- a followed team's game under way, big: its score, the minute and «مباشر» (item 2). The matches card and the bottom slot
 // show it alone, with both crests where there are crests (the launcher's card), until it ends; then they go back to the list.
 function liveWhen(ev){   // «مباشر» and «الدقيقة ٦٧» / «استراحة» / «بدأت ٦:٣٠ م»
   const p = hmParts(toDate(ev));
-  return `<span class="live">مباشر</span> · ${liveStatus(ev, ar(fmt12(+p.hour % 24, +p.minute)))}`;
+  return `<span class="live">LIVE</span> · ${liveStatus(ev, ar(fmt12(+p.hour % 24, +p.minute)))}`;
 }
 const liveScore = ev => ev.intHomeScore != null && ev.intAwayScore != null ? `<span class="sc">${ar(+ev.intHomeScore)} - ${ar(+ev.intAwayScore)}</span>` : '<span class="sc">×</span>';
 function liveRow(ev){   // a row of the card: «الهلال [شعار] ٢ - ١ [شعار] النصر», the crests next to the score
@@ -2265,7 +2270,7 @@ function renderCard(card, animate, keepSize){
     if(P === 'matches' && !MATCHES_LOADED && ul.firstElementChild && !ul.firstElementChild.classList.contains('empty')) return;
     if(P === 'matches' && ul.firstElementChild && ul.firstElementChild.classList.contains('empty') && ul.firstElementChild.textContent === matchesEmptyText()) return;   // the saved games stay until the first answer
     ul.classList.remove('flip');
-    setHTML(ul, `<li class="empty">${P === 'matches' ? matchesEmptyText() : P === 'tasks' ? 'لا مهام اليوم' : 'لا تتوفر بيانات الآن'}</li>`);
+    setHTML(ul, `<li class="empty">${P === 'matches' ? matchesEmptyText() : P === 'tasks' ? 'No tasks today' : 'No data right now'}</li>`);
     return;
   }
   const per = card.cap || (P === 'matches' ? MATCH_ROWS : WEEK_ROWS);
@@ -2334,7 +2339,7 @@ function yearFacts(){
   const total = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0 ? 366 : 365;
   const day = Math.round((Date.UTC(y, p.mo - 1, p.d) - Date.UTC(y, 0, 1)) / 864e5) + 1;
   const pct = Math.round(100 * day / total);
-  return {y, total, day, pct, text: `اليوم <b>${ar(day)}</b> من ${ar(total)} · ${ar(pct)}${LATIN ? '%' : '٪'}`};
+  return {y, total, day, pct, text: `Day <b>${ar(day)}</b> of ${ar(total)} · ${ar(pct)}${LATIN ? '%' : '٪'}`};
 }
 
 // ---- «السنة»: a dot for every day of this Gregorian year (Riyadh time). Drawn again only when the day changes.
@@ -2398,7 +2403,7 @@ function fitYearStrip(){
 function prayerRows(){
   if(!DAY_TIMES) return [];
   const p = riyadhParts(), mins = p.h * 60 + p.mi + p.s / 60;
-  const names = {Fajr:'الفجر', Sunrise:'الشروق', Dhuhr:isFriday() ? 'الجمعة' : 'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء'};
+  const names = {Fajr:'Fajr', Sunrise:'Sunrise', Dhuhr:isFriday() ? 'Jumuah' : 'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha'};
   // The lit box is the one the bottom panel names (tickPrayer): during the iqama wait the prayer that has just been called, else the next
   // of the five, and after Isha tomorrow's Fajr. The sunrise is not a prayer and is never lit. Before Fajr nothing is past.
   const at = k => { const [h, mi] = String(DAY_TIMES[k]).split(':').map(Number); return h * 60 + mi; };
@@ -2421,7 +2426,7 @@ function forecastRows(){
   const days = FORECAST.filter(d => d.date >= today).slice(0, 5);
   if(!days.some(d => d.date === today)) return [];
   return days.map(d => {
-    const day = d.date === today ? 'اليوم' : d.date === tomorrow ? 'غداً'
+    const day = d.date === today ? 'Today' : d.date === tomorrow ? 'Tomorrow'
       : new Intl.DateTimeFormat(GREG, {timeZone:'UTC', weekday:'long'}).format(new Date(d.date + 'T12:00:00Z'));
     return `<li><span>${day}</span><span class="ep">${WX_CODES[d.code] || ''}</span>`
          + `<span class="dt">${ar(Math.round(d.hi))}° / ${ar(Math.round(d.lo))}°</span></li>`;
@@ -2508,16 +2513,16 @@ async function loadCrests(){
 // ---- «الصلوات في صف»: the five prayers in one row, the next lit, and above it «المغرب بعد ١ س و ٥ د»
 function shortHM(sec){   // «١ س و ٥ د», «٢ س», «٥ د»
   const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60);
-  return [h ? ar(h) + ' س' : '', m || !h ? ar(Math.max(m, 1)) + ' د' : ''].filter(Boolean).join(' و ');
+  return [h ? ar(h) + 'h' : '', m || !h ? ar(Math.max(m, 1)) + 'm' : ''].filter(Boolean).join(' ');
 }
 function prayerRowCard(){
-  if(!PRAYERS.length) return {title:'مواقيت اليوم', rows:[]};
+  if(!PRAYERS.length) return {title:"Today's prayers", rows:[]};
   const p = riyadhParts(), mins = p.h * 60 + p.mi + p.s / 60;
   let next = PRAYERS.findIndex(x => x.h * 60 + x.mi > mins), tomorrow = false;
   if(next < 0){ next = 0; tomorrow = true; }   // after Isha the next is tomorrow's Fajr
   const n = PRAYERS[next], left = n.h * 60 + n.mi + (tomorrow ? 1440 : 0) - mins;
   return {
-    title: `${prayerName(n)} بعد ${shortHM(Math.max(0, Math.round(left * 60)))}`,
+    title: `${prayerName(n)} in ${shortHM(Math.max(0, Math.round(left * 60)))}`,
     rows: ['<li class="prow">' + PRAYERS.map((x, i) =>
       `<div class="pc${i === next ? ' next' : tomorrow || x.h * 60 + x.mi <= mins ? ' past' : ''}"><b>${prayerName(x)}</b><i>${fmt12(x.h, x.mi)}</i></div>`).join('') + '</li>'],
   };
@@ -2556,7 +2561,7 @@ function hourlyRows(){
   if(!next.length) return [];
   return ['<li class="hrs">' + next.map(x => {
     const h = +x.t.slice(11, 13), h12 = h % 12 === 0 ? 12 : h % 12;
-    return `<div class="hc"><b>${ar(h12)} ${h < 12 ? 'ص' : 'م'}</b>${wxIcon(x.code, isNight(x.t))}<i>${ar(Math.round(x.temp))}°</i></div>`;
+    return `<div class="hc"><b>${ar(h12)} ${h < 12 ? 'AM' : 'PM'}</b>${wxIcon(x.code, isNight(x.t))}<i>${ar(Math.round(x.temp))}°</i></div>`;
   }).join('') + '</li>'];
 }
 
@@ -2591,10 +2596,10 @@ function matchRows(card){
       const d = new Date(t), scored = ev.intHomeScore != null && ev.intAwayScore != null;
       const mid = scored && now >= t ? `<span class="sc">${ar(+ev.intHomeScore)} - ${ar(+ev.intAwayScore)}</span>` : '<span class="x">×</span>';
       const done = finishedRecently(ev, now), upcoming = !done && now < t, pending = r === 0 && !done;
-      const when = done ? 'انتهت'
+      const when = done ? 'Full time'
         : pending ? ''   // over with no result yet: no score, no «بعد …»
-        : now >= t ? '<span class="live">مباشر</span>'
-        : 'بعد ' + shortRemaining(t - now).split(' و ')[0];   // one unit: the date says the rest
+        : now >= t ? '<span class="live">LIVE</span>'
+        : 'in ' + shortRemaining(t - now).split(' ').slice(0, 2).join(' ');   // one unit: the date says the rest
       // the date is always there but for a game under way: the day and time of a game to come or one with no result yet, the day of a finished one
       const date = upcoming || pending ? matchWhen(d) : done ? matchDay(d) : '';
       const dateEl = date ? `<i class="mwhen" data-s="${esc(matchWhenShort(d, now, done))}">${date}</i>` : '';
@@ -2604,12 +2609,12 @@ function matchRows(card){
 }
 
 // ---- «الأسهم»: the watchlist card. A Tadawul code (4 digits) is asked of Yahoo as CODE.SR, letters are a US ticker.
-const TADAWUL = {   // Arabic short names of the 30 largest companies; any other code shows as the number
-  '2222':'أرامكو', '1120':'الراجحي', '1180':'الأهلي', '2010':'سابك', '7010':'stc', '1211':'معادن', '2082':'أكوا',
-  '5110':'كهرباء السعودية', '1150':'الإنماء', '1060':'ساب', '1010':'بنك الرياض', '1050':'السعودي الفرنسي', '1140':'البلاد',
-  '1020':'الجزيرة', '1080':'العربي', '2280':'المراعي', '2380':'بترورابغ', '2310':'سبكيم', '2020':'سافكو', '2290':'ينساب',
-  '2350':'كيان', '4013':'الحبيب', '4190':'جرير', '7020':'موبايلي', '7030':'زين', '7203':'علم', '4030':'البحري',
-  '1810':'سيرا', '8010':'التعاونية', '4300':'دار الأركان',
+const TADAWUL = {   // short names of the 30 largest companies; any other code shows as the number
+  '2222':'Aramco', '1120':'Al Rajhi', '1180':'SNB', '2010':'SABIC', '7010':'stc', '1211':"Ma'aden", '2082':'ACWA Power',
+  '5110':'Saudi Electricity', '1150':'Alinma', '1060':'SAB', '1010':'Riyad Bank', '1050':'BSF', '1140':'Albilad',
+  '1020':'Aljazira', '1080':'ANB', '2280':'Almarai', '2380':'Petro Rabigh', '2310':'Sipchem', '2020':'SAFCO', '2290':'Yansab',
+  '2350':'Kayan', '4013':'Al Habib', '4190':'Jarir', '7020':'Mobily', '7030':'Zain', '7203':'Elm', '4030':'Bahri',
+  '1810':'Seera', '8010':'Tawuniya', '4300':'Dar Al Arkan',
 };
 const isSA = k => /^\d/.test(k);
 const stockName = k => isSA(k) ? (TADAWUL[k] || ar(k)) : k;
@@ -2638,12 +2643,12 @@ function stocksCard(){
     const d = STOCKS[k], v = d.v, pct = v ? (d.p - v) / v * 100 : null;
     const up = pct !== null ? pct >= 0 : d.c.length > 1 ? d.c[d.c.length - 1] >= d.c[0] : null;
     const cls = up === null ? '' : up ? 'up' : 'down';
-    return `<li class="stk${staleMark(d) ? ' old' : ''}"><span class="nm">${esc(stockName(k))}${mixed && !marketOpen(isSA(k)) ? '<span class="cl">مغلق</span>' : ''}</span>`
+    return `<li class="stk${staleMark(d) ? ' old' : ''}"><span class="nm">${esc(stockName(k))}${mixed && !marketOpen(isSA(k)) ? '<span class="cl">Closed</span>' : ''}</span>`
       + (up === null ? '' : spark(d.c, up)) + `<span class="px">${num(d.p, 2)}</span>`
       + (pct === null ? '' : `<span class="chg ${cls}">${pct >= 0 ? '▲' : '▼'} ${num(Math.abs(pct), 2)}${LATIN ? '%' : '٪'}</span>`) + '</li>';
   });
-  const note = [allClosed ? 'السوق مغلق' : '', stale.length ? staleMark(stale[0]) : ''].filter(Boolean).join(' · ');   // the oldest price that is not current
-  return {hd: '<span>الأسهم</span>' + (note ? `<span class="until">${note}</span>` : ''), rows};
+  const note = [allClosed ? 'Market closed' : '', stale.length ? staleMark(stale[0]) : ''].filter(Boolean).join(' · ');   // the oldest price that is not current
+  return {hd: '<span>Stocks</span>' + (note ? `<span class="until">${note}</span>` : ''), rows};
 }
 
 // verse one day, hadith the next. Verse texts come from the Quran API via CI (.github/tools/fetch_verses.py), never typed.
@@ -2692,13 +2697,13 @@ function quoteOfDay(card){
   const n = riyadhDayNumber(), half = Math.floor(n / 2);
   if(VERSES.length && n % 2 === 0){
     const v = pickShort(VERSES, half, x => x.text.length, card);
-    return {title:'آية اليوم', rows:[`<li class="quote quran${v.text.length > 330 ? ' q4' : quoteSize(v.text.length)}"><span class="orn">﴿</span><span class="qt">${esc(v.text)}</span><span class="orn">﴾</span></li>`, `<li class="src">${esc(v.surah)} · ${ar(v.ayah)}</li>`]
+    return {title:'Verse of the day', rows:[`<li class="quote quran${v.text.length > 330 ? ' q4' : quoteSize(v.text.length)}"><span class="orn">﴿</span><span class="qt">${esc(v.text)}</span><span class="orn">﴾</span></li>`, `<li class="src">${esc(v.surah)} · ${ar(v.ayah)}</li>`]
       .concat(CONFIG.tafsir && v.tafsir ? [`<li class="tafsir">${esc(v.tafsir)}</li>`] : [])};
   }
   const h = pickShort(HADITH, half, x => x.parts.reduce((m, [, t]) => m + t.length, 0), card);
   const saw = s => s.replace(/ﷺ/g, '<span class="saw">ﷺ</span>').replace(/[﴿﴾]/g, m => `<span class="orn">${m}</span>`);
   const body = h.parts.map(([k, t]) => k === 'q' ? `«${saw(esc(t))}»` : `<span class="nar">${saw(esc(t))}</span>`).join(' ');
-  return {title:'حديث اليوم', rows:[`<li class="quote hadith${quoteSize(h.parts.reduce((n, [, t]) => n + t.length, 0))}">${body}</li>`, `<li class="src">${esc(h.source)}</li>`]};
+  return {title:'Hadith of the day', rows:[`<li class="quote hadith${quoteSize(h.parts.reduce((n, [, t]) => n + t.length, 0))}">${body}</li>`, `<li class="src">${esc(h.source)}</li>`]};
 }
 
 // «حكمة اليوم»: one saying a day by the Riyadh day number, proverbs and classical sayings only (assets/shared/wisdom.json)
@@ -2706,20 +2711,20 @@ const WISDOM = [{"text": "الصبر مفتاح الفرج", "source": "مثل �
 function wisdomOfDay(){
   if(!WISDOM.length) return quoteOfDay();
   const w = WISDOM[riyadhDayNumber() % WISDOM.length];
-  return {title:'حكمة اليوم', rows:[`<li class="quote${quoteSize(w.text.length)}">${esc(w.text)}</li>`, `<li class="src">${esc(w.source)}</li>`]};
+  return {title:'Saying of the day', rows:[`<li class="quote${quoteSize(w.text.length)}">${esc(w.text)}</li>`, `<li class="src">${esc(w.source)}</li>`]};
 }
 
 // «أذكار الصباح والمساء» (from حصن المسلم): only those .github/tools/verify_adhkar.py found in the six books or the Quran.
 // Morning ones from Fajr until Dhuhr, evening ones from Asr until Maghrib, the night ones (the end of al-Baqara) from
 // Isha until Fajr; outside those hours the card shows the verse or hadith of the day. One timer, and only while a dhikr is on screen: 20 s + 0.1 s per character, at most 60 s.
 const ADHKAR = [{"when": "both", "text": "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡحَيُّ ٱلۡقَيُّومُۚ لَا تَأۡخُذُهُۥ سِنَةٞ وَلَا نَوۡمٞۚ لَّهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَمَا فِي ٱلۡأَرۡضِۗ مَن ذَا ٱلَّذِي يَشۡفَعُ عِندَهُۥٓ إِلَّا بِإِذۡنِهِۦۚ يَعۡلَمُ مَا بَيۡنَ أَيۡدِيهِمۡ وَمَا خَلۡفَهُمۡۖ وَلَا يُحِيطُونَ بِشَيۡءٖ مِّنۡ عِلۡمِهِۦٓ إِلَّا بِمَا شَآءَۚ وَسِعَ كُرۡسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَۖ وَلَا يَـُٔودُهُۥ حِفۡظُهُمَاۚ وَهُوَ ٱلۡعَلِيُّ ٱلۡعَظِيمُ", "count": 1, "source": "سورة البقرة · 255", "quran": true}, {"when": "both", "text": "قُلۡ هُوَ ٱللَّهُ أَحَدٌ ۝١ ٱللَّهُ ٱلصَّمَدُ ۝٢ لَمۡ يَلِدۡ وَلَمۡ يُولَدۡ ۝٣ وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ ۝٤", "count": 3, "source": "سورة الإخلاص · 1–4", "quran": true}, {"when": "both", "text": "قُلۡ أَعُوذُ بِرَبِّ ٱلۡفَلَقِ ۝١ مِن شَرِّ مَا خَلَقَ ۝٢ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝٣ وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِي ٱلۡعُقَدِ ۝٤ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ۝٥", "count": 3, "source": "سورة الفلق · 1–5", "quran": true}, {"when": "both", "text": "قُلۡ أَعُوذُ بِرَبِّ ٱلنَّاسِ ۝١ مَلِكِ ٱلنَّاسِ ۝٢ إِلَٰهِ ٱلنَّاسِ ۝٣ مِن شَرِّ ٱلۡوَسۡوَاسِ ٱلۡخَنَّاسِ ۝٤ ٱلَّذِي يُوَسۡوِسُ فِي صُدُورِ ٱلنَّاسِ ۝٥ مِنَ ٱلۡجِنَّةِ وَٱلنَّاسِ ۝٦", "count": 3, "source": "سورة الناس · 1–6", "quran": true}, {"when": "morning", "text": "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ", "count": 1, "source": "سنن أبي داود · 5068"}, {"when": "evening", "text": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ", "count": 1, "source": "صحيح مسلم · 2723"}, {"when": "evening", "text": "رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ", "count": 1, "source": "صحيح مسلم · 2723"}, {"when": "both", "text": "بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَىْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", "count": 3, "source": "سنن أبي داود · 5088"}, {"when": "both", "text": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", "count": 100, "source": "صحيح مسلم · 2692"}, {"when": "evening", "text": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", "count": 1, "source": "صحيح مسلم · 2709"}, {"when": "morning", "text": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عَدَدَ خَلْقِهِ وَرِضَا نَفْسِهِ وَزِنَةَ عَرْشِهِ وَمِدَادَ كَلِمَاتِهِ", "count": 3, "source": "صحيح مسلم · 2726"}, {"when": "morning", "text": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَىْءٍ قَدِيرٌ", "count": 100, "source": "صحيح البخاري · 3293"}, {"when": "morning", "text": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلاً مُتَقَبَّلاً", "count": 1, "source": "سنن ابن ماجه · 925"}, {"when": "both", "text": "اللَّهُمَّ أَنْتَ رَبِّي، لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَىَّ وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ", "count": 1, "source": "صحيح البخاري · 6306"}, {"when": "evening", "text": "اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ", "count": 1, "source": "جامع الترمذي · 3391"}, {"when": "both", "text": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَاىَ وَأَهْلِي وَمَالِي اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي وَاحْفَظْنِي مِنْ بَيْنِ يَدَىَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي وَأَعُوذُ بِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي", "count": 1, "source": "سنن ابن ماجه · 3871"}, {"when": "both", "text": "اللَّهُمَّ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَوَاتِ وَالأَرْضِ رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي وَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ", "count": 1, "source": "جامع الترمذي · 3392"}, {"when": "evening", "text": "رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا", "count": 1, "source": "صحيح مسلم · 2723"}];   // assets/shared/adhkar.json, through src/build.py
-const ADHKAR_COUNT = {1:'مرة واحدة', 2:'مرتان', 3:'ثلاث مرات', 4:'أربع مرات', 7:'سبع مرات', 10:'عشر مرات', 33:'ثلاثاً وثلاثين مرة', 100:'مئة مرة'};
+const ADHKAR_COUNT = {1:'once', 2:'twice', 3:'3 times', 4:'4 times', 7:'7 times', 10:'10 times', 33:'33 times', 100:'100 times'};
 const ADHKAR_ICON = {
   morning:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>',
   evening:'<svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>',
   night:'<svg viewBox="0 0 24 24"><path d="M19 13.5A7.5 7.5 0 0 1 9.5 4.4a7.5 7.5 0 1 0 9.5 9.1z"/><path d="M16.5 3.5v3M15 5h3"/></svg>',
 };
-const ADHKAR_HEAD = {morning:['أذكار الصباح', 'حتى الظهر'], evening:['أذكار المساء', 'حتى المغرب'], night:['الآيتان من آخر سورة البقرة', 'حتى الفجر']}   // the hadith's own words, no new category name;
+const ADHKAR_HEAD = {morning:['Morning adhkar', 'until Dhuhr'], evening:['Evening adhkar', 'until Maghrib'], night:['The last two verses of al-Baqara', 'until Fajr']}   // the hadith's own words, no new category name;
 // the adhkar's place in a card: card.ad = {i: which, t: the timer, mode: morning|evening|night, n: how many}
 function adhkarWindow(){
   if(!DAY_TIMES) return '';
@@ -2757,18 +2762,18 @@ function adhkarCard(card){
     title,
     hd: `${ADHKAR_ICON[mode]}<span>${title}</span><span class="until">${until}</span>`,
     rows: [`<li class="quote${d.quran ? ' quran' : ''}${d.text.length > 560 ? ' q4' : quoteSize(d.text.length)}">${text}</li>`,   // harakat make a dhikr long: one more step
-           `<li class="adf"><span class="s">${esc(ar(d.virtue ? `${d.virtue.text} · ${d.virtue.source.replace(' · ', ' ')}` : d.source))}</span><span class="c">${ADHKAR_COUNT[d.count] || ar(d.count) + ' مرة'}</span>`
+           `<li class="adf"><span class="s">${esc(ar(d.virtue ? `${d.virtue.text} · ${d.virtue.source.replace(' · ', ' ')}` : d.source))}</span><span class="c">${ADHKAR_COUNT[d.count] || ar(d.count) + ' times'}</span>`
            + `<span class="d">${Array.from({length: dots}, (_, k) => k === on ? '<i class="on"></i>' : '<i></i>').join('')}</span></li>`],
   };
 }
 
 const WX_CODES = {
-  0:'صافي',1:'صافي غالباً',2:'غائم جزئياً',3:'غائم',45:'ضباب',48:'ضباب متجمد',
-  51:'رذاذ',53:'رذاذ',55:'رذاذ كثيف',56:'رذاذ متجمد',57:'رذاذ متجمد',
-  61:'مطر خفيف',63:'مطر',65:'مطر غزير',66:'مطر متجمد',67:'مطر متجمد',
-  71:'ثلج خفيف',73:'ثلج',75:'ثلج كثيف',77:'حبيبات ثلج',
-  80:'زخات خفيفة',81:'زخات مطر',82:'زخات غزيرة',85:'زخات ثلج',86:'زخات ثلج',
-  95:'عواصف رعدية',96:'عواصف مصحوبة ببرد',99:'عواصف قوية'
+  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Cloudy',45:'Fog',48:'Freezing fog',
+  51:'Drizzle',53:'Drizzle',55:'Heavy drizzle',56:'Freezing drizzle',57:'Freezing drizzle',
+  61:'Light rain',63:'Rain',65:'Heavy rain',66:'Freezing rain',67:'Freezing rain',
+  71:'Light snow',73:'Snow',75:'Heavy snow',77:'Snow grains',
+  80:'Light showers',81:'Rain showers',82:'Heavy showers',85:'Snow showers',86:'Snow showers',
+  95:'Thunderstorms',96:'Thunderstorms with hail',99:'Severe thunderstorms'
 };
 // When the current reading was fetched, and the last dust reading (µg/m³): both are kept on the device. A reading older than 3 hours is
 // not shown as «now» (the temperature, the word and the day's range at the top left go blank until a new one arrives).
@@ -2822,7 +2827,7 @@ async function loadWeather(){
   }catch(e){}                                  // no answer: the last dust reading stands, not a clear sky
   if(WX.pm >= 150 && Date.now() - WX.pmAt < WX_STALE_MS){
     const d = document.getElementById('wx-desc');
-    setText(d, WX.pm >= 400 ? 'غبار كثيف' : 'غبار');
+    setText(d, WX.pm >= 400 ? 'Heavy dust' : 'Dust');
     d.classList.add('dust');
   }
 }
@@ -2895,7 +2900,7 @@ function showBackground(url, b){
   ph.classList.remove('settle'); void ph.offsetWidth; ph.classList.add('settle');
   cardBlurLater(url);
   const cr = document.getElementById('credit');
-  if(cr) cr.textContent = b.c ? 'الصورة: ' + b.c : '';
+  if(cr) cr.textContent = b.c ? 'Photo: ' + b.c : '';
 }
 
 // ---- card style blur: a copy of the photo behind the card, blurred once per photo, never a live backdrop-filter ----
@@ -3155,8 +3160,8 @@ function boot(){
   const wxCity = document.getElementById('wx-city');
   if(wxCity) wxCity.textContent = CONFIG.city;
   const cs = document.getElementById('clock-sub');
-  if(cs) cs.textContent = 'بتوقيت ' + CONFIG.city;
-  document.title = 'شاشة تلفزيونك';
+  if(cs) cs.textContent = CONFIG.city + ' time';
+  document.title = 'TV Screensaver';
   applyBackground(true);
   loadPhotoIndex().then(() => applyBackground(true));
   setInterval(() => applyBackground(false), 60*1000);

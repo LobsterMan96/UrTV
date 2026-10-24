@@ -300,7 +300,7 @@ def main():
     html = html.replace("__TEAMS_AR__", js_json(teams))
     # by TheSportsDB id: "Al-Faisaly" and "Al Faisaly" are different clubs under one name key
     clubs = json.loads((ROOT / "assets/shared/teams.json").read_text(encoding="utf-8"))
-    by_id = {c["id"]: c["ar"] for c in clubs if c.get("id") and c.get("ar")}
+    by_id = {c["id"]: c["en"] for c in clubs if c.get("id") and c.get("en")}   # English build: the club's own name, not the Arabic one
     html = html.replace("__TEAMS_BY_ID__", js_json(by_id))
     html = html.replace("__TEAMS_SHORT__", js_json(us_short(clubs)))
     # leagues of Formula 1, UFC, boxing and tennis, found by CI (.github/tools/team_ids.py); {} until a run delivers them
