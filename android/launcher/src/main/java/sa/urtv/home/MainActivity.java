@@ -314,6 +314,7 @@ public class MainActivity extends Activity {
         ((LinearLayout.LayoutParams) title.getLayoutParams()).setMargins(dp(8), 0, 0, dp(14));
 
         dockRow = new LinearLayout(this);
+        dockRow.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);   // same for the favourites row
         dockRow.setOrientation(LinearLayout.HORIZONTAL);
         dockRow.setGravity(Gravity.CENTER);
         dockRow.setClipChildren(false);
@@ -401,6 +402,7 @@ public class MainActivity extends Activity {
         clockBlock = left;
 
         LinearLayout right = new LinearLayout(this);
+        right.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);   // else the row renders RTL and D-pad right moves focus left
         right.setGravity(Gravity.CENTER_VERTICAL);
         right.setClipChildren(false);
         Pill saver = pill("Screensaver", R.drawable.ic_screensaver);

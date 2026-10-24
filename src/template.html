@@ -2590,7 +2590,8 @@ function matchRows(card){
           && x.t - now <= CONFIG.weekWindowDays * 86400000))
     // upcoming and live games come before finished ones: with a full matchday behind us, six
     // final scores would otherwise fill all four rows and nothing still to play would show
-    .sort((a, b) => (finishedRecently(a.ev, now) ? 1 : 0) - (finishedRecently(b.ev, now) ? 1 : 0) || byRank(a, b))
+    .sort((a, b) => { const over = x => (x.ev.intHomeScore != null && now >= x.t) ? 1 : 0;   // already has a score on screen
+                      return over(a) - over(b) || byRank(a, b); })   // still to play first, finished after
     .map(({ev, t, r}) => {
       const d = new Date(t), scored = ev.intHomeScore != null && ev.intAwayScore != null;
       const mid = scored && now >= t ? `<span class="sc">${ar(+ev.intHomeScore)} - ${ar(+ev.intAwayScore)}</span>` : '<span class="x">×</span>';

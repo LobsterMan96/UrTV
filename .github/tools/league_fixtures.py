@@ -83,6 +83,26 @@ def days(now):
     return [(first + datetime.timedelta(days=i)).isoformat() for i in range((now.date() - first).days + AHEAD_DAYS + 1)]
 
 
+# The league table, one request per league. The free key returns only the leading rows (5 for the
+# Saudi Pro League), so the page shows what arrives rather than a fixed ten. Kept in the same file as
+# the fixtures so the TV makes no extra call of its own.
+TABLE_KEEP = ("intRank", "strTeam", "idTeam", "strBadge", "intPlayed", "intWin", "intDraw", "intLoss",
+              "intGoalsFor", "intGoalsAgainst", "intGoalDifference", "intPoints")
+
+
+def standings(lid, season, get=ti.get):
+    if not season:
+        return []
+    rows = (get(f"lookuptable.php?l={lid}&s={season}") or {}).get("table") or []
+    out = []
+    for r in rows:
+        if not isinstance(r, dict) or not r.get("strTeam"):
+            continue
+        out.append({k: r[k] for k in TABLE_KEEP if r.get(k) not in (None, "")})
+    out.sort(key=lambda r: int(r.get("intRank") or 999))
+    return out
+
+
 def collect(name, lid, now, get=ti.get):
     """-> (events, notes): what the calls answered, for the report."""
     notes = {"id": lid}
@@ -152,8 +172,16 @@ def main(argv=None):
         notes["events"] = len(events)
         report["leagues"][name] = notes
         # nothing now and nothing kept: still write the (empty) file, so the page can tell «no games» from «no file»
+        season = current_season(events)
+        try:
+            tbl = standings(lid, season)
+        except Exception as e:      # the table must never stop the fixtures
+            tbl, notes["table"] = [], f"error: {str(e)[:120]}"
+        else:
+            notes["table"] = len(tbl)
         (OUT / f"{ti.slug(name)}.json").write_text(json.dumps(
             {"league": name, "id": str(lid), "updated": now.isoformat().replace("+00:00", "Z"), "events": events,
+             **({"season": season} if season else {}), **({"table": tbl} if tbl else {}),
              **({"stale": True} if stale and events else {})}, ensure_ascii=False, separators=(",", ":")) + "\n",
             encoding="utf-8")
         print(f"{name}: {len(events)} games  {json.dumps(notes, ensure_ascii=False)}", flush=True)
