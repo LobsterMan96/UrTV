@@ -290,7 +290,7 @@ public class MainActivity extends Activity {
 
         hero.addView(buildHeader(), lp(-1, -2, Gravity.TOP, dp(48), dp(36), dp(48), 0));
         // optional card under the pills, same size as beside the screensaver's clock
-        homeCard = new HomeCard(this, hero, lp(dp(461), dp(250), Gravity.LEFT | Gravity.TOP, dp(48), dp(84), 0, 0), this::homeCardBox, new HomeCard.Live() {
+        homeCard = new HomeCard(this, hero, lp(dp(461), dp(250), Gravity.RIGHT | Gravity.TOP, dp(48), dp(84), 0, 0), this::homeCardBox, new HomeCard.Live() {
             @Override public void focus(View target, boolean has) {   // «المهام» on the card takes the focus like a pill
                 if (has) { lastFocusedId = target.getId(); scroll.smoothScrollTo(0, 0); fadeGlow(1f); }
             }
@@ -363,7 +363,8 @@ public class MainActivity extends Activity {
 
         LinearLayout left = new LinearLayout(this);
         left.setOrientation(LinearLayout.VERTICAL);
-        // Top right, stacked tight: greeting, clock, date. Gravity.RIGHT, not END: for Arabic text END is the left.
+        // Top left, stacked tight: greeting, clock, date. Absolute gravity, mirrored for the English chrome:
+        // setLayoutDirection cannot move these, which is why they stayed right-aligned after the LTR flip.
         greeting = text(15, "medium", GOLD);
         greeting.setSingleLine(true);
         left.addView(greeting, llp(-2, -2, 0, 0, dp(4), 0));
@@ -394,9 +395,9 @@ public class MainActivity extends Activity {
         zoneLine.setVisibility(View.GONE);
         left.addView(zoneLine, llp(-2, -2, 0, dp(1), dp(4), 0));
         for (TextView t : new TextView[]{greeting, weatherLine, clock, ampm, date, zoneLine}) t.setShadowLayer(dp(3), 0, dp(1), 0x80000000);
-        left.setGravity(Gravity.RIGHT);
-        for (TextView t : new TextView[]{greeting, weatherLine, date, zoneLine}) t.setGravity(Gravity.RIGHT);
-        header.addView(left, new FrameLayout.LayoutParams(-2, -2, Gravity.RIGHT | Gravity.TOP));
+        left.setGravity(Gravity.LEFT);
+        for (TextView t : new TextView[]{greeting, weatherLine, date, zoneLine}) t.setGravity(Gravity.LEFT);
+        header.addView(left, new FrameLayout.LayoutParams(-2, -2, Gravity.LEFT | Gravity.TOP));
         clockBlock = left;
 
         LinearLayout right = new LinearLayout(this);
@@ -434,7 +435,7 @@ public class MainActivity extends Activity {
             if (has) { lastFocusedId = v.getId(); scroll.smoothScrollTo(0, 0); fadeGlow(1f); }
         });
         right.addView(nowCard, 0, llp(-2, dp(Pill.HEIGHT), dp(10), 0, 0, 0));
-        header.addView(right, new FrameLayout.LayoutParams(-2, -2, Gravity.LEFT | Gravity.TOP));
+        header.addView(right, new FrameLayout.LayoutParams(-2, -2, Gravity.RIGHT | Gravity.TOP));
         return header;
     }
 

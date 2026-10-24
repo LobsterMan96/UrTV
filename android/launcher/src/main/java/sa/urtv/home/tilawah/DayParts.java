@@ -35,16 +35,16 @@ public final class DayParts {
         long now = System.currentTimeMillis();
         String label, clock;
         if (now < t.at[PrayerTimes.SUNRISE]) {            // before dawn: today's sunrise is next
-            label = "الشروق"; clock = t.clock[PrayerTimes.SUNRISE];
+            label = "Sunrise"; clock = t.clock[PrayerTimes.SUNRISE];
         } else if (now < t.at[PrayerTimes.MAGHRIB]) {
-            label = "الغروب"; clock = t.clock[PrayerTimes.MAGHRIB];
+            label = "Sunset"; clock = t.clock[PrayerTimes.MAGHRIB];
         } else {                                          // after sunset: tomorrow's sunrise
             Calendar tomorrow = Calendar.getInstance(TimeZone.getTimeZone(place.tz), Locale.US);
             tomorrow.add(Calendar.DAY_OF_MONTH, 1);
             String key = PrayerTimes.dayKey(tomorrow, place);
             synchronized (DayParts.class) {
                 if (!key.equals(sunriseKey)) { sunriseClock = PrayerTimes.of(tomorrow, place).clock[PrayerTimes.SUNRISE]; sunriseKey = key; }
-                label = "الشروق"; clock = sunriseClock;
+                label = "Sunrise"; clock = sunriseClock;
             }
         }
         boolean friday = Calendar.getInstance(TimeZone.getTimeZone(place.tz), Locale.US).get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY;
