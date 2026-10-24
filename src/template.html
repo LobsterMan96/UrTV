@@ -49,7 +49,8 @@
   html.widget .mid .week.w3{grid-column:1/-1}
   html.widget .week{width:100%}
   /* a living room, not a desk: the card may lose rows, never legibility */
-  .widget .week li{font-size:calc(clamp(19px,3.4vw,30px)*var(--z,1))}
+  /* the WebView is 461 dp wide; vw keeps this right whatever the panel's density */
+  .widget .week li{font-size:calc(clamp(15px,4.1vw,26px)*var(--z,1))}
   html.widget .week.boxes{padding:max(1.7vh,10px) max(1.4vw,14px)}   /* the prayer boxes keep a clear, even distance from the card's edge */
   html,body{
     height:100%;overflow:hidden;background:#040E09;color:var(--sand);
@@ -142,7 +143,7 @@
   .week li.mg .mr .sc,.week li.mg .mr .x{justify-self:center}
   /* the home card is far narrower than the screensaver: there is no room for the date, and a
      squeezed column just shows a stray separator. Drop it there and keep club, score, club, status. */
-  .widget .week li.mg .mr{grid-template-columns:4.2em 4.1em 4.2em 3.2em;justify-content:center;column-gap:.55em}
+  .widget .week li.mg .mr{grid-template-columns:minmax(0,1fr) 4.1em minmax(0,1fr) 3.2em;column-gap:.5em}
   .widget .week li.mg .mr .mwhen{display:none}
   .week li.mg .mr > *{flex:0 0 auto;max-width:none;overflow:visible;text-overflow:clip;padding:0;margin:0}
   .week li.mg .mr .mwhen{text-align:left;font-size:.78em;justify-self:stretch;min-width:0;
@@ -162,7 +163,7 @@
   .week li.mg .tm .cr{margin:0}
   .week li.mg .sc{font-variant-numeric:tabular-nums;color:var(--gold-hi);font-weight:600}
   /* the league table: one grid, so every column is a column */
-  .week li.tbl{display:grid;grid-template-columns:1.6em 1.5em 3.2em repeat(4,1.8em) 2.4em;align-items:center;
+  .week li.tbl{display:grid;grid-template-columns:1.6em 1.5em 3.2em repeat(4,minmax(0,1fr)) minmax(0,1.3fr);align-items:center;
     column-gap:.45em;white-space:nowrap;padding:calc(.34vh + 1px) 0;font-variant-numeric:tabular-nums;
     text-align:center;font-size:.92em}
   .week li.tbl .rk{text-align:right;color:#9C9279}
@@ -176,8 +177,8 @@
   /* the header must sit on the SAME grid and the SAME size as the rows, or the labels drift off
      their numbers. Only its weight and colour differ. */
   /* stacked, the card is full width, so the table can breathe instead of being squeezed */
-  .widget .week li.tbl{font-size:.95em;column-gap:.7em;padding:calc(.34vh + 2px) 0;
-    grid-template-columns:1.8em 1.7em 3.4em repeat(4,2.1em) 2.8em;justify-content:center}
+  .widget .week li.tbl{font-size:.95em;column-gap:.5em;padding:calc(.34vh + 2px) 0;
+    grid-template-columns:1.7em 1.6em 3.3em repeat(4,minmax(0,1fr)) minmax(0,1.3fr)}
   .week li .dt{flex:1 1 auto;color:#9C9279;font-size:.72em;min-width:3.2em;text-align:left}
   .week li .tm .cr{width:1.25em;height:1.25em;object-fit:contain;vertical-align:middle;margin-block:-.25em}
   .week li .tm .cr:not([src]){visibility:hidden}   /* a restored row waits for its picture: the same room */
@@ -333,7 +334,7 @@
   html.cs-dark3 .week,html.cs-glass3 .week{padding:calc(1.7vh + 8px) calc(1.4vw + 8px)}
   /* the launcher's box is short: the header must clear the diamond on the top edge whatever its height (vh is the box's) */
   html.widget.cs-dark3 .week,html.widget.cs-glass3 .week{padding:calc(24px*var(--z,1)) calc(1.4vw + 8px) calc(18px*var(--z,1))}
-  html.widget .week{padding:calc(1.1vh + 2px) 1.1vw}
+  html.widget .week{padding:calc(1.1vh + 2px) 1.1vw;overflow:hidden}
   html.widget.cs-dark3 .week .frm,html.widget.cs-glass3 .week .frm{inset:calc(12px*var(--z,1))}
   html.widget.cs-dark3 .week .dia,html.widget.cs-glass3 .week .dia{width:calc(18px*var(--z,1));height:calc(18px*var(--z,1))}
   html.widget.cs-dark3 .week .dia.t,html.widget.cs-glass3 .week .dia.t{top:calc(12px*var(--z,1))}
@@ -2340,8 +2341,8 @@ function renderCard(card, animate, keepSize){
     setHTML(ul, `<li class="empty">${P === 'matches' ? matchesEmptyText() : P === 'tasks' ? 'No tasks today' : 'No data right now'}</li>`);
     return;
   }
-  const per = card.cap || (P === 'matches' ? (CONFIG.widget ? 5 : MATCH_ROWS)
-    : P === 'table' ? TABLE_MAX + 1 : WEEK_ROWS);
+  const per = card.cap || (P === 'matches' ? (CONFIG.widget ? 3 : MATCH_ROWS)
+    : P === 'table' ? tableMax() + 1 : WEEK_ROWS);
   if((P === 'matches' || P === 'stocks' || P === 'tasks') && rows.length > per){        // page through, like the shows
     if(P === 'matches'){   // fixed pages, each game once a lap; the last holds what is left
       const pages = Math.ceil(rows.length / per), start = (card.page % pages) * per;
@@ -2676,6 +2677,11 @@ function matchEvents(){
 // ---- the league table, from the same leagues/<slug>.json the fixtures come in. The free key returns
 // only the leading rows, so this shows however many arrived rather than promising a fixed ten.
 const TABLE_MAX = 10;
+// On the home card the table shares one card's height with the matches card. Ten clubs at a size
+// readable from the sofa need the whole of it, so there it shows the top five and the full page
+// keeps the ten. Rows go, never the type size.
+const TABLE_MAX_WIDGET = 5;
+const tableMax = () => CONFIG.widget ? TABLE_MAX_WIDGET : TABLE_MAX;
 // «Matchday 11 of 34», from the league's own matchday list
 function matchdayNote(){
   const d = LEAGUE_DATA[CONFIG.leagues[0]], m = d && d.matchday;
@@ -2689,7 +2695,7 @@ function tableRows(){
   const n = v => ar(String(v == null ? 0 : v));
   const head = `<li class="tbl thd"><span class="rk">#</span><span class="cr"></span><span class="cl">Club</span>`
     + `<span>P</span><span>W</span><span>D</span><span>L</span><span class="pts">Pts</span></li>`;
-  return [head].concat(rows.slice(0, TABLE_MAX).map(r => {
+  return [head].concat(rows.slice(0, tableMax()).map(r => {
     const own = ownCrest(r.code || r.strTeam);
     return `<li class="tbl"><span class="rk">${n(r.intRank)}</span>`
       + `<span class="cr">${own ? `<img src="${esc(own)}" alt="" loading="lazy">` : ''}</span>`

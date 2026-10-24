@@ -14,11 +14,13 @@ final class CardBox {
     static final int SIDE = 48, TOP = 84;
     /** Three cards sit two across: 58.44% of the screen, at 1920 that is 560 + 22 + 540. */
     static final float PAIR_WIDTH = 0.5844f;
-    /** Two cards STACK, one under the other, so the pair is one card wide and as tall as it may be.
-     *  Side by side they read heavy and squeezed the league table's columns. */
-    static final float STACK_WIDTH = 0.335f;
+    /** Two cards STACK, one under the other: the pair is exactly ONE card wide (461 dp) and as tall
+     *  as the dock allows. Given in DP, not as a fraction of the screen: at 320 dpi the density is 2,
+     *  so a screen fraction gave 321 dp, far narrower than a card, and the table overflowed. A full
+     *  461 dp card then dominated half the panel, so the stacked pair is a little narrower. */
+    static final int STACK_W = 380;
     /** Stacked, the pair is tall: this is what it takes before the dock's position is known. */
-    static final float STACK_HEIGHT = 0.62f;
+    static final float STACK_HEIGHT = 0.58f;   // must end above the dock even before it is laid out
     /** The height of today's single card (250 dp of 540) as a share of the screen's. */
     static final float PAIR_HEIGHT = 0.463f;
 
@@ -33,7 +35,7 @@ final class CardBox {
     static int[] box(int cards, int screenW, int screenH, float density, int clockEnd, int titleTop, int dockTop, int titleWide) {
         if (cards <= 1) return new int[]{dp(ONE_W, density), dp(ONE_H, density)};
         boolean stacked = cards == 2;
-        int w = Math.round(screenW * (stacked ? STACK_WIDTH : PAIR_WIDTH));
+        int w = stacked ? dp(STACK_W, density) : Math.round(screenW * PAIR_WIDTH);
         int h = Math.round(screenH * (stacked ? STACK_HEIGHT : PAIR_HEIGHT));   // the dock trims this once laid out
         int side = dp(SIDE, density), top = dp(TOP, density);   // clear of the pill row above
         // the box is anchored to the right edge: what is left over once the clock block has had its say

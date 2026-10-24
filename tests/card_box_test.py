@@ -36,8 +36,10 @@ for kind, d, n, w, h, *rest in rows:
         continue
     if kind == "early":   # before the screen is laid out
         # two cards STACK (one card wide, tall); three still sit two across
-        frac = (.335, .62) if n == 2 else (.5844, .463)
-        want = (round(1920 / d * frac[0]), round(1080 / d * frac[1]))
+        if n == 2:
+            want = (380, round(1080 / d * .58))      # the stacked pair: narrower than a card, tall
+        else:
+            want = (round(1920 / d * .5844), round(1080 / d * .463))
         check(f"{tag}: {want[0]} x {want[1]} dp", abs(wdp - want[0]) <= 1 and abs(hdp - want[1]) <= 1, (wdp, hdp, want))
         continue
     clock_end, title_top, dock_top = map(int, rest)
