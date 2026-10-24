@@ -541,7 +541,6 @@
       <div class="clock">
         <span class="d" id="ck-h">--</span><span class="sep">:</span><span class="d" id="ck-m">--</span><span class="ampm" id="ck-ap">—</span>
       </div>
-      <div class="subline"><span class="dot"></span><span id="clock-sub">Al-Khobar time</span></div>
       <div class="ystrip" id="ystrip" hidden></div>
     </div>
 
@@ -610,7 +609,8 @@ const CONFIG = {
     .map(x=>(x||'').trim()).filter(x=>/^\d+$/.test(x)).slice(0, 20),
   sportsKey: '123',
   // whole leagues: #leagues=Saudi-Arabian Pro League,NBA (default none; up to 5): every game of every club in them
-  leagues: _list('leagues').filter(x => /^[A-Za-z0-9 \-]{2,40}$/.test(x)).slice(0, 5),
+  leagues: (_Q.has('leagues') ? _list('leagues') : ['Saudi-Arabian Pro League'])
+    .filter(x => /^[A-Za-z0-9 \-]{2,40}$/.test(x)).slice(0, 5),
   // other sports beside the teams' games: #events=f1,ufc,boxing (default none)
   events: _list('events').filter(k => ['f1','ufc','boxing'].includes(k)),
   eventWindowDays: 14,
@@ -644,7 +644,7 @@ const CONFIG = {
   own: Math.max(0, Math.min(10, Math.floor(_num('own', 0)))),
   ownMode: _Q.get('ownmode') === 'only' ? 'only' : 'mix',
   // digits everywhere: #digits=hindi (١٢٣, the default) or latin (123); anything else = hindi
-  digits: _Q.get('digits') === 'latin' ? 'latin' : 'hindi',
+  digits: _Q.get('digits') === 'hindi' ? 'hindi' : 'latin',   // Latin by default in this fork
   // the look of the card beside the clock: #cardstyle=current|dark1|glass1|dark3|glass3 (anything else = current)
   cardStyle: (v => ['dark1','glass1','dark3','glass3'].includes(v) ? v : 'current')(_Q.get('cardstyle')),
   // the markets at the top left: #markets=tasi,spx,btc (up to 4 of tasi aramco spx btc gold silver xrp; anything else = the default)
@@ -2592,7 +2592,9 @@ function matchRows(card){
     .filter(x => finishedRecently(x.ev, now) || pendingResult(x.ev, now)
       || (now < x.t + durMs(x.ev) && !FINAL.includes((x.ev.strStatus || '').toUpperCase())
           && x.t - now <= CONFIG.weekWindowDays * 86400000))
-    .sort(byRank)
+    // upcoming and live games come before finished ones: with a full matchday behind us, six
+    // final scores would otherwise fill all four rows and nothing still to play would show
+    .sort((a, b) => (finishedRecently(a.ev, now) ? 1 : 0) - (finishedRecently(b.ev, now) ? 1 : 0) || byRank(a, b))
     .map(({ev, t, r}) => {
       const d = new Date(t), scored = ev.intHomeScore != null && ev.intAwayScore != null;
       const mid = scored && now >= t ? `<span class="sc">${ar(+ev.intHomeScore)} - ${ar(+ev.intAwayScore)}</span>` : '<span class="x">×</span>';

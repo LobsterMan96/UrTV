@@ -251,7 +251,7 @@ final class Prefs {
     String minRating() { return sp.getString("minRating", "7"); }
     void setMinRating(String v) { sp.edit().putString("minRating", v).apply(); }
 
-    String digits() { return sp.getString("digits", "hindi"); }
+    String digits() { return sp.getString("digits", "latin"); }   // Latin by default in this fork
     void setDigits(String v) { sp.edit().putString("digits", v).apply(); }
 
     static String digitsLabel(String v) {
