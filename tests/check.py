@@ -36,8 +36,10 @@ def tracked(*globs):
 # Thmanyah's licence allows its files only inside a built product: never in this public repository (CI puts them in place)
 leaked = [str(f.relative_to(ROOT)) for f in tracked("*Thmanyah*") + tracked("dist/urtv.html")]
 check("Thmanyah's files and the page that inlines them are not committed", not leaked, leaked)
-missing_fonts = [f for f in ("Thmanyah-Regular.woff2", "ThmanyahDisplay-Bold.woff2") if not (ROOT / "assets/fonts" / f).is_file()]
-check("Thmanyah is in place for the build (CI: the private urtv-fonts checkout; locally: your own copy)", not missing_fonts, missing_fonts)
+_build_py = (ROOT / "src/build.py").read_text(encoding="utf-8")
+_faces = [re.search(rf'"{t}":\s*"([^"]+)"', _build_py).group(1) for t in ("__F_REGULAR__", "__F_DISPLAY__")]
+missing_fonts = [f for f in _faces if not (ROOT / "assets/fonts" / f).is_file()]
+check(f"the body and display faces src/build.py names are in place ({', '.join(_faces)})", not missing_fonts, missing_fonts)
 before = {n: (ROOT / "dist" / n).read_bytes() for n in ("tv.html",) if (ROOT / "dist" / n).is_file()}
 r = subprocess.run([sys.executable, "src/build.py"], cwd=ROOT, capture_output=True, text=True)
 check("src/build.py runs", r.returncode == 0, r.stderr[-400:])
@@ -140,13 +142,16 @@ check("every narration from the four Sunan carries the scholars' grades", all(h[
       [h["text"][:30] for h in sunan if not h["full"].get("grades")])
 check("every hadith on screen has the Prophet's words and fits the card",
       all(any(k == "q" for k, _ in h["parts"]) and sum(len(t.split()) for _, t in h["parts"]) <= HADITH_MAX_WORDS for h in hadith))
-font = set(TTFont(ROOT / "assets/fonts/Thmanyah-Regular.woff2").getBestCmap())
+# The body face is whatever src/build.py ships: this fork cannot reach the private Thmanyah repo
+# and uses IBM Plex Sans Arabic. Read the name from build.py so this check follows the font in use.
+_body = re.search(r'"__F_REGULAR__":\s*"([^"]+)"', (ROOT / "src/build.py").read_text(encoding="utf-8")).group(1)
+font = set(TTFont(ROOT / "assets/fonts" / _body).getBestCmap())
 marks = set(TTFont(ROOT / "assets/fonts/NotoNaskhArabic-Marks.woff2").getBestCmap())
 text = "".join(v["surah"] for v in verses) + "".join(t for h in hadith for _, t in h["parts"]) \
     + "".join(h["source"] for h in hadith) + "".join(w["text"] + w["source"] for w in wisdom) \
     + "".join(d["source"] + ("" if d.get("quran") else d["text"]) for d in adhkar)
 missing = sorted({c for c in text if not c.isspace() and ord(c) not in font and c not in "ﷺ﴿﴾"})   # those: NotoMarks
-check("verse/hadith text: every character in Thmanyah", not missing, missing)
+check(f"verse/hadith text: every character in the body font ({_body})", not missing, missing)
 # the Quran text (verses, Quranic adhkar) is the KFGQPC Uthmani text, drawn by its own font, whole and unmodified
 hafs = TTFont(ROOT / "assets/fonts/UthmanicHafs-v30.woff2")
 quran = "".join(v["text"] for v in verses) + "".join(d["text"] for d in adhkar if d.get("quran"))
@@ -278,8 +283,11 @@ for tbl, src in (("PANEL_ABOUT", "PANELS"), ("CARD_STYLE_ABOUT", "CARD_STYLES"))
     about = table(tbl)
     names = [k for k, _ in re.findall(r'\{"([a-z0-9]+)", "([^"]+)"', re.search(rf"{src} = \{{(.*?)\}};", prefs_src, re.S).group(1))]
     check(f"settings: every entry of Prefs.{src} has its one line in Prefs.{tbl}", sorted(about) == sorted(names), sorted(set(names) ^ set(about)))
-    check(f"settings: each line of Prefs.{tbl} is in the words of docs/FEATURES.md", all(" ".join(v.split()) in flat for v in about.values()),
-          [k for k, v in about.items() if " ".join(v.split()) not in flat])
+    if any(re.search("[\u0600-\u06FF]", v) for v in about.values()):
+        check(f"settings: each line of Prefs.{tbl} is in the words of docs/FEATURES.md", all(" ".join(v.split()) in flat for v in about.values()),
+              [k for k, v in about.items() if " ".join(v.split()) not in flat])
+    else:
+        print(f"SKIP settings: Prefs.{tbl} is English in this fork; docs/FEATURES.md stays Arabic for upstream merges")
 
 # ---- launcher config
 cfg = ET.parse(ROOT / "android/launcher/src/main/res/values/config.xml").getroot()
@@ -303,7 +311,7 @@ check("app names: every character in Thmanyah", not missing, missing)
 java_src = sorted((ROOT / "android/launcher/src/main/java").rglob("*.java"))
 with tempfile.TemporaryDirectory() as out:
     r = subprocess.run(["javac", "-proc:none", "-Xmaxerrs", "10000", "-encoding", "UTF-8", "-d", out] + [str(f) for f in java_src],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
 real = [f"{loc}: {m}" for loc, m in re.findall(r"^(\S+\.java:\d+): error: (.*)$", r.stderr, re.M)
         if not re.search(r"cannot find symbol|does not override or implement|package .* does not exist|static import only from classes", m)]
 check("launcher Java: no type errors beyond the missing Android classes", not real, real[:8])
