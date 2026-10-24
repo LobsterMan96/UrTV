@@ -173,8 +173,8 @@
   .week li.tbl .cr img{width:1.15em;height:1.15em;object-fit:contain;display:block;margin:0 auto}
   /* the header must sit on the SAME grid and the SAME size as the rows, or the labels drift off
      their numbers. Only its weight and colour differ. */
-  .widget .week li.tbl{font-size:.82em;column-gap:.32em;padding:calc(.36vh + 1px) 0;
-    grid-template-columns:1.5em 1.4em 3.1em repeat(4,1.7em) 2.3em}
+  .widget .week li.tbl{font-size:.97em;column-gap:.3em;padding:calc(.46vh + 2px) 0;
+    grid-template-columns:1.4em 1.35em 2.9em repeat(4,1.55em) 2.1em}
   .week li .dt{flex:1 1 auto;color:#9C9279;font-size:.72em;min-width:3.2em;text-align:left}
   .week li .tm .cr{width:1.25em;height:1.25em;object-fit:contain;vertical-align:middle;margin-block:-.25em}
   .week li .tm .cr:not([src]){visibility:hidden}   /* a restored row waits for its picture: the same room */
@@ -3315,7 +3315,8 @@ function bootWidget(){
   renderPanel(false, ...CARD_KINDS.filter(k => k !== 'shows'));
   if(USES('adhkar') || USES('prayers') || USES('prayerrow')){ loadPrayers(); periodic(loadPrayers, 6*3600*1000); }
   if(USES('forecast') || USES('hourly')){ loadWeather(); periodic(loadWeather, 30*60*1000); }
-  if(USES('matches')){ loadMatches(); periodic(loadMatches, 30*60*1000); periodic(loadLive, 2*60000); }
+  // the table card lives off the same league file, so it needs this load too
+  if(USES('matches') || USES('table')){ loadMatches(); periodic(loadMatches, 30*60*1000); periodic(loadLive, 2*60000); }
   if(USES('stocks')){ loadMarkets(); periodic(loadMarkets, 15*60*1000); }
   cardTimers();
   let lastDay = riyadhDayNumber();
