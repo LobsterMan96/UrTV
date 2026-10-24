@@ -5,8 +5,8 @@ package sa.urtv.screensaver;
  * «·» beside a digit (the TV's system font draws it as a zero). No Android in here, so tests/countdown_text_test.py runs it.
  */
 final class CountdownText {
-    private static final String[] MONTHS = {"يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
-        "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"};
+    private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"};
 
     private CountdownText() { }
 

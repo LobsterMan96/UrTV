@@ -19,8 +19,8 @@ final class Updater {
         PhotoCache.REPO + "dist/tv.html";
     static final long INTERVAL_MS = 6L * 3600 * 1000;
 
-    private static final String OFF = "التحديث التلقائي متوقف";
-    private static final String RECENT = "تم الفحص مؤخراً";
+    private static final String OFF = "Automatic updates are off";
+    private static final String RECENT = "Checked recently";
     private static final String LATEST_URL = "https://github.com/LobsterMan96/UrTV/releases/latest";
     private static final Pattern TAG = Pattern.compile("v(\\d+\\.\\d+)$");
 
@@ -86,27 +86,27 @@ final class Updater {
             if (etag != null && out.isFile()) con.setRequestProperty("If-None-Match", etag);
             int code = con.getResponseCode();
             sp.edit().putLong("lastCheck", now).apply();
-            if (code == HttpURLConnection.HTTP_NOT_MODIFIED) return "الصفحة محدثة";
-            if (code != HttpURLConnection.HTTP_OK) return "تعذر التحديث (" + code + ")";
+            if (code == HttpURLConnection.HTTP_NOT_MODIFIED) return "The page is up to date";
+            if (code != HttpURLConnection.HTTP_OK) return "Update failed (" + code + ")";
 
             byte[] body = readAll(con.getInputStream());
             String head = new String(body, 0, Math.min(body.length, 4096), "UTF-8");
             String tail = new String(body, Math.max(0, body.length - 4096), Math.min(body.length, 4096), "UTF-8");
             // never swap in a truncated or wrong file
-            if (body.length < 30_000 || !head.contains("<html") || !tail.contains("</html>")) return "ملف التحديث غير صالح";
+            if (body.length < 30_000 || !head.contains("<html") || !tail.contains("</html>")) return "The update file is not valid";
             // a copy older than the page the app carries (a CDN serves old ones for minutes) is not kept, whatever its file time will be
-            if (PageStamp.newer(assetStamp(c), PageStamp.of(head))) return "الصفحة المرفقة أحدث من المنزّلة";
+            if (PageStamp.newer(assetStamp(c), PageStamp.of(head))) return "The bundled page is newer than the download";
 
             File dir = out.getParentFile();
-            if (!dir.isDirectory() && !dir.mkdirs()) return "تعذر الحفظ";
+            if (!dir.isDirectory() && !dir.mkdirs()) return "Could not save";
             File tmp = new File(dir, "page.tmp");
             FileOutputStream fo = new FileOutputStream(tmp);
             try { fo.write(body); } finally { fo.close(); }
-            if (!tmp.renameTo(out)) return "تعذر الحفظ";
+            if (!tmp.renameTo(out)) return "Could not save";
             sp.edit().putString("etag", con.getHeaderField("ETag")).apply();
-            return "تم التحديث";
+            return "Updated";
         } catch (Exception e) {
-            return "لا يوجد اتصال";
+            return "No connection";
         } finally {
             if (con != null) con.disconnect();
         }
@@ -149,12 +149,12 @@ final class Updater {
         String mine = BuildConfig.VERSION_NAME;
         String latest = new Prefs(c).raw().getString("latestVersion", null);
         Integer newer = Versions.compare(latest, mine);   // major first, then minor: 4.0 is newer than 3.12
-        String available = latest == null || Versions.parse(latest) == null ? "لم يُفحص بعد"
-            : newer == null || newer <= 0 ? "لا يوجد أحدث" : arabic(latest);
+        String available = latest == null || Versions.parse(latest) == null ? "Not checked yet"
+            : newer == null || newer <= 0 ? "None newer" : arabic(latest);
         return new String[] {
-            "الإصدار الحالي: " + arabic(mine),
-            "الإصدار المتاح: " + available,
-            "طريقة التحديث: اطلب من مساعد الذكاء الاصطناعي «حدّث تلفزيوني»، وإعداداتك كلها تبقى.",
+            "Current version: " + arabic(mine),
+            "Available version: " + available,
+            "How to update: ask your AI assistant to update your TV; all your settings are kept.",
         };
     }
 

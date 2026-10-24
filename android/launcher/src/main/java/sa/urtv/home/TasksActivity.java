@@ -60,10 +60,10 @@ public class TasksActivity extends Activity {
         col.setPadding(0, dp(36), 0, dp(48));
         frame.addView(col, new FrameLayout.LayoutParams(dp(600), -2, Gravity.CENTER_HORIZONTAL));
 
-        col.addView(text("المهام", 26, "Medium", TEXT), right(0));
-        col.addView(text("اختيار على مهمة لإنجازها. أو اضغط «تكلّم» وقل: أضف مهمة … / خلصت … / احذف …", 14, "Regular", DIM), right(dp(10)));
+        col.addView(text("Tasks", 26, "Medium", TEXT), right(0));
+        col.addView(text("Select a task to complete it. Or press «Speak» and say: أضف مهمة … / خلصت … / احذف …", 14, "Regular", DIM), right(dp(10)));
 
-        mic = pill("🎤 تكلّم", GOLD, v -> listen());
+        mic = pill("🎤 Speak", GOLD, v -> listen());
         LinearLayout.LayoutParams mp = new LinearLayout.LayoutParams(dp(140), dp(40));
         mp.gravity = Gravity.RIGHT;
         col.addView(mic, mp);
@@ -83,8 +83,8 @@ public class TasksActivity extends Activity {
         confirm.addView(question, right(dp(10)));
         LinearLayout buttons = new LinearLayout(this);
         buttons.setGravity(Gravity.RIGHT);
-        yes = pill("نعم", GOLD, v -> answer(true));
-        no = pill("لا", DIM, v -> answer(false));
+        yes = pill("Yes", GOLD, v -> answer(true));
+        no = pill("No", DIM, v -> answer(false));
         buttons.addView(yes, new LinearLayout.LayoutParams(dp(90), dp(38)));
         LinearLayout.LayoutParams np = new LinearLayout.LayoutParams(dp(90), dp(38));
         np.rightMargin = dp(10);
@@ -99,7 +99,7 @@ public class TasksActivity extends Activity {
 
         if (!hasRecognizer()) {
             mic.setVisibility(View.GONE);
-            status.setText("الإدخال الصوتي غير متاح في هذا التلفزيون");
+            status.setText("Voice input is not available on this TV");
         }
     }
 
@@ -130,17 +130,17 @@ public class TasksActivity extends Activity {
     private void render(int focus) {
         boolean ok = load();
         list.removeAllViews();
-        if (!ok) status.setText("تطبيق شاشة التوقف غير مثبّت أو قديم");
-        else if (texts.isEmpty()) list.addView(text("لا مهام اليوم", 17, "Medium", DIM), right(0));
+        if (!ok) status.setText("The screensaver app is missing or out of date");
+        else if (texts.isEmpty()) list.addView(text("No tasks today", 17, "Medium", DIM), right(0));
         View first = null, wanted = null;
         for (int i = 0; i < texts.size(); i++) {
             final String t = texts.get(i);
             final boolean done = dones.get(i);
             LinearLayout r = new LinearLayout(this);
-            View del = pill("حذف", 0xFFEE8B70, v -> ask("أحذف «" + t + "»؟", () -> delete(t)));
+            View del = pill("Delete", 0xFFEE8B70, v -> ask("Delete «" + t + "»?", () -> delete(t)));
             r.addView(del, new LinearLayout.LayoutParams(dp(84), -1));
             View card = card((done ? "✓  " : "●  ") + t, done, v -> {
-                if (done) toast("هذي المهمة منجزة");
+                if (done) toast("That task is already done");
                 else markDone(t);
             });
             LinearLayout.LayoutParams cp = new LinearLayout.LayoutParams(0, -2, 1f);
@@ -164,22 +164,22 @@ public class TasksActivity extends Activity {
         int n = numberOf(t, true);
         ContentValues v = new ContentValues();
         v.put("i", n);
-        if (n > 0 && write(() -> getContentResolver().update(TASKS, v, null, null) > 0)) toast("تم: " + t);
+        if (n > 0 && write(() -> getContentResolver().update(TASKS, v, null, null) > 0)) toast("Done: " + t);
         else failed();
     }
 
     private void delete(String t) {
         int n = numberOf(t, false);
         if (n > 0 && write(() -> getContentResolver().delete(TASKS.buildUpon().appendPath(String.valueOf(n)).build(), null, null) > 0))
-            toast("حُذفت: " + t);
+            toast("Deleted: " + t);
         else failed();
     }
 
     private void add(String t) {
         ContentValues v = new ContentValues();
         v.put("t", t);
-        if (write(() -> getContentResolver().insert(TASKS, v) != null)) toast("أُضيفت: " + t);
-        else toast("ما أضفت المهمة: القائمة ممتلئة (" + ar(12) + ") أو النص فاضي");
+        if (write(() -> getContentResolver().insert(TASKS, v) != null)) toast("Added: " + t);
+        else toast("Task not added: the list is full (" + ar(12) + ") or the text was empty");
     }
 
     private interface Change { boolean run(); }
@@ -195,7 +195,7 @@ public class TasksActivity extends Activity {
     }
 
     private void failed() {
-        toast("تعذّر التعديل، افتح المهام من جديد");
+        toast("Could not save, open Tasks again");
         render(0);
     }
 
@@ -250,7 +250,7 @@ public class TasksActivity extends Activity {
         try { startActivityForResult(speechIntent(), SPEECH); }
         catch (ActivityNotFoundException e) {
             mic.setVisibility(View.GONE);
-            status.setText("الإدخال الصوتي غير متاح في هذا التلفزيون");
+            status.setText("Voice input is not available on this TV");
         }
     }
 
@@ -266,31 +266,31 @@ public class TasksActivity extends Activity {
             r = TaskVoice.understand(h, texts, dones);
             if (r.kind != TaskVoice.Kind.NONE) break;
         }
-        status.setText("سمعت: " + heard.get(0));
+        status.setText("Heard: " + heard.get(0));
         switch (r.kind) {
             case ADD: {
                 final String t = clip(r.text);
-                ask("أضيف «" + t + "»؟", () -> add(t));
+                ask("Add «" + t + "»?", () -> add(t));
                 break;
             }
             case DONE: {
                 final String t = r.text;
-                ask("أعلّم «" + t + "» منجزة؟", () -> markDone(t));
+                ask("Mark «" + t + "» done?", () -> markDone(t));
                 break;
             }
             case DELETE: {
                 final String t = r.text;
-                ask("أحذف «" + t + "»؟", () -> delete(t));
+                ask("Delete «" + t + "»?", () -> delete(t));
                 break;
             }
             case NO_MATCH:
-                status.setText("ما لقيت مهمة تطابق «" + r.text + "»");
+                status.setText("No task matches «" + r.text + "»");
                 break;
             case AMBIGUOUS:
-                status.setText("أكثر من مهمة تطابق «" + r.text + "»، قل جزءاً أوضح");
+                status.setText("More than one task matches «" + r.text + "», say a clearer part");
                 break;
             default:
-                status.setText("ما فهمت. قل: أضف مهمة … أو خلصت … أو احذف …");
+                status.setText("Did not catch that. Say: أضف مهمة … أو خلصت … أو احذف …");
         }
     }
 

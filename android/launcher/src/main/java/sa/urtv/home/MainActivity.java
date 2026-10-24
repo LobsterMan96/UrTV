@@ -239,7 +239,7 @@ public class MainActivity extends Activity {
         root.setBackgroundColor(Color.BLACK);
         // The home is built in code, so it inherits no direction from the window: set it here and
         // the pills, the favourites and the app rows all read from right to left.
-        root.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        root.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
         // Wallpaper: two stacked layers so a new photo can crossfade in over the old one.
         wallBack = wallpaperLayer();

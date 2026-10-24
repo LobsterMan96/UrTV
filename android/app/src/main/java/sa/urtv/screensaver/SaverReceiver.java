@@ -66,7 +66,7 @@ public class SaverReceiver extends BroadcastReceiver {
                 StringBuilder b = new StringBuilder();
                 for (Cities.Region r : Cities.REGIONS) {
                     b.append(r.name).append(": ");
-                    for (String[] city : r.cities) b.append(city[0]).append("، ");
+                    for (String[] city : r.cities) b.append(city[0]).append(", ");
                     b.setLength(b.length() - 2);
                     b.append('\n');
                 }
@@ -127,7 +127,7 @@ public class SaverReceiver extends BroadcastReceiver {
                     else if (hits.size() > 1) {
                         List<String> names = new ArrayList<>();
                         for (String[] h : hits) names.add(h[0]);
-                        return "error: «" + name + "» fits several cities: " + Prefs.join(names, "، ") + " — give one of them in full";
+                        return "error: «" + name + "» fits several cities: " + Prefs.join(names, ", ") + " — give one of them in full";
                     }
                 }
                 if (city == null) return "error: city not in the built-in list; give --es lat and --es lon too (CITIES lists them)";

@@ -20,51 +20,51 @@ final class Prefs {
 
     // TheSportsDB id, Arabic name; more teams come from the in-app search
     static final String[][] TEAM_PRESETS = {
-        {"136013", "الهلال"}, {"136137", "المنتخب السعودي"},
+        {"136013", "Al-Hilal"}, {"136137", "Saudi Arabia"},
     };
 
     // League name exactly as TheSportsDB spells it (checked from CI by .github/tools/team_ids.py), Arabic label.
     // Their clubs come from assets/shared/teams.json (Teams), which CI builds from these leagues' matches
     // (.github/tools/team_ids.py reads this list); a new league here needs its sport and minimum team count there.
     static final String[][] LEAGUES = {
-        {"Saudi-Arabian Pro League", "دوري روشن السعودي"},
-        {"Saudi First Division League", "دوري يلو (الدرجة الأولى)"},
-        {"English Premier League", "الدوري الإنجليزي"},
-        {"Spanish La Liga", "الدوري الإسباني"},
-        {"Italian Serie A", "الدوري الإيطالي"},
-        {"German Bundesliga", "الدوري الألماني"},
-        {"French Ligue 1", "الدوري الفرنسي"},
-        {"Portuguese Primeira Liga", "الدوري البرتغالي"},
-        {"Dutch Eredivisie", "الدوري الهولندي"},
-        {"Turkish Super Lig", "الدوري التركي"},
-        {"Egyptian Premier League", "الدوري المصري"},
-        {"UAE Pro League", "الدوري الإماراتي"},
-        {"Qatar Stars League", "الدوري القطري"},
-        {"American Major League Soccer", "الدوري الأمريكي"},
-        {"NBA", "دوري كرة السلة الأمريكي (NBA)"},
-        {"NFL", "دوري كرة القدم الأمريكية (NFL)"},
+        {"Saudi-Arabian Pro League", "Saudi-Arabian Pro League"},
+        {"Saudi First Division League", "Saudi First Division League"},
+        {"English Premier League", "English Premier League"},
+        {"Spanish La Liga", "Spanish La Liga"},
+        {"Italian Serie A", "Italian Serie A"},
+        {"German Bundesliga", "German Bundesliga"},
+        {"French Ligue 1", "French Ligue 1"},
+        {"Portuguese Primeira Liga", "Portuguese Primeira Liga"},
+        {"Dutch Eredivisie", "Dutch Eredivisie"},
+        {"Turkish Super Lig", "Turkish Super Lig"},
+        {"Egyptian Premier League", "Egyptian Premier League"},
+        {"UAE Pro League", "UAE Pro League"},
+        {"Qatar Stars League", "Qatar Stars League"},
+        {"American Major League Soccer", "American Major League Soccer"},
+        {"NBA", "NBA"},
+        {"NFL", "NFL"},
     };
 
     // Other sports shown in the matches slot and card beside the followed teams' games: only their next event
     // (#events= key, Arabic label). The page finds each one's league ids in assets/shared/events.json (CI).
     static final String[][] EVENTS = {
-        {"f1", "فورمولا 1"}, {"ufc", "UFC"}, {"boxing", "الملاكمة"},
+        {"f1", "Formula 1"}, {"ufc", "UFC"}, {"boxing", "Boxing"},
     };
 
     // TVMaze genre (sent to the page), Arabic label
     static final String[][] GENRES = {
-        {"Drama", "دراما"}, {"Comedy", "كوميديا"}, {"Action", "أكشن"}, {"Crime", "جريمة"},
-        {"Thriller", "إثارة"}, {"Mystery", "غموض"}, {"Science-Fiction", "خيال علمي"},
-        {"Fantasy", "فانتازيا"}, {"Adventure", "مغامرة"}, {"Romance", "رومانسي"},
-        {"Family", "عائلي"}, {"History", "تاريخي"}, {"Horror", "رعب"},
-        {"Anime", "أنمي"}, {"Documentary", "وثائقي"}, {"Sports", "رياضة"},
+        {"Drama", "Drama"}, {"Comedy", "Comedy"}, {"Action", "Action"}, {"Crime", "Crime"},
+        {"Thriller", "Thriller"}, {"Mystery", "Mystery"}, {"Science-Fiction", "Science-Fiction"},
+        {"Fantasy", "Fantasy"}, {"Adventure", "Adventure"}, {"Romance", "Romance"},
+        {"Family", "Family"}, {"History", "History"}, {"Horror", "Horror"},
+        {"Anime", "Anime"}, {"Documentary", "Documentary"}, {"Sports", "Sports"},
     };
 
     // TVMaze language, Arabic label
     static final String[][] LANGS = {
-        {"English", "الإنجليزية"}, {"Arabic", "العربية"}, {"Korean", "الكورية"},
-        {"Japanese", "اليابانية"}, {"Turkish", "التركية"}, {"Spanish", "الإسبانية"},
-        {"French", "الفرنسية"}, {"Hindi", "الهندية"}, {"German", "الألمانية"},
+        {"English", "English"}, {"Arabic", "Arabic"}, {"Korean", "Korean"},
+        {"Japanese", "Japanese"}, {"Turkish", "Turkish"}, {"Spanish", "Spanish"},
+        {"French", "French"}, {"Hindi", "Hindi"}, {"German", "German"},
     };
 
     static final String[] MIN_RATINGS = {"0", "6", "6.5", "7", "7.5", "8"};
@@ -73,28 +73,28 @@ final class Prefs {
     static final String[] PHOTO_MINUTES = {"5", "10", "15", "30", "60"};
 
     // digits on the screen (sent to the page as #digits=; hindi is what it always showed)
-    static final String[][] DIGITS = {{"hindi", "هندية ١٢٣"}, {"latin", "عربية 123"}};
+    static final String[][] DIGITS = {{"hindi", "Arabic-Indic ١٢٣"}, {"latin", "Latin 123"}};
 
     // the national days (sent to the page as #national=; auto shows them on their days, off never)
-    static final String[][] NATIONAL = {{"auto", "تلقائي"}, {"off", "إيقاف"}};
+    static final String[][] NATIONAL = {{"auto", "Automatic"}, {"off", "Off"}};
 
     // look of the card beside the clock (sent to the page as #cardstyle=; current is the plain card it always had)
-    static final String[][] CARD_STYLES = {{"current", "الحالية"}, {"dark1", "داكنة"}, {"glass1", "زجاجية"},
-        {"dark3", "داكنة بإطار"}, {"glass3", "زجاجية بإطار"}};
+    static final String[][] CARD_STYLES = {{"current", "Current"}, {"dark1", "Dark"}, {"glass1", "Glass"},
+        {"dark3", "Dark with a frame"}, {"glass3", "Glass with a frame"}};
 
     // markets at the top left (sent to the page as #markets=, up to MAX_MARKETS, in this order of choice; tasi,spx,btc is what it always showed)
     static final String[][] MARKETS = {
-        {"tasi", "تاسي"}, {"aramco", "أرامكو"}, {"spx", "S&P 500"}, {"btc", "بيتكوين"},
-        {"gold", "الذهب (الجرام بالريال)"}, {"silver", "الفضة (الجرام بالريال)"}, {"xrp", "ريبل"},
+        {"tasi", "TASI"}, {"aramco", "Aramco"}, {"spx", "S&P 500"}, {"btc", "Bitcoin"},
+        {"gold", "Gold (per gram, SAR)"}, {"silver", "Silver (per gram, SAR)"}, {"xrp", "XRP"},
     };
     static final int MAX_MARKETS = 4;
     static final String DEFAULT_MARKETS = "tasi,spx,btc";
 
     // how the markets are shown (#mkstyle=; arrows is what it always showed)
-    static final String[][] MK_STYLES = {{"arrows", "الاتجاه فقط ▲▼"}, {"prices", "السعر والنسبة"}};
+    static final String[][] MK_STYLES = {{"arrows", "Direction only ▲▼"}, {"prices", "Price and change"}};
     // what the bottom-left slot shows (sent to the page as #slot=; matches is what it always showed)
-    static final String[][] SLOTS = {{"matches", "المباريات"}, {"weather", "الطقس"}, {"fasting", "الصيام"},
-        {"countdown", "عدّ تنازلي"}, {"markets", "الأسواق"}, {"none", "بدون"}};
+    static final String[][] SLOTS = {{"matches", "Matches"}, {"weather", "Weather"}, {"fasting", "Fasting"},
+        {"countdown", "Countdown"}, {"markets", "Markets"}, {"none", "None"}};
 
     // minutes of idle before Android starts the screensaver (the TV's own screen_off_timeout; not stored here)
     static final String[] IDLE_MINUTES = {"1", "2", "5", "10", "15", "30"};
@@ -116,7 +116,7 @@ final class Prefs {
 
     /** {name, latitude, longitude}; Riyadh until the user picks */
     String[] city() {
-        return new String[] {sp.getString("cityName", "الرياض"), sp.getString("cityLat", "24.6877"), sp.getString("cityLon", "46.7219")};
+        return new String[] {sp.getString("cityName", "Al-Khobar"), sp.getString("cityLat", "26.2794"), sp.getString("cityLon", "50.2083")};
     }
     void setCity(String name, String lat, String lon) { setCity(name, lat, lon, ""); }
     /** tz: the place's own time zone, "" for a built-in city or when only the TV's is known (see cityTz) */
@@ -185,11 +185,11 @@ final class Prefs {
 
     // The card beside the clock: value sent to the page (#panel=), Arabic label
     static final String[][] PANELS = {
-        {"shows", "جديد المسلسلات"}, {"prayers", "مواقيت الصلاة اليوم"}, {"forecast", "طقس الأيام القادمة"}, {"hourly", "طقس الساعات القادمة"}, {"prayerrow", "الصلوات في صف"},
-        {"matches", "مباريات فرقك القادمة"}, {"verse", "آية أو حديث اليوم"}, {"wisdom", "حكمة اليوم"},
-        {"adhkar", "أذكار الصباح والمساء"}, {"stocks", "الأسهم"}, {"tasks", "المهام"}, {"year", "السنة"},
-        {"smart", "البطاقة الذكية"}, {"today", "يومك"},
-        {"none", "لا شيء"},
+        {"shows", "New episodes"}, {"prayers", "Today's prayer times"}, {"forecast", "The next days' weather"}, {"hourly", "The next hours' weather"}, {"prayerrow", "Prayers in a row"},
+        {"matches", "Your teams' next matches"}, {"verse", "Verse or hadith of the day"}, {"wisdom", "Saying of the day"},
+        {"adhkar", "Morning and evening adhkar"}, {"stocks", "Stocks"}, {"tasks", "Tasks"}, {"year", "The year"},
+        {"smart", "Smart card"}, {"today", "Your day"},
+        {"none", "Nothing"},
     };
 
     /** Older builds had an on/off switch for the card; off becomes "none", otherwise the verse card. */
@@ -198,28 +198,28 @@ final class Prefs {
 
     // One plain line about each card, in the words of docs/FEATURES.md (tests/check.py compares them): the pickers show it under the name
     static final String[][] PANEL_ABOUT = {
-        {"shows", "حلقات هذا الأسبوع"},
-        {"prayers", "الست أوقات، والجاية مميّزة"},
-        {"forecast", "خمسة أيام"},
-        {"hourly", "الست ساعات الجاية بالساعة والأيقونة والحرارة، وقمر بعد الغروب"},
-        {"prayerrow", "الخمس صلوات في صف واحد، والجاية مضيئة"},
-        {"matches", "مباريات الأسبوع ونتائج آخر يوم لفرقك، وكل مباراة بسطر واحد"},
-        {"verse", "آية يوم، وحديث صحيح من الكتب الستة اليوم اللي بعده، ومعه مصدره"},
-        {"wisdom", "مثل أو قول عربي معروف مع مصدره"},
-        {"adhkar", "من الفجر للظهر أذكار الصباح، ومن العصر للمغرب أذكار المساء"},
-        {"stocks", "أسهمك بالسعر والتغيّر"},
-        {"tasks", "قائمة مهامك"},
-        {"year", "٣٦٥ نقطة، الأيام اللي راحت تولّع من الغامق للذهبي"},
-        {"smart", "تختار لك البطاقة المناسبة للوقت"},
-        {"today", "الصلاة القادمة ووقتها، والمباراة القادمة لفرقك، وأول مهمة مفتوحة، والمناسبة القادمة وكم يوم باقي"},
-        {"none", "بدون بطاقة"},
+        {"shows", "This week's episodes"},
+        {"prayers", "The six times, with the next one picked out"},
+        {"forecast", "Five days"},
+        {"hourly", "The next six hours with the time, an icon and the temperature, and a moon after sunset"},
+        {"prayerrow", "The five prayers in one row, the next one lit"},
+        {"matches", "This week's games and the last day's results for your teams, one line each"},
+        {"verse", "A verse one day, a sound hadith from the six books the next, each with its source"},
+        {"wisdom", "A well-known Arabic proverb or saying, with its source"},
+        {"adhkar", "Morning adhkar from Fajr to Dhuhr, evening adhkar from Asr to Maghrib"},
+        {"stocks", "Your stocks with price and change"},
+        {"tasks", "Your task list"},
+        {"year", "365 dots; the days gone by glow from dark to gold"},
+        {"smart", "Picks the card that suits the time of day"},
+        {"today", "The next prayer and its time, your teams' next game, the first open task, and the next occasion with the days left"},
+        {"none", "No card"},
     };
     static final String[][] CARD_STYLE_ABOUT = {
-        {"current", "البطاقة كما كانت، بخلفية داكنة شفافة"},
-        {"dark1", "داكنة بزوايا مدوّرة وخط ذهبي على جهة الساعة"},
-        {"glass1", "زجاجية ضبابية فوق الصورة"},
-        {"dark3", "داكنة بإطار ذهبي داخلي ومعيّن على الحافتين"},
-        {"glass3", "زجاجية بإطار ذهبي داخلي ومعيّن على الحافتين"},
+        {"current", "The card as it was, on a dark translucent background"},
+        {"dark1", "Dark, rounded corners, a gold line on the clock side"},
+        {"glass1", "Frosted glass over the photo"},
+        {"dark3", "Dark with an inner gold frame and a diamond on each edge"},
+        {"glass3", "Glass with an inner gold frame and a diamond on each edge"},
     };
 
     static String about(String[][] table, String v) {

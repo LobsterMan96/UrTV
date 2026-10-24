@@ -11,7 +11,7 @@ final class PrayerAdj {
     static final int COUNT = 5;
     /** the names optimize/saver.sh and the receiver use, in the order of the fragment */
     static final String[] KEYS = {"fajr", "dhuhr", "asr", "maghrib", "isha"};
-    static final String[] NAMES = {"الفجر", "الظهر", "العصر", "المغرب", "العشاء"};
+    static final String[] NAMES = {"Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"};
 
     private PrayerAdj() { }
 
@@ -55,7 +55,7 @@ final class PrayerAdj {
     /** «الفجر +٢ د», «العشاء −١ د», «الظهر ٠ د» (Arabic digits, the real minus sign) */
     static String label(int index, int v) {
         String sign = v > 0 ? "+" : v < 0 ? "−" : "";
-        return NAMES[index] + " " + sign + DigitsText.convert(String.valueOf(Math.abs(v)), false) + " د";
+        return NAMES[index] + " " + sign + DigitsText.convert(String.valueOf(Math.abs(v)), false) + "m";
     }
 
     /** "fajr=+2 dhuhr=0 asr=0 maghrib=-1 isha=0" for optimize/saver.sh show */
