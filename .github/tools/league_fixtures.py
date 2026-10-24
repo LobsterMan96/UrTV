@@ -148,9 +148,23 @@ def write_report(report, problems):
     (OUT / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
+SPL_LEAGUE = "Saudi-Arabian Pro League"
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     names = [n for n in ti.prefs_leagues() if not argv or n in argv]
+    # The Saudi Pro League comes from its own site, not TheSportsDB: the free key caps the table at
+    # five clubs and gives no matchday. spl_league.py writes that file; everything else carries on here.
+    if SPL_LEAGUE in names:
+        names = [n for n in names if n != SPL_LEAGUE]
+        try:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))   # CI runs this from the repo root
+            import spl_league
+            spl_league.OUT = OUT
+            spl_league.build()
+        except Exception as e:
+            print(f"!! {SPL_LEAGUE} from spl.com.sa failed: {e}", flush=True)
     cache = ti.load_cache()[0]["leagues"]
     ids = ti.league_ids(names, cache)
     now = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0)

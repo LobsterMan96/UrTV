@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- the build: UTC time (YYYYMMDDHHMMSS) of the newest commit of the page's sources, put in by src/build.py. The app loads the page with the newer stamp (its own
      copy or a downloaded one), never by file time, and does not keep a download whose stamp is older than its own (Updater, PageStamp). -->
-<meta name="urtv-build" content="20261024201027">
+<meta name="urtv-build" content="20261024201258">
 <title>TV Screensaver</title>
 <style>
   @font-face{font-family:'Thmanyah';font-weight:300;font-style:normal;font-display:block;src:url("https://raw.githubusercontent.com/LobsterMan96/UrTV/english/assets/fonts/IBMPlexSansArabic-Light.woff2") format("woff2")}
@@ -44,7 +44,8 @@
   /* the launcher's cards, up to three: one fills the box; two side by side (the first on the right, as Arabic reads);
      three: two side by side and the third the full width under them. At 1920 a pair is about 560 + 540 px with a 22 px gap. */
   html.widget .mid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--cg,clamp(8px,2vw,22px));align-items:start}
-  html.widget .mid.n2,html.widget .mid.n3{grid-template-columns:minmax(0,560fr) minmax(0,540fr)}
+  /* two cards stack, one under the other: side by side read heavy and squeezed the table's columns */
+  html.widget .mid.n3{grid-template-columns:minmax(0,560fr) minmax(0,540fr)}
   html.widget .mid .week.w3{grid-column:1/-1}
   html.widget .week{width:100%}
   /* a living room, not a desk: the card may lose rows, never legibility */
@@ -173,8 +174,9 @@
   .week li.tbl .cr img{width:1.15em;height:1.15em;object-fit:contain;display:block;margin:0 auto}
   /* the header must sit on the SAME grid and the SAME size as the rows, or the labels drift off
      their numbers. Only its weight and colour differ. */
-  .widget .week li.tbl{font-size:.97em;column-gap:.3em;padding:calc(.46vh + 2px) 0;
-    grid-template-columns:1.4em 1.35em 2.9em repeat(4,1.55em) 2.1em}
+  /* stacked, the card is full width, so the table can breathe instead of being squeezed */
+  .widget .week li.tbl{font-size:.95em;column-gap:.7em;padding:calc(.5vh + 3px) 0;
+    grid-template-columns:1.8em 1.7em 3.4em repeat(4,2.1em) 2.8em;justify-content:center}
   .week li .dt{flex:1 1 auto;color:#9C9279;font-size:.72em;min-width:3.2em;text-align:left}
   .week li .tm .cr{width:1.25em;height:1.25em;object-fit:contain;vertical-align:middle;margin-block:-.25em}
   .week li .tm .cr:not([src]){visibility:hidden}   /* a restored row waits for its picture: the same room */
@@ -1283,7 +1285,9 @@ function pendingResult(ev, now){
   return !FINAL.includes(st) && !CALLED_OFF.test(st) && !isNaN(k) && now >= end && now - end < 86400000;
 }
 // the order of the screen: results (and a past game with no result yet) in time order, then live, then the rest by time
-const gameRank = (ev, now) => finishedRecently(ev, now) || pendingResult(ev, now) ? 0 : now >= toDate(ev).getTime() ? 1 : 2;
+// 0 a game under way, 1 one still to come, 2 a result: on a TV what is next matters more than what is done
+const gameRank = (ev, now) => finishedRecently(ev, now) || pendingResult(ev, now) ? 2
+  : now >= toDate(ev).getTime() ? 0 : 1;
 const byRank = (a, b) => a.r - b.r || a.t - b.t;
 // Keep a score seen at the final whistle: the free API's "last games" list can lag, and "next game"
 // moves on to the following fixture right away. Saved, so a restart within the day still shows it.
@@ -1377,7 +1381,8 @@ async function loadLeagues(){
       const j = await r.json();
       // keep the table too: the card reads it from here, and dropping it is why it showed «No data»
       if(j && Array.isArray(j.events)){ LEAGUE_DATA[name] = {updated: j.updated, events: j.events,
-        ...(Array.isArray(j.table) && j.table.length ? {table: j.table} : {})}; got++; }
+        ...(Array.isArray(j.table) && j.table.length ? {table: j.table} : {}),
+        ...(j.matchday ? {matchday: j.matchday} : {}), ...(j.season ? {season: j.season} : {})}; got++; }
     }catch(e){}
   }));
   if(got) try{ localStorage.setItem('leagueData', JSON.stringify(LEAGUE_DATA)); }catch(e){}
@@ -2319,7 +2324,8 @@ function renderCard(card, animate, keepSize){
   else if(P === 'hourly') rows = hourlyRows();
   else if(P === 'prayerrow'){ const q = prayerRowCard(); paintHd(hd, q.title); rows = q.rows; }
   else if(P === 'matches') rows = matchRows(card);
-  else if(P === 'table') rows = tableRows();
+  else if(P === 'table'){ rows = tableRows(); const md = matchdayNote();
+    if(md) paintHd(hd, '', `<span>${PANEL_TITLE.table}</span><span class="until">${md}</span>`); }
   else if(P === 'year') rows = [yearCard(card)];
   else if(P === 'today'){ const q = todayCard(); paintHd(hd, q.title); rows = q.rows; }
   else if(P === 'tasks') rows = CONFIG.tasks.map(t => `<li class="task"><span>${esc(t)}</span></li>`);
@@ -2336,7 +2342,7 @@ function renderCard(card, animate, keepSize){
     setHTML(ul, `<li class="empty">${P === 'matches' ? matchesEmptyText() : P === 'tasks' ? 'No tasks today' : 'No data right now'}</li>`);
     return;
   }
-  const per = card.cap || (P === 'matches' ? (CONFIG.widget ? 3 : MATCH_ROWS)   // bigger rows on the small card
+  const per = card.cap || (P === 'matches' ? (CONFIG.widget ? 5 : MATCH_ROWS)
     : P === 'table' ? TABLE_MAX + 1 : WEEK_ROWS);
   if((P === 'matches' || P === 'stocks' || P === 'tasks') && rows.length > per){        // page through, like the shows
     if(P === 'matches'){   // fixed pages, each game once a lap; the last holds what is left
@@ -2505,12 +2511,15 @@ function forecastRows(){
 // Club crests this fork ships, by their three-letter code (assets/crests/). Scraped once from
 // spl.com.sa, so every Saudi Pro League club has one instead of depending on TheSportsDB having a
 // badge. Shown on the screensaver as well as the home card.
-const OWN_CRESTS = new Set(["ABH", "AHL", "DIR", "ETT", "FAT", "FAY", "FSL", "HIL", "HZM", "ITT", "KHL", "KHO", "NEO", "NSR", "QAD", "RIY", "SHB", "TAW"]);
+const OWN_CRESTS = new Set(["ABH", "AHL", "DIR", "ETT", "FAT", "FSL", "FYH", "HAZ", "HIL", "ITT", "KLD", "KLJ", "NAS", "NEO", "QAD", "RIY", "SHB", "TWN"]);
 // PHOTO_BASE is declared far below this point, so read it lazily: touching it here threw a
 // ReferenceError (temporal dead zone) that killed the whole script, page blank in both modes.
 let _crestBase = '';
 const crestBase = () => _crestBase || (_crestBase = PHOTO_BASE.replace(/photos\/$/, 'assets/crests/'));
-const ownCrest = name => { const c = abbr(name); return OWN_CRESTS.has(c) ? crestBase() + c + '.webp' : ''; };
+const ownCrest = key => { const c = String(key || '').length === 3 && OWN_CRESTS.has(String(key).toUpperCase())
+  ? String(key).toUpperCase() : abbr(key); return OWN_CRESTS.has(c) ? crestBase() + c + '.webp' : ''; };
+// spl.com.sa gives every club its official acronym (HIL, NAS, KLJ...). Use it where the file has one.
+const codeOf = (code, name) => (code && String(code).trim().toUpperCase()) || abbr(name);
 const CRESTS_ON = USES('matches') || USES('table');
 const CREST_PX = 48, CREST_KEEP = 60, CREST_PER_ROUND = 10;
 let CRESTS = {};   // team id -> {u: badge address, d: data: URI of the small copy, none when only the address could be kept}
@@ -2521,7 +2530,7 @@ function crestOf(ev, side){
 }
 const crestImg = (ev, side) => {
   if(!CRESTS_ON) return '';
-  const own = ownCrest(ev['str' + side + 'Team']);   // ours first: every club has one
+  const own = ownCrest(ev[side.toLowerCase() + 'Code'] || ev['str' + side + 'Team']);   // ours first: every club has one
   if(own) return `<img class="cr" src="${esc(own)}" width="${CREST_PX}" height="${CREST_PX}" loading="lazy" alt="">`;
   const c = crestOf(ev, side);
   const k = c && CRESTS[c.id];
@@ -2658,6 +2667,11 @@ function matchEvents(){
 // ---- the league table, from the same leagues/<slug>.json the fixtures come in. The free key returns
 // only the leading rows, so this shows however many arrived rather than promising a fixed ten.
 const TABLE_MAX = 10;
+// «Matchday 11 of 34», from the league's own matchday list
+function matchdayNote(){
+  const d = LEAGUE_DATA[CONFIG.leagues[0]], m = d && d.matchday;
+  return m && m.current ? `Matchday ${ar(m.current)}${m.total ? ' of ' + ar(m.total) : ''}` : '';
+}
 function tableRows(){
   const name = CONFIG.leagues[0];
   const d = name && LEAGUE_DATA[name];
@@ -2667,10 +2681,10 @@ function tableRows(){
   const head = `<li class="tbl thd"><span class="rk">#</span><span class="cr"></span><span class="cl">Club</span>`
     + `<span>P</span><span>W</span><span>D</span><span>L</span><span class="pts">Pts</span></li>`;
   return [head].concat(rows.slice(0, TABLE_MAX).map(r => {
-    const own = ownCrest(r.strTeam);
+    const own = ownCrest(r.code || r.strTeam);
     return `<li class="tbl"><span class="rk">${n(r.intRank)}</span>`
       + `<span class="cr">${own ? `<img src="${esc(own)}" alt="" loading="lazy">` : ''}</span>`
-      + `<span class="cl" title="${esc(r.strTeam)}">${esc(abbr(r.strTeam))}</span>`
+      + `<span class="cl" title="${esc(r.strTeam)}">${esc(codeOf(r.code, r.strTeam))}</span>`
       + `<span>${n(r.intPlayed)}</span><span>${n(r.intWin)}</span><span>${n(r.intDraw)}</span><span>${n(r.intLoss)}</span>`
       + `<span class="pts">${n(r.intPoints)}</span></li>`;
   }));
@@ -2690,8 +2704,7 @@ function matchRows(card){
           && x.t - now <= CONFIG.weekWindowDays * 86400000))
     // upcoming and live games come before finished ones: with a full matchday behind us, six
     // final scores would otherwise fill all four rows and nothing still to play would show
-    .sort((a, b) => { const over = x => (x.ev.intHomeScore != null && now >= x.t) ? 1 : 0;   // already has a score on screen
-                      return over(a) - over(b) || byRank(a, b); })   // still to play first, finished after
+    .sort(byRank)   // gameRank already puts live, then upcoming, then results
     .map(({ev, t, r}) => {
       const d = new Date(t), scored = ev.intHomeScore != null && ev.intAwayScore != null;
       const mid = scored && now >= t ? `<span class="sc">${ar(+ev.intHomeScore)} - ${ar(+ev.intAwayScore)}</span>` : '<span class="x">×</span>';
@@ -2705,7 +2718,8 @@ function matchRows(card){
       const dateEl = date ? `<i class="mwhen" data-s="${esc(matchWhenShort(d, now, done))}">${date}</i>` : '';
       // the code, not the full name: three letters keep every row the same width
       const club = (id, name, home) => `<span class="tm ${home ? 'h' : 'a'}" title="${esc(teamAr(name, id))}">`
-        + `${home ? '' : crestImg(ev, 'Away')}<span class="nm">${esc(abbr(teamAr(name, id)))}</span>${home ? crestImg(ev, 'Home') : ''}</span>`;
+        + `${home ? '' : crestImg(ev, 'Away')}<span class="nm">${esc(codeOf(home ? ev.homeCode : ev.awayCode, teamAr(name, id)))}</span>`
+        + `${home ? crestImg(ev, 'Home') : ''}</span>`;
       return {t, r, html: `<li class="mg"><span class="mr">${club(ev.idHomeTeam, ev.strHomeTeam, true)} ${mid} ${club(ev.idAwayTeam, ev.strAwayTeam, false)} ${dateEl} <span class="dt">${when}</span></span></li>`};
     }), ...others.map(o => ({...o, r: o.t <= now ? 1 : 2}))].sort(byRank).map(x => x.html);
 }

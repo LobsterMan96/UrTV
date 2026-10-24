@@ -12,8 +12,13 @@ final class CardBox {
     /** One card is the size it always was: 461 x 250 dp. */
     static final int ONE_W = 461, ONE_H = 250;
     static final int SIDE = 48, TOP = 84;
-    /** A pair is 58.44% of the screen wide: at 1920 that is 560 + 22 + 540. */
+    /** Three cards sit two across: 58.44% of the screen, at 1920 that is 560 + 22 + 540. */
     static final float PAIR_WIDTH = 0.5844f;
+    /** Two cards STACK, one under the other, so the pair is one card wide and as tall as it may be.
+     *  Side by side they read heavy and squeezed the league table's columns. */
+    static final float STACK_WIDTH = 0.335f;
+    /** Stacked, the pair is tall: this is what it takes before the dock's position is known. */
+    static final float STACK_HEIGHT = 0.62f;
     /** The height of today's single card (250 dp of 540) as a share of the screen's. */
     static final float PAIR_HEIGHT = 0.463f;
 
@@ -27,7 +32,9 @@ final class CardBox {
      */
     static int[] box(int cards, int screenW, int screenH, float density, int clockEnd, int titleTop, int dockTop, int titleWide) {
         if (cards <= 1) return new int[]{dp(ONE_W, density), dp(ONE_H, density)};
-        int w = Math.round(screenW * PAIR_WIDTH), h = Math.round(screenH * PAIR_HEIGHT);
+        boolean stacked = cards == 2;
+        int w = Math.round(screenW * (stacked ? STACK_WIDTH : PAIR_WIDTH));
+        int h = Math.round(screenH * (stacked ? STACK_HEIGHT : PAIR_HEIGHT));   // the dock trims this once laid out
         int side = dp(SIDE, density), top = dp(TOP, density);
         // the box is anchored to the right edge: what is left over once the clock block has had its say
         if (clockEnd > 0) w = Math.min(w, screenW - clockEnd - side - dp(16, density));   // clear of the clock block

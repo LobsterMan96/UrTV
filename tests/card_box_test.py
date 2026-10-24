@@ -34,12 +34,19 @@ for kind, d, n, w, h, *rest in rows:
     if n == 1:
         check(f"{tag}: 461 x 250 dp, as it always was", (wdp, hdp) == (461, 250), (wdp, hdp))
         continue
-    if kind == "early":   # before the screen is laid out: the sizes the page tests use (58.44% of the width, 46.3% of the height)
-        want = (round(1920 / d * .5844), round(1080 / d * .463))
+    if kind == "early":   # before the screen is laid out
+        # two cards STACK (one card wide, tall); three still sit two across
+        frac = (.335, .62) if n == 2 else (.5844, .463)
+        want = (round(1920 / d * frac[0]), round(1080 / d * frac[1]))
         check(f"{tag}: {want[0]} x {want[1]} dp", abs(wdp - want[0]) <= 1 and abs(hdp - want[1]) <= 1, (wdp, hdp, want))
         continue
-    clock_left, title_top, dock_top = map(int, rest)
-    check(f"{tag}: clear of the greeting and clock block", dp(48) + w <= clock_left - dp(16) + 1, (dp(48) + w, clock_left))
+    clock_end, title_top, dock_top = map(int, rest)
+    # the box is anchored to the RIGHT edge now (English chrome puts the clock on the left),
+    # so what must hold is that it starts clear of where the clock block ends
+    box_left = 1920 - dp(48) - w          # the screen is 1920 px wide at every density tested
+    check(f"{tag}: clear of the greeting and clock block",
+          box_left >= clock_end + dp(16) - 1 or w == dp(300),
+          (box_left, clock_end))
     wide = round((200 if kind == "short" else 420) * d)
     reaches = 1920 - dp(56) - wide < dp(48) + w + dp(16)   # the widest title would run into the box: it ends above the title
     limit = (title_top - dp(6)) if reaches else (dock_top - dp(8))
