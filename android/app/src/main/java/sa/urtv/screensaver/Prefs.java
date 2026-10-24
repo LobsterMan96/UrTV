@@ -187,7 +187,7 @@ final class Prefs {
     // The card beside the clock: value sent to the page (#panel=), Arabic label
     static final String[][] PANELS = {
         {"shows", "New episodes"}, {"prayers", "Today's prayer times"}, {"forecast", "The next days' weather"}, {"hourly", "The next hours' weather"}, {"prayerrow", "Prayers in a row"},
-        {"matches", "Your teams' next matches"}, {"verse", "Verse or hadith of the day"}, {"wisdom", "Saying of the day"},
+        {"matches", "Your teams' next matches"}, {"table", "League table"}, {"verse", "Verse or hadith of the day"}, {"wisdom", "Saying of the day"},
         {"adhkar", "Morning and evening adhkar"}, {"stocks", "Stocks"}, {"tasks", "Tasks"}, {"year", "The year"},
         {"smart", "Smart card"}, {"today", "Your day"},
         {"none", "Nothing"},
@@ -205,6 +205,7 @@ final class Prefs {
         {"hourly", "The next six hours with the time, an icon and the temperature, and a moon after sunset"},
         {"prayerrow", "The five prayers in one row, the next one lit"},
         {"matches", "This week's games and the last day's results for your teams, one line each"},
+        {"table", "The followed league's standings: played, won, drawn, lost and points"},
         {"verse", "A verse one day, a sound hadith from the six books the next, each with its source"},
         {"wisdom", "A well-known Arabic proverb or saying, with its source"},
         {"adhkar", "Morning adhkar from Fajr to Dhuhr, evening adhkar from Asr to Maghrib"},

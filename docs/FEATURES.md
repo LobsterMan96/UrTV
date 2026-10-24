@@ -81,6 +81,13 @@
 - **وش هو:** كم يوم باقي على تاريخ تختاره، مع اسمه (رحلة، زواج…).
 - **وين:** الإعدادات ← العرض ← العدّ التنازلي. **الوكيل:** `optimize/saver.sh countdown 2026-12-31 'رحلة'` ثم `optimize/saver.sh slot countdown`.
 
+### جدول الدوري (League table)
+
+ترتيب الدوري المتابع: اللعب والفوز والتعادل والخسارة والنقاط، مع شعار كل نادٍ.
+The followed league's standings. The free key returns only the leading rows, so the card shows
+however many arrive. **الوكيل:** `optimize/saver.sh card table` or `panel=table`;
+`optimize/saver.sh home-card matches,table` puts both on the home screen.
+
 ### المباريات
 - **تعديل وقت الصلاة:** إذا مسجدك يؤذّن قبل أو بعد الوقت المحسوب بدقيقتين أو ثلاث، شغّل «تعديل وقت الصلاة» (مطفأ في الأصل)
   وحدّد لكل صلاة دقائقها من −٢٠ إلى +٢٠، مثل «الفجر +٢ د»: بالأسهم يسار (+) ويمين (−)، وموافق للتصفير. الأوقات المعدّلة هي

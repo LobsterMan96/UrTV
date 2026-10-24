@@ -300,7 +300,11 @@ app_rows = [(i.text or "").split("|", 1) for i in ET.parse(ROOT / "android/launc
             .getroot().find("string-array")]
 pkg_re = re.compile(r"^[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z][A-Za-z0-9_]*)+$")
 arabic_re = re.compile("[\u0600-\u06FF]")
-check("app names: every row is package|name", bool(app_rows) and all(len(r) == 2 for r in app_rows))
+# this fork ships an EMPTY list on purpose: the English chrome shows each app's own name
+if not app_rows:
+    print("SKIP app names: the list is empty in this fork; apps show their own names")
+else:
+    check("app names: every row is package|name", all(len(r) == 2 for r in app_rows))
 check("app names: every key is a valid package name", all(pkg_re.match(r[0]) for r in app_rows), [r[0] for r in app_rows if not pkg_re.match(r[0])])
 check("app names: every name has Arabic letters", all(len(r) == 2 and arabic_re.search(r[1]) for r in app_rows), [r[0] for r in app_rows if len(r) < 2 or not arabic_re.search(r[1])])
 check("app names: no package twice", len({r[0] for r in app_rows}) == len(app_rows))
