@@ -50,7 +50,8 @@ for kind, d, n, w, h, *rest in rows:
     wide = round((200 if kind == "short" else 420) * d)
     reaches = 1920 - dp(56) - wide < dp(48) + w + dp(16)   # the widest title would run into the box: it ends above the title
     limit = (title_top - dp(6)) if reaches else (dock_top - dp(8))
-    check(f"{tag}: ends {'above the app title' if reaches else 'above the dock'}", dp(84) + h <= limit + 1 or h == dp(150),
-          (dp(84) + h, limit))
+    top = dp(84)
+    check(f"{tag}: ends {'above the app title' if reaches else 'above the dock'}", top + h <= limit + 1 or h == dp(150),
+          (top + h, limit))
     check(f"{tag}: room for a third card (150 dp at least)", h >= dp(150), hdp)
 sys.exit(1 if failed else 0)

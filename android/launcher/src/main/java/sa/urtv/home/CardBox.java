@@ -35,7 +35,7 @@ final class CardBox {
         boolean stacked = cards == 2;
         int w = Math.round(screenW * (stacked ? STACK_WIDTH : PAIR_WIDTH));
         int h = Math.round(screenH * (stacked ? STACK_HEIGHT : PAIR_HEIGHT));   // the dock trims this once laid out
-        int side = dp(SIDE, density), top = dp(TOP, density);
+        int side = dp(SIDE, density), top = dp(TOP, density);   // clear of the pill row above
         // the box is anchored to the right edge: what is left over once the clock block has had its say
         if (clockEnd > 0) w = Math.min(w, screenW - clockEnd - side - dp(16, density));   // clear of the clock block
         if (titleTop > 0) {

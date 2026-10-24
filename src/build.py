@@ -297,7 +297,9 @@ def main():
     # 2 KB, so inlined in both pages
     html = html.replace("__F_MARKS__", data_uri(ROOT / "assets/fonts/NotoNaskhArabic-Marks.woff2", "font/woff2"))
     teams = json.loads((ROOT / "assets/shared/teams-ar.json").read_text(encoding="utf-8"))
-    html = html.replace("__TEAMS_AR__", js_json(teams))
+    # 20 KB of Arabic club names that nothing reads any more: arName() returns the source name
+    # before it ever reaches TEAM_KEYS. Ship an empty map rather than the data.
+    html = html.replace("__TEAMS_AR__", js_json({}))
     # by TheSportsDB id: "Al-Faisaly" and "Al Faisaly" are different clubs under one name key
     clubs = json.loads((ROOT / "assets/shared/teams.json").read_text(encoding="utf-8"))
     by_id = {c["id"]: c["en"] for c in clubs if c.get("id") and c.get("en")}   # English build: the club's own name, not the Arabic one

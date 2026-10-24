@@ -390,7 +390,9 @@ public class MainActivity extends Activity {
         left.addView(clockRow, llp(-2, -2, 0, dp(-2), 0, 0));
 
         date = text(14, "regular", 0xFFC6BBA4);
-        date.setSingleLine(true);
+        date.setSingleLine(false);   // two lines: Gregorian above, Hijri below, as on the screensaver
+        date.setMaxLines(2);
+        date.setLineSpacing(0f, 1.05f);
         left.addView(date, llp(-2, -2, 0, dp(-6), dp(4), 0));   // the display font leaves a deep gap under its digits
         // «بتوقيت دبي», only when the city's clock is not the TV's (as the screensaver's line under its clock)
         zoneLine = text(12, "regular", GOLD);
@@ -423,7 +425,7 @@ public class MainActivity extends Activity {
         sleepPill = pill("Sleep timer", R.drawable.ic_sleep);
         sleepPill.setOnClickListener(v -> showSleep(v));
         List<Pill> row = new ArrayList<>(Arrays.asList(inputs, wifiPill, settings, sleepPill));
-        if (isInstalled(SAVER_PKG)) { row.add(tasks); row.add(saver); }
+        if (isInstalled(SAVER_PKG)) row.add(saver);   // Tasks taken off the row at Papi G's request
         if (getResources().getBoolean(R.bool.show_listening)) row.add(tilawah);
         for (Pill p : row) {
             right.addView(p, llp(-2, dp(Pill.HEIGHT), dp(10), 0, 0, 0));
@@ -941,7 +943,8 @@ public class MainActivity extends Activity {
             if (hijriFormat != null) hijri = hijriFormat.format(now.getTime());
         } catch (Exception ignored) { }
         String greg = gregFormat.format(now.getTime());
-        date.setText(arabicDigits(hijri.isEmpty() ? greg : greg + "  ·  " + hijri));
+        date.setText(arabicDigits(hijri.isEmpty() ? greg : greg + "
+" + hijri));
         updateAdhanBar(cfg);
         sa.urtv.home.tilawah.AdhanSync.onConfig(this, cfg.fragment);   // «تعديل وقت الصلاة» changed on the TV: the alarm follows
         updateSleepPill();
